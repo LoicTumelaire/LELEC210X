@@ -38,7 +38,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ADC_BUF_SIZE 256
+#define ADC_BUF_SIZE 30000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -50,6 +50,7 @@
 
 /* USER CODE BEGIN PV */
 volatile int state;
+volatile int sound_bigger_than_50;
 volatile uint16_t ADCBuffer[2*ADC_BUF_SIZE]; /* ADC group regular conversion data (array of data) */
 volatile uint16_t* ADCData1;
 volatile uint16_t* ADCData2;
@@ -74,9 +75,25 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc){
-  print_buffer(ADCBuffer);
-  HAL_ADC_Stop_DMA(&hadc1);
-  HAL_TIM_Base_Stop(&htim3);
+  if(sound_bigger_than_50){
+    sound_bigger_than_50 = 0;
+    print_buffer(ADCData2);
+    HAL_ADC_Stop_DMA(&hadc1);
+    HAL_TIM_Base_Stop(&htim3);
+  } else {
+    printf("On relance un sample youhou\n");
+    HAL_ADC_Start_DMA(&hadc1, ADCData1, 2*ADC_BUF_SIZE);
+  }
+  
+}
+
+void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc){
+	uint32_t power = get_signal_power(ADCData1, ADC_BUF_SIZE);
+  printf("Power: %d\r\n", power);
+  if (power>50){
+    sound_bigger_than_50 = 1;
+    print_buffer(ADCData1);
+  }
 }
 
 void hex_encode(char* s, const uint8_t* buf, size_t len) {
@@ -140,6 +157,7 @@ int main(void)
   RetargetInit(&hlpuart1);
   printf("Hello world!\r\n");
   state=0;
+  sound_bigger_than_50 = 0;
   ADCData1 = &ADCBuffer[0];
   ADCData2 = &ADCBuffer[ADC_BUF_SIZE];
   /* USER CODE END 2 */
@@ -148,16 +166,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-	HAL_Delay(500);
-	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-	HAL_Delay(500);
+  __WFI();
  
   // Convert the ADC values if button is pressed
   if(state) {
     // Using a timer
     HAL_TIM_Base_Start(&htim3);
-    HAL_ADC_Start_DMA(&hadc1, ADCData1, ADC_BUF_SIZE);
+    HAL_ADC_Start_DMA(&hadc1, ADCData1, 2*ADC_BUF_SIZE);
 
     /*
     HAL_ADC_Start(&hadc1); // Start the ADC conversion
