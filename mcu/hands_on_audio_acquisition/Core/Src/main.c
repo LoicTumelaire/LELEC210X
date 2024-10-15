@@ -24,6 +24,7 @@
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
+//#include <stdint.h>//nécessaire pour uint16_t?
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
