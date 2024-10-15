@@ -50,7 +50,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-volatile int recording;
+volatile int buttonPressed;
 volatile int sound_bigger_than_50;
 volatile uint16_t ADCBuffer[2*ADC_BUF_SIZE]; /* ADC group regular conversion data (array of data) */
 volatile uint16_t* ADCData1;
@@ -71,10 +71,10 @@ uint32_t get_signal_power(uint16_t *buffer, size_t len);
 /* USER CODE BEGIN 0 */
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-  // If the button is pressed, start recording
+  // If the button is pressed, change state buttonPressed
 	if (GPIO_Pin == B1_Pin) {
     //__disable_irq(); //Disable interrupts
-    recording = 1;
+    buttonPressed = 1;
     //__enable_irq(); //Enable interrupts
 	}
 }
@@ -86,7 +86,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc){
     HAL_TIM_Base_Stop(&htim3);
     //__disable_irq(); //Disable interrupts
     sound_bigger_than_50 = 0;
-    recording = 0;
     //__enable_irq(); //Enable interrupts
     print_buffer(ADCData2);
   } else {
@@ -105,7 +104,7 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc){
 	uint32_t power = get_signal_power(ADCData1, ADC_BUF_SIZE);
   printf("Power: %d\r\n", power);
   if (power>50){
-    // If the power of the signal is bigger than 50, we stop the recording
+    // If the power of the signal is bigger than 50, we stop the buttonPressed
     sound_bigger_than_50 = 1;
     print_buffer(ADCData1);
   }
@@ -171,7 +170,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   RetargetInit(&hlpuart1);
   printf("Hello world!\r\n");
-  recording=0;
+
+  buttonPressed = 0;
   sound_bigger_than_50 = 0;
   ADCData1 = &ADCBuffer[0];
   ADCData2 = &ADCBuffer[ADC_BUF_SIZE];
@@ -180,11 +180,12 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1){
-    if(!recording) __WFI(); // Wait for interrupt
+    if(!buttonPressed) __WFI(); // Wait for interrupt
     else {
       // Start the ADC and the timer
       HAL_TIM_Base_Start(&htim3);
       HAL_ADC_Start_DMA(&hadc1, ADCData1, 2*ADC_BUF_SIZE);
+      buttonPressed = 0;
     }
   
   // Convert the ADC values if button is pressed
@@ -252,7 +253,7 @@ void SystemClock_Config(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return recording */
+  /* User can add his own implementation to report the HAL error return buttonPressed */
   __disable_irq();
   printf("Error!\r\n");
   while (1)
