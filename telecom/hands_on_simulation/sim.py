@@ -260,7 +260,7 @@ def run_sim(chain: Chain):
     ax2.set_ylabel("Angle (radians)", color="g")
     ax2.grid(True)
     ax2.axis("tight")
-    plt.show()
+    plt.savefig("fir_response.pdf", bbox_inches="tight")
 
     # Bit error rate
     fig, ax = plt.subplots(constrained_layout=True)
@@ -338,7 +338,7 @@ def run_sim(chain: Chain):
     plt.ylim([-1, 101])
     plt.grid()
     plt.legend()
-    plt.show()
+    plt.savefig("preamble_detection.pdf", bbox_inches="tight")
 
     # RMSE CFO
     plt.figure()
