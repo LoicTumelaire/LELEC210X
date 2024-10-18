@@ -24,7 +24,6 @@
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"
-//#include <stdint.h>//nécessaire pour uint16_t?
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -81,32 +80,26 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc){
   // If buffer is full
-  if(sound_bigger_than_50){
-    HAL_ADC_Stop_DMA(&hadc1);
-    HAL_TIM_Base_Stop(&htim3);
-    //__disable_irq(); //Disable interrupts
-    sound_bigger_than_50 = 0;
-    //__enable_irq(); //Enable interrupts
-    print_buffer(ADCData2);
-  } else {
-    // If the power of the signal is not bigger than 50, we restart the recording
-    printf("Not enough power, we restart\n");
-    HAL_ADC_Stop_DMA(&hadc1);
-    HAL_TIM_Base_Stop(&htim3);
+  HAL_TIM_Base_Stop(&htim3);
+  HAL_ADC_Stop_DMA(&hadc1);
+
+	if(sound_bigger_than_50){
+    printf("Sending datas\r\n");
+    print_buffer(ADCData1);
+    
+	}else{
+    printf("Waiting for sound\r\n");
     HAL_TIM_Base_Start(&htim3);
     HAL_ADC_Start_DMA(&hadc1, ADCData1, 2*ADC_BUF_SIZE);
-  }
-  
+	}
 }
 
 void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc){
   // If half of the buffer is filled
 	uint32_t power = get_signal_power(ADCData1, ADC_BUF_SIZE);
   printf("Power: %d\r\n", power);
-  if (power>50){
-    // If the power of the signal is bigger than 50, we stop the buttonPressed
+  if (power>80000){
     sound_bigger_than_50 = 1;
-    print_buffer(ADCData1);
   }
 }
 
@@ -218,10 +211,10 @@ void SystemClock_Config(void)
   * in the RCC_OscInitTypeDef structure.
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_MSI;
-  RCC_OscInitStruct.MSIrecording = RCC_MSI_ON;
+  RCC_OscInitStruct.MSIState = RCC_MSI_ON;
   RCC_OscInitStruct.MSICalibrationValue = 0;
   RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_10;
-  RCC_OscInitStruct.PLL.PLLrecording = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
