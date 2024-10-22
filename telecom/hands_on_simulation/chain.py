@@ -205,7 +205,7 @@ class BasicChain(Chain):
 
         # TO DO: performs the decision based on r0 and r1
 
-        bits_hat = np.zeros(nb_syms, dtype=int)  # Default value, all bits=0. TO CHANGE!
+        bits_hat = np.zeros(nb_syms, dtype=int)
 
         for i in range(nb_syms):
             r1 = 1 / R * np.exp(-2j * np.pi * self.freq_dev * (np.arange(R) / R) / self.bit_rate) @ y[i]
