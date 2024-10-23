@@ -1,7 +1,6 @@
 options:
   parameters:
     author: UCLouvain
-    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -160,7 +159,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: /mnt/d/Pol/Documents/Courses/LELEC2102/Github/LELEC210X/telecom/hands_on_measurements/gr-fsk/misc/fsk_capture.mat
+    file: /mnt/c/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/telecom/hands_on_measurements/gr-fsk/misc/fsk_capture.mat
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -194,23 +193,6 @@ blocks:
     coordinate: [252.0, 160]
     rotation: 270
     state: true
-- name: blocks_var_to_msg_0
-  id: blocks_var_to_msg
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    msgname: estimated_noise_power
-    target: estimated_noise_power
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [80, 564.0]
-    rotation: 0
-    state: true
 - name: fsk_demodulation_0
   id: fsk_demodulation
   parameters:
@@ -231,6 +213,24 @@ blocks:
     coordinate: [720, 452.0]
     rotation: 0
     state: enabled
+- name: fsk_onQuery_noise_estimation_0
+  id: fsk_onQuery_noise_estimation
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n_est: '10'
+    n_samples: '1024'
+    query: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [73, 565]
+    rotation: 0
+    state: true
 - name: fsk_packet_parser_0
   id: fsk_packet_parser
   parameters:
@@ -308,7 +308,7 @@ blocks:
     samp_rate: samp_rate
     type: fir_filter_ccf
     width: data_rate*1
-    win: window.WIN_HAMMING
+    win: firdes.WIN_HAMMING
   states:
     bus_sink: false
     bus_source: false
@@ -322,11 +322,8 @@ blocks:
     address: tcp://127.0.0.1:10000
     affinity: ''
     alias: ''
-    bind: 'True'
     comment: ''
-    drop_on_hwm: 'True'
     hwm: '-1'
-    key: ''
     pass_tags: 'False'
     timeout: '100'
     type: byte
@@ -342,13 +339,13 @@ blocks:
 connections:
 - [blocks_file_source_0, '0', blocks_throttle_0, '0']
 - [blocks_throttle_0, '0', low_pass_filter_0, '0']
-- [blocks_var_to_msg_0, msgout, fsk_synchronization_0, NoisePow]
 - [fsk_demodulation_0, '0', fsk_packet_parser_0, '0']
+- [fsk_onQuery_noise_estimation_0, NoisePow, fsk_synchronization_0, NoisePow]
 - [fsk_packet_parser_0, '0', zeromq_pub_sink_0, '0']
 - [fsk_preamble_detect_0, '0', fsk_synchronization_0, '0']
 - [fsk_synchronization_0, '0', fsk_demodulation_0, '0']
+- [low_pass_filter_0, '0', fsk_onQuery_noise_estimation_0, '0']
 - [low_pass_filter_0, '0', fsk_preamble_detect_0, '0']
 
 metadata:
   file_format: 1
-  grc_version: 3.10.7.0

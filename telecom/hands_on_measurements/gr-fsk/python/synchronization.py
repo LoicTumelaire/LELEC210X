@@ -31,7 +31,20 @@ def cfo_estimation(y, B, R, Fdev):
     """
     Estimate CFO using Moose algorithm, on first samples of preamble
     """
-    return 0.0  # TODO
+    N = 2
+    y1 = y[:N*R]
+    y2 = y[N*R:2*N*R]
+
+    # TO DO: apply the Moose algorithm on these two blocks to estimate the CFO
+    Nt = N*R
+    alpha = 0
+    for i in range(0,Nt):
+        alpha += y2[i]* np.conjugate(y1[i])
+    argalpha = np.angle(alpha)
+
+    cfo_est = argalpha/(2*np.pi*Nt* 1/(B *R))
+
+    return cfo_est
 
 
 def sto_estimation(y, B, R, Fdev):
