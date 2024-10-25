@@ -28,51 +28,51 @@ INFO: device_handler::calibrate(): Rx calibration finished
 Compiling the Python codes for GNU Radio 3.8
 INFO: source_impl::init_stream(): source channel 0 (device nr. 0) stream setup done.
 INFO: device_handler::set_gain(): set gain [RX] CH0: 60 dB.
-INFO:noise:estimated noise power: 2.92e-04 (-35.34dB, Noise std : 1.71e-02,  DC offset: 5.74e-05, calc. on 4095 samples)
-INFO:noise:estimated noise power: 3.72e-04 (-34.29dB, Noise std : 1.93e-02,  DC offset: 1.39e-04, calc. on 4096 samples)
-INFO:noise:estimated noise power: 3.26e-04 (-34.86dB, Noise std : 1.81e-02,  DC offset: 1.07e-04, calc. on 4095 samples)
-INFO:noise:estimated noise power: 3.46e-04 (-34.61dB, Noise std : 1.86e-02,  DC offset: 1.32e-04, calc. on 4096 samples)
-INFO:noise:estimated noise power: 3.80e-04 (-34.20dB, Noise std : 1.95e-02,  DC offset: 1.34e-04, calc. on 4095 samples)
-INFO:noise:estimated noise power: 2.87e-04 (-35.42dB, Noise std : 1.69e-02,  DC offset: 7.75e-05, calc. on 4096 samples)
-INFO:noise:estimated noise power: 3.06e-04 (-35.14dB, Noise std : 1.75e-02,  DC offset: 4.73e-05, calc. on 4095 samples)
-INFO:noise:estimated noise power: 3.07e-04 (-35.13dB, Noise std : 1.75e-02,  DC offset: 2.23e-05, calc. on 4096 samples)
-INFO:noise:estimated noise power: 3.19e-04 (-34.96dB, Noise std : 1.79e-02,  DC offset: 1.50e-05, calc. on 4095 samples)
-INFO:noise:estimated noise power: 2.97e-04 (-35.27dB, Noise std : 1.72e-02,  DC offset: 1.29e-04, calc. on 4096 samples)
-INFO:noise:===== > Final estimated noise power: 3.23e-04 (-34.90dB, Noise std : 1.80e-02)
-INFO:sync:new preamble detected @ 1 (CFO 6630.56 Hz, STO 1)
-INFO:sync:estimated SNR: 22.40 dB (512 samples, Esti. RX power: 5.65e-02,  TX indicative Power: 60 dB)
+INFO:noise:estimated noise power: 2.70e-04 (-35.69dB, Noise std : 1.64e-02,  DC offset: 2.31e-05, calc. on 4096 samples)
+INFO:noise:estimated noise power: 3.02e-04 (-35.20dB, Noise std : 1.74e-02,  DC offset: 1.09e-04, calc. on 4095 samples)
+INFO:noise:estimated noise power: 3.17e-04 (-34.99dB, Noise std : 1.78e-02,  DC offset: 1.49e-04, calc. on 4096 samples)
+INFO:noise:estimated noise power: 3.52e-04 (-34.54dB, Noise std : 1.87e-02,  DC offset: 1.53e-04, calc. on 4095 samples)
+INFO:noise:estimated noise power: 3.09e-04 (-35.10dB, Noise std : 1.76e-02,  DC offset: 1.89e-04, calc. on 4096 samples)
+INFO:noise:estimated noise power: 3.03e-04 (-35.19dB, Noise std : 1.74e-02,  DC offset: 1.30e-04, calc. on 4095 samples)
+INFO:noise:estimated noise power: 3.14e-04 (-35.03dB, Noise std : 1.77e-02,  DC offset: 1.60e-04, calc. on 4096 samples)
+INFO:noise:estimated noise power: 3.23e-04 (-34.91dB, Noise std : 1.80e-02,  DC offset: 1.53e-04, calc. on 4095 samples)
+INFO:noise:estimated noise power: 3.06e-04 (-35.15dB, Noise std : 1.75e-02,  DC offset: 1.96e-04, calc. on 4096 samples)
+INFO:noise:estimated noise power: 2.82e-04 (-35.50dB, Noise std : 1.68e-02,  DC offset: 3.01e-05, calc. on 4095 samples)
+INFO:noise:===== > Final estimated noise power: 3.08e-04 (-35.12dB, Noise std : 1.75e-02)
+INFO:sync:new preamble detected @ 1 (CFO 6890.27 Hz, STO 1)
+INFO:sync:estimated SNR: 21.80 dB (4096 samples, Esti. RX power: 4.69e-02,  TX indicative Power: 0 dB)
 INFO:parser:packet successfully demodulated: [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
  24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
  48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
  72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
  96 97 98 99] (CRC: [195])
 INFO:parser:1 packets received with 0 error(s)
-INFO:sync:new preamble detected @ 7054 (CFO 6937.59 Hz, STO 6)
-INFO:sync:estimated SNR: 25.74 dB (4096 samples, Esti. RX power: 1.22e-01,  TX indicative Power: 60 dB)
+INFO:sync:new preamble detected @ 7051 (CFO 6929.82 Hz, STO 3)
+INFO:sync:estimated SNR: 25.20 dB (2048 samples, Esti. RX power: 1.02e-01,  TX indicative Power: 0 dB)
 INFO:parser:packet successfully demodulated: [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
  24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
  48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
  72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
  96 97 98 99] (CRC: [195])
 INFO:parser:2 packets received with 0 error(s)
-INFO:sync:new preamble detected @ 14102 (CFO 6726.46 Hz, STO 6)
-INFO:sync:estimated SNR: 24.15 dB (2048 samples, Esti. RX power: 8.45e-02,  TX indicative Power: 60 dB)
+INFO:sync:new preamble detected @ 14103 (CFO 6636.44 Hz, STO 7)
+INFO:sync:estimated SNR: 26.73 dB (2048 samples, Esti. RX power: 1.45e-01,  TX indicative Power: 0 dB)
 INFO:parser:packet successfully demodulated: [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
  24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
  48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
  72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
  96 97 98 99] (CRC: [195])
 INFO:parser:3 packets received with 0 error(s)
-INFO:sync:new preamble detected @ 21145 (CFO 6852.51 Hz, STO 1)
-INFO:sync:estimated SNR: 23.11 dB (2048 samples, Esti. RX power: 6.65e-02,  TX indicative Power: 60 dB)
+INFO:sync:new preamble detected @ 21149 (CFO 6813.93 Hz, STO 5)
+INFO:sync:estimated SNR: 22.97 dB (2048 samples, Esti. RX power: 6.12e-02,  TX indicative Power: 0 dB)
 INFO:parser:packet successfully demodulated: [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
  24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
  48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
  72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
  96 97 98 99] (CRC: [195])
 INFO:parser:4 packets received with 0 error(s)
-INFO:sync:new preamble detected @ 28199 (CFO 6920.03 Hz, STO 7)
-INFO:sync:estimated SNR: 23.48 dB (2048 samples, Esti. RX power: 7.23e-02,  TX indicative Power: 60 dB)
+INFO:sync:new preamble detected @ 28197 (CFO 6959.96 Hz, STO 5)
+INFO:sync:estimated SNR: 25.04 dB (1024 samples, Esti. RX power: 9.85e-02,  TX indicative Power: 0 dB)
 INFO:parser:packet successfully demodulated: [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
  24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
  48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
