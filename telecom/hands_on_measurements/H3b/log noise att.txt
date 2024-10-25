@@ -1,0 +1,51 @@
+INFO:noise:estimated noise power: 8.29e-07 (-60.82dB, Noise std : 9.10e-04,  DC offset: 6.73e-06, calc. on 4095 samples)
+INFO:noise:estimated noise power: 8.78e-07 (-60.57dB, Noise std : 9.37e-04,  DC offset: 6.10e-06, calc. on 4096 samples)
+INFO:noise:estimated noise power: 9.68e-07 (-60.14dB, Noise std : 9.84e-04,  DC offset: 2.33e-05, calc. on 4095 samples)
+INFO:noise:estimated noise power: 8.67e-07 (-60.62dB, Noise std : 9.31e-04,  DC offset: 3.96e-05, calc. on 4096 samples)
+INFO:noise:estimated noise power: 8.58e-07 (-60.67dB, Noise std : 9.26e-04,  DC offset: 1.47e-05, calc. on 4095 samples)
+INFO:noise:estimated noise power: 9.86e-07 (-60.06dB, Noise std : 9.93e-04,  DC offset: 2.50e-05, calc. on 4096 samples)
+INFO:noise:estimated noise power: 8.96e-07 (-60.47dB, Noise std : 9.47e-04,  DC offset: 1.35e-05, calc. on 4095 samples)
+INFO:noise:estimated noise power: 9.15e-07 (-60.38dB, Noise std : 9.57e-04,  DC offset: 1.24e-05, calc. on 4096 samples)
+INFO:noise:estimated noise power: 8.58e-07 (-60.66dB, Noise std : 9.26e-04,  DC offset: 1.48e-05, calc. on 4095 samples)
+INFO:noise:estimated noise power: 9.02e-07 (-60.45dB, Noise std : 9.50e-04,  DC offset: 2.90e-05, calc. on 4096 samples)
+INFO:noise:===== > Final estimated noise power: 8.96e-07 (-60.48dB, Noise std : 9.46e-04)
+INFO:sync:new preamble detected @ 35241 (CFO 6542.90 Hz, STO 1)
+INFO:sync:estimated SNR: 23.11 dB (2048 samples, Esti. RX power: 1.84e-04,  TX indicative Power: 0 dB)
+INFO:parser:packet successfully demodulated: [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+ 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
+ 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
+ 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
+ 96 97 98 99] (CRC: [195])
+INFO:parser:6 packets received with 0 error(s)
+INFO:sync:new preamble detected @ 42292 (CFO 6549.65 Hz, STO 4)
+INFO:sync:estimated SNR: 23.70 dB (2048 samples, Esti. RX power: 2.11e-04,  TX indicative Power: 0 dB)
+INFO:parser:packet successfully demodulated: [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+ 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
+ 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
+ 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
+ 96 97 98 99] (CRC: [195])
+INFO:parser:7 packets received with 0 error(s)
+INFO:sync:new preamble detected @ 49336 (CFO 6510.24 Hz, STO 0)
+INFO:sync:estimated SNR: 24.13 dB (2048 samples, Esti. RX power: 2.33e-04,  TX indicative Power: 0 dB)
+INFO:parser:packet successfully demodulated: [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+ 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
+ 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
+ 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
+ 96 97 98 99] (CRC: [195])
+INFO:parser:8 packets received with 0 error(s)
+INFO:sync:new preamble detected @ 56384 (CFO 6479.29 Hz, STO 0)
+INFO:sync:estimated SNR: 24.26 dB (2048 samples, Esti. RX power: 2.40e-04,  TX indicative Power: 0 dB)
+INFO:parser:packet successfully demodulated: [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+ 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
+ 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
+ 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
+ 96 97 98 99] (CRC: [195])
+INFO:parser:9 packets received with 0 error(s)
+INFO:sync:new preamble detected @ 63436 (CFO 6319.70 Hz, STO 4)
+INFO:sync:estimated SNR: 23.73 dB (2048 samples, Esti. RX power: 2.12e-04,  TX indicative Power: 0 dB)
+INFO:parser:packet successfully demodulated: [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+ 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
+ 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
+ 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
+ 96 97 98 99] (CRC: [195])
+INFO:parser:10 packets received with 0 error(s)
