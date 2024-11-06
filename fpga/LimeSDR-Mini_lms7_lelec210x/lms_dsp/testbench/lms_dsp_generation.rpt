@@ -1,0 +1,422 @@
+Info: Starting: Create testbench Platform Designer system
+Info: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/lms_dsp.ipx
+Info: qsys-generate "C:\Users\loict\Nextcloud\Portable UCL\Master\LELEC2102 Projet\Git\fpga\LimeSDR-Mini_lms7_lelec210x\lms_dsp.qsys" --testbench=STANDARD --output-directory="C:\Users\loict\Nextcloud\Portable UCL\Master\LELEC2102 Projet\Git\fpga\LimeSDR-Mini_lms7_lelec210x" --family="MAX 10" --part=10M16SAU169C8G
+Progress: Loading LimeSDR-Mini_lms7_lelec210x/lms_dsp.qsys
+Progress: Reading input file
+Progress: Adding AVS2FIFO_0 [AVS2FIFO 1.0]
+Progress: Parameterizing module AVS2FIFO_0
+Progress: Adding FIFO2AVS_0 [FIFO2AVS 1.0]
+Progress: Parameterizing module FIFO2AVS_0
+Progress: Adding clk_0 [clock_source 18.1]
+Progress: Parameterizing module clk_0
+Progress: Adding fir_compiler_ii_0 [altera_fir_compiler_ii 18.1]
+Progress: Parameterizing module fir_compiler_ii_0
+Progress: Adding packet_presence_detection_0 [packet_presence_detection 1.0]
+Progress: Parameterizing module packet_presence_detection_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: lms_dsp.AVS2FIFO: The SIM_VERILOG fileset must specify the top-level module name.
+Warning: lms_dsp.AVS2FIFO: The SIM_VHDL fileset must specify the top-level module name.
+Info: lms_dsp.fir_compiler_ii_0: PhysChanIn 2, PhysChanOut 2, ChansPerPhyIn 1, ChansPerPhyOut 1, OutputFullBitWidth 25, Bankcount 1, CoefBitWidth 8
+Info: lms_dsp.packet_presence_detection_0.avalon_streaming_source/AVS2FIFO_0.avalon_streaming_sink: The source data signal is 24 bits, but the sink is 48 bits. Avalon-ST Adapter will be inserted.
+Info: lms_dsp.FIFO2AVS_0.avalon_streaming_source/fir_compiler_ii_0.avalon_streaming_sink: The sink has a error signal of 2 bits, but the source does not. Avalon-ST Adapter will be inserted.
+Info: lms_dsp.FIFO2AVS_0.avalon_streaming_source/fir_compiler_ii_0.avalon_streaming_sink: The source data signal is 48 bits, but the sink is 24 bits. Avalon-ST Adapter will be inserted.
+Info: lms_dsp.fir_compiler_ii_0.avalon_streaming_source/packet_presence_detection_0.avalon_streaming_sink: The source has a error signal of 2 bits, but the sink does not. Avalon-ST Adapter will be inserted.
+Warning: lms_dsp.clk_0.clk/packet_presence_detection_0.clock_sink: packet_presence_detection_0.clock_sink requires 100000000Hz, but source has frequency of 125000000Hz
+Info: qsys-generate succeeded.
+Info: Loading IP catalog for testbench.
+Progress: 
+Progress: 
+Progress: 
+Progress: (2) searching C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/root_components.ipx (ipx file)
+Info: Reading index C:\intelfpga_lite\18.1\quartus\sopc_builder\bin\root_components.ipx
+Info: C:\intelfpga_lite\18.1\quartus\sopc_builder\bin\root_components.ipx: Loading now from components.ipx
+Info: Reading index C:\intelfpga_lite\18.1\quartus\sopc_builder\bin\ip_component_categories.ipx
+Info: C:\intelfpga_lite\18.1\quartus\sopc_builder\bin\ip_component_categories.ipx described 0 plugins, 0 paths, in 0,01 seconds
+Info: C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/ip_component_categories.ipx matched 1 files in 0,01 seconds
+Info: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/ip/**/* matched 0 files in 0,00 seconds
+Info: Reading index C:\Users\loict\Nextcloud\Portable UCL\Master\LELEC2102 Projet\Git\fpga\LimeSDR-Mini_lms7_lelec210x\lms_dsp\testbench\lms_dsp.ipx
+Progress: Loading LimeSDR-Mini_lms7_lelec210x/AVS2FIFO_hw.tcl
+Progress: Loading LimeSDR-Mini_lms7_lelec210x/Av_FIFO_Int_hw.tcl
+Progress: Loading LimeSDR-Mini_lms7_lelec210x/FIFO2AVS_hw.tcl
+Progress: Loading LimeSDR-Mini_lms7_lelec210x/fir_tb_gen.qsys
+Progress: Loading LimeSDR-Mini_lms7_lelec210x/lms_ctr.qsys
+Progress: Loading LimeSDR-Mini_lms7_lelec210x/lms_dsp.qsys
+Progress: Loading LimeSDR-Mini_lms7_lelec210x/packet_presence_detection_hw.tcl
+Progress: Loading LimeSDR-Mini_lms7_lelec210x/packet_presence_detection_tb_gen.qsys
+Info: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/* matched 43 files in 0,24 seconds
+Progress: Loading clkctrl/clkctrl.qsys
+Info: Reading index C:\Users\loict\Nextcloud\Portable UCL\Master\LELEC2102 Projet\Git\fpga\LimeSDR-Mini_lms7_lelec210x\ip\fir\testbench\fir_tb_gen.ipx
+Warning: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/ip/**/* repeats C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/*
+Warning: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/ip/**/* repeats C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/ip/**/*
+Info: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/*/* matched 958 files in 0,15 seconds
+Info: C:\Users\loict\Nextcloud\Portable UCL\Master\LELEC2102 Projet\Git\fpga\LimeSDR-Mini_lms7_lelec210x\ip\fir\testbench\fir_tb_gen.ipx described 0 plugins, 3 paths, in 0,16 seconds
+Progress: Loading testbench/fir_tb_gen_tb.qsys
+Progress: Loading i2c_opencores_v13/i2c_opencores_hw.tcl
+Progress: Loading i2c_opencores_v13/i2c_opencores_sw.tcl
+Progress: Loading i2c_opencores_v13_v0/i2c_opencores_hw.tcl
+Progress: Loading i2c_opencores_v13_v0/i2c_opencores_sw.tcl
+Info: Reading index C:\Users\loict\Nextcloud\Portable UCL\Master\LELEC2102 Projet\Git\fpga\LimeSDR-Mini_lms7_lelec210x\ip\packet_presence_detection\testbench\packet_presence_detection_tb_gen.ipx
+Warning: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/*/* repeats C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/*
+Warning: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/*/* repeats C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/ip/**/*
+Warning: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/*/* repeats C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/*/*
+Info: C:\Users\loict\Nextcloud\Portable UCL\Master\LELEC2102 Projet\Git\fpga\LimeSDR-Mini_lms7_lelec210x\ip\packet_presence_detection\testbench\packet_presence_detection_tb_gen.ipx described 0 plugins, 3 paths, in 0,00 seconds
+Progress: Loading testbench/packet_presence_detection_tb_gen_tb.qsys
+Info: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/ip/**/* matched 114 files in 0,33 seconds
+Warning: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/*/* repeats C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/*/*
+Info: C:\Users\loict\Nextcloud\Portable UCL\Master\LELEC2102 Projet\Git\fpga\LimeSDR-Mini_lms7_lelec210x\lms_dsp\testbench\lms_dsp.ipx described 0 plugins, 3 paths, in 0,57 seconds
+Info: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/* matched 4 files in 0,57 seconds
+Info: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/*/* matched 0 files in 0,00 seconds
+Info: C:/Users/loict/.altera.quartus/ip/18.1/**/* matched 0 files in 0,00 seconds
+Info: C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/$$QUARTUS_IP_PROJECTDIR/* matched 0 files in 0,01 seconds
+Info: C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/$$QUARTUS_IP_USERDIR/* matched 0 files in 0,00 seconds
+Info: C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/$$QUARTUS_IP_GLOBALDIR/* matched 0 files in 0,00 seconds
+Info: Reading index C:\intelfpga_lite\18.1\ip\altera\altera_components.ipx
+Info: C:\intelfpga_lite\18.1\ip\altera\altera_components.ipx described 2035 plugins, 0 paths, in 0,16 seconds
+Info: C:/intelfpga_lite/18.1/ip/**/* matched 139 files in 0,18 seconds
+Info: C:/intelfpga_lite/ip/**/* matched 0 files in 0,00 seconds
+Info: Reading index C:\intelfpga_lite\18.1\quartus\sopc_builder\builtin.ipx
+Info: C:\intelfpga_lite\18.1\quartus\sopc_builder\builtin.ipx described 83 plugins, 0 paths, in 0,00 seconds
+Info: C:/intelfpga_lite/18.1/quartus/sopc_builder/**/* matched 8 files in 0,00 seconds
+Info: Reading index C:\intelfpga_lite\18.1\quartus\common\librarian\factories\index.ipx
+Info: C:\intelfpga_lite\18.1\quartus\common\librarian\factories\index.ipx described 151 plugins, 0 paths, in 0,00 seconds
+Info: C:/intelfpga_lite/18.1/quartus/common/librarian/factories/**/* matched 4 files in 0,02 seconds
+Info: C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/$IP_IPX_PATH matched 1 files in 0,00 seconds
+Info: C:\intelfpga_lite\18.1\quartus\sopc_builder\bin\root_components.ipx described 0 plugins, 13 paths, in 0,79 seconds
+Info: C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/root_components.ipx matched 1 files in 0,79 seconds
+Progress: 
+Progress: 
+Progress: 
+Info: Running script C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/tbgen.tcl
+Info: send_message Info TB_Gen: QSYS Testbench Generator Rev: $Revision: #1 $
+Info: TB_Gen: QSYS Testbench Generator Rev: $Revision: #1 $
+Info: get_module_property NAME
+Info: send_message Info TB_Gen: System design is: lms_dsp
+Info: TB_Gen: System design is: lms_dsp
+Info: get_interfaces 
+Info: get_connections 
+Info: get_interface_property clk EXPORT_OF
+Info: get_instance_property clk_0 CLASS_NAME
+Info: get_instance_assignment clk_0 testbench.partner.map.clk_in
+Info: get_interface_property fifo_in EXPORT_OF
+Info: get_instance_property FIFO2AVS_0 CLASS_NAME
+Info: get_instance_assignment FIFO2AVS_0 testbench.partner.map.conduit_in
+Info: get_interface_property fifo_out EXPORT_OF
+Info: get_instance_property AVS2FIFO_0 CLASS_NAME
+Info: get_instance_assignment AVS2FIFO_0 testbench.partner.map.conduit_end
+Info: get_interface_property ppd EXPORT_OF
+Info: get_instance_property packet_presence_detection_0 CLASS_NAME
+Info: get_instance_assignment packet_presence_detection_0 testbench.partner.map.cfg
+Info: get_interface_property reset EXPORT_OF
+Info: get_instance_property clk_0 CLASS_NAME
+Info: get_instance_assignment clk_0 testbench.partner.map.clk_in_reset
+Info: send_message Info TB_Gen: Creating testbench system : lms_dsp_tb with all standard BFMs
+Info: TB_Gen: Creating testbench system : lms_dsp_tb with all standard BFMs
+Info: create_system lms_dsp_tb
+Info: add_instance lms_dsp_inst lms_dsp 
+Info: set_use_testbench_naming_pattern true lms_dsp
+Info: get_instance_interfaces lms_dsp_inst
+Info: get_instance_interface_property lms_dsp_inst clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst fifo_in CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst fifo_out CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst ppd CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst reset CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst clk CLASS_NAME
+Info: send_message Info TB_Gen: clock_sink found: clk
+Info: TB_Gen: clock_sink found: clk
+Info: get_instance_interface_property lms_dsp_inst clk CLASS_NAME
+Info: add_instance lms_dsp_inst_clk_bfm altera_avalon_clock_source 
+Info: get_instance_property lms_dsp_inst_clk_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value lms_dsp_inst clk clockRate
+Info: set_instance_parameter_value lms_dsp_inst_clk_bfm CLOCK_RATE 125000000.0
+Info: set_instance_parameter_value lms_dsp_inst_clk_bfm CLOCK_UNIT 1
+Info: get_instance_property lms_dsp_inst_clk_bfm CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst clk CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_clk_bfm
+Info: get_instance_interface_property lms_dsp_inst_clk_bfm clk CLASS_NAME
+Info: add_connection lms_dsp_inst_clk_bfm.clk lms_dsp_inst.clk
+Info: get_instance_interface_property lms_dsp_inst reset CLASS_NAME
+Info: send_message Info TB_Gen: reset_sink found: reset
+Info: TB_Gen: reset_sink found: reset
+Info: get_instance_interface_property lms_dsp_inst reset CLASS_NAME
+Info: add_instance lms_dsp_inst_reset_bfm altera_avalon_reset_source 
+Info: get_instance_property lms_dsp_inst_reset_bfm CLASS_NAME
+Info: get_instance_interface_ports lms_dsp_inst reset
+Info: get_instance_interface_port_property lms_dsp_inst reset reset_reset_n ROLE
+Info: get_instance_interface_port_property lms_dsp_inst reset reset_reset_n ROLE
+Info: set_instance_parameter_value lms_dsp_inst_reset_bfm ASSERT_HIGH_RESET 0
+Info: set_instance_parameter_value lms_dsp_inst_reset_bfm INITIAL_RESET_CYCLES 50
+Info: get_instance_property lms_dsp_inst_reset_bfm CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_reset_bfm
+Info: get_instance_interface_property lms_dsp_inst_reset_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_reset_bfm reset CLASS_NAME
+Info: get_instance_property lms_dsp_inst_reset_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value lms_dsp_inst reset associatedClock
+Info: get_instance_interfaces lms_dsp_inst_clk_bfm
+Info: get_instance_interface_property lms_dsp_inst_clk_bfm clk CLASS_NAME
+Info: send_message Warning TB_Gen: lms_dsp_inst_reset_bfm is not associated to any clock; connecting lms_dsp_inst_reset_bfm to 'lms_dsp_inst_clk_bfm.clk'
+Warning: TB_Gen: lms_dsp_inst_reset_bfm is not associated to any clock; connecting lms_dsp_inst_reset_bfm to 'lms_dsp_inst_clk_bfm.clk'
+Info: add_connection lms_dsp_inst_clk_bfm.clk lms_dsp_inst_reset_bfm.clk
+Info: get_instance_interface_property lms_dsp_inst reset CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_reset_bfm
+Info: get_instance_interface_property lms_dsp_inst_reset_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_reset_bfm reset CLASS_NAME
+Info: add_connection lms_dsp_inst_reset_bfm.reset lms_dsp_inst.reset
+Info: get_instance_interface_property lms_dsp_inst fifo_in CLASS_NAME
+Info: send_message Info TB_Gen: conduit_end found: fifo_in
+Info: TB_Gen: conduit_end found: fifo_in
+Info: get_instance_interface_property lms_dsp_inst fifo_in CLASS_NAME
+Info: add_instance lms_dsp_inst_fifo_in_bfm altera_conduit_bfm 
+Info: get_instance_property lms_dsp_inst_fifo_in_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value lms_dsp_inst fifo_in associatedClock
+Info: get_instance_interface_parameter_value lms_dsp_inst fifo_in associatedReset
+Info: get_instance_interface_ports lms_dsp_inst fifo_in
+Info: get_instance_interface_port_property lms_dsp_inst fifo_in fifo_in_wdata ROLE
+Info: get_instance_interface_port_property lms_dsp_inst fifo_in fifo_in_wdata WIDTH
+Info: get_instance_interface_port_property lms_dsp_inst fifo_in fifo_in_wdata DIRECTION
+Info: get_instance_interface_port_property lms_dsp_inst fifo_in fifo_in_wrreq ROLE
+Info: get_instance_interface_port_property lms_dsp_inst fifo_in fifo_in_wrreq WIDTH
+Info: get_instance_interface_port_property lms_dsp_inst fifo_in fifo_in_wrreq DIRECTION
+Info: set_instance_parameter_value lms_dsp_inst_fifo_in_bfm CLOCKED_SIGNAL 1
+Info: set_instance_parameter_value lms_dsp_inst_fifo_in_bfm ENABLE_RESET 1
+Info: set_instance_parameter_value lms_dsp_inst_fifo_in_bfm SIGNAL_ROLES wdata wrreq
+Info: set_instance_parameter_value lms_dsp_inst_fifo_in_bfm SIGNAL_WIDTHS 48 1
+Info: set_instance_parameter_value lms_dsp_inst_fifo_in_bfm SIGNAL_DIRECTIONS output output
+Info: get_instance_property lms_dsp_inst_fifo_in_bfm CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_fifo_in_bfm
+Info: get_instance_interface_property lms_dsp_inst_fifo_in_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_fifo_in_bfm conduit CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_fifo_in_bfm reset CLASS_NAME
+Info: get_instance_property lms_dsp_inst_fifo_in_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value lms_dsp_inst fifo_in associatedClock
+Info: get_instance_interface_property lms_dsp_inst clk CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_clk_bfm
+Info: get_instance_interface_property lms_dsp_inst_clk_bfm clk CLASS_NAME
+Info: add_connection lms_dsp_inst_clk_bfm.clk lms_dsp_inst_fifo_in_bfm.clk
+Info: get_instance_interfaces lms_dsp_inst_fifo_in_bfm
+Info: get_instance_interface_property lms_dsp_inst_fifo_in_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_fifo_in_bfm conduit CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_fifo_in_bfm reset CLASS_NAME
+Info: get_instance_property lms_dsp_inst_fifo_in_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value lms_dsp_inst fifo_in associatedReset
+Info: get_instance_interface_property lms_dsp_inst reset CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_reset_bfm
+Info: get_instance_interface_property lms_dsp_inst_reset_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_reset_bfm reset CLASS_NAME
+Info: add_connection lms_dsp_inst_reset_bfm.reset lms_dsp_inst_fifo_in_bfm.reset
+Info: get_instance_interface_property lms_dsp_inst fifo_in CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_fifo_in_bfm
+Info: get_instance_interface_property lms_dsp_inst_fifo_in_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_fifo_in_bfm conduit CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_fifo_in_bfm reset CLASS_NAME
+Info: add_connection lms_dsp_inst_fifo_in_bfm.conduit lms_dsp_inst.fifo_in
+Info: get_instance_interface_property lms_dsp_inst fifo_out CLASS_NAME
+Info: send_message Info TB_Gen: conduit_end found: fifo_out
+Info: TB_Gen: conduit_end found: fifo_out
+Info: get_instance_interface_property lms_dsp_inst fifo_out CLASS_NAME
+Info: add_instance lms_dsp_inst_fifo_out_bfm altera_conduit_bfm 
+Info: get_instance_property lms_dsp_inst_fifo_out_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value lms_dsp_inst fifo_out associatedClock
+Info: get_instance_interface_parameter_value lms_dsp_inst fifo_out associatedReset
+Info: get_instance_interface_ports lms_dsp_inst fifo_out
+Info: get_instance_interface_port_property lms_dsp_inst fifo_out fifo_out_wrdata ROLE
+Info: get_instance_interface_port_property lms_dsp_inst fifo_out fifo_out_wrdata WIDTH
+Info: get_instance_interface_port_property lms_dsp_inst fifo_out fifo_out_wrdata DIRECTION
+Info: get_instance_interface_port_property lms_dsp_inst fifo_out fifo_out_wrreq ROLE
+Info: get_instance_interface_port_property lms_dsp_inst fifo_out fifo_out_wrreq WIDTH
+Info: get_instance_interface_port_property lms_dsp_inst fifo_out fifo_out_wrreq DIRECTION
+Info: set_instance_parameter_value lms_dsp_inst_fifo_out_bfm CLOCKED_SIGNAL 1
+Info: set_instance_parameter_value lms_dsp_inst_fifo_out_bfm ENABLE_RESET 1
+Info: set_instance_parameter_value lms_dsp_inst_fifo_out_bfm SIGNAL_ROLES wrdata wrreq
+Info: set_instance_parameter_value lms_dsp_inst_fifo_out_bfm SIGNAL_WIDTHS 48 1
+Info: set_instance_parameter_value lms_dsp_inst_fifo_out_bfm SIGNAL_DIRECTIONS input input
+Info: get_instance_property lms_dsp_inst_fifo_out_bfm CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_fifo_out_bfm
+Info: get_instance_interface_property lms_dsp_inst_fifo_out_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_fifo_out_bfm conduit CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_fifo_out_bfm reset CLASS_NAME
+Info: get_instance_property lms_dsp_inst_fifo_out_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value lms_dsp_inst fifo_out associatedClock
+Info: get_instance_interface_property lms_dsp_inst clk CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_clk_bfm
+Info: get_instance_interface_property lms_dsp_inst_clk_bfm clk CLASS_NAME
+Info: add_connection lms_dsp_inst_clk_bfm.clk lms_dsp_inst_fifo_out_bfm.clk
+Info: get_instance_interfaces lms_dsp_inst_fifo_out_bfm
+Info: get_instance_interface_property lms_dsp_inst_fifo_out_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_fifo_out_bfm conduit CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_fifo_out_bfm reset CLASS_NAME
+Info: get_instance_property lms_dsp_inst_fifo_out_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value lms_dsp_inst fifo_out associatedReset
+Info: get_instance_interface_property lms_dsp_inst reset CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_reset_bfm
+Info: get_instance_interface_property lms_dsp_inst_reset_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_reset_bfm reset CLASS_NAME
+Info: add_connection lms_dsp_inst_reset_bfm.reset lms_dsp_inst_fifo_out_bfm.reset
+Info: get_instance_interface_property lms_dsp_inst fifo_out CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_fifo_out_bfm
+Info: get_instance_interface_property lms_dsp_inst_fifo_out_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_fifo_out_bfm conduit CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_fifo_out_bfm reset CLASS_NAME
+Info: add_connection lms_dsp_inst_fifo_out_bfm.conduit lms_dsp_inst.fifo_out
+Info: get_instance_interface_property lms_dsp_inst ppd CLASS_NAME
+Info: send_message Info TB_Gen: conduit_end found: ppd
+Info: TB_Gen: conduit_end found: ppd
+Info: get_instance_interface_property lms_dsp_inst ppd CLASS_NAME
+Info: add_instance lms_dsp_inst_ppd_bfm altera_conduit_bfm 
+Info: get_instance_property lms_dsp_inst_ppd_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value lms_dsp_inst ppd associatedClock
+Info: get_instance_interface_parameter_value lms_dsp_inst ppd associatedReset
+Info: get_instance_interface_ports lms_dsp_inst ppd
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_cfg_clear_rs ROLE
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_cfg_clear_rs WIDTH
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_cfg_clear_rs DIRECTION
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_cfg_enable ROLE
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_cfg_enable WIDTH
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_cfg_enable DIRECTION
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_cfg_passthrough_len ROLE
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_cfg_passthrough_len WIDTH
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_cfg_passthrough_len DIRECTION
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_cfg_threshold ROLE
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_cfg_threshold WIDTH
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_cfg_threshold DIRECTION
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_debug_count ROLE
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_debug_count WIDTH
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_debug_count DIRECTION
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_debug_long_sum ROLE
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_debug_long_sum WIDTH
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_debug_long_sum DIRECTION
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_debug_short_sum ROLE
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_debug_short_sum WIDTH
+Info: get_instance_interface_port_property lms_dsp_inst ppd ppd_debug_short_sum DIRECTION
+Info: set_instance_parameter_value lms_dsp_inst_ppd_bfm CLOCKED_SIGNAL 1
+Info: set_instance_parameter_value lms_dsp_inst_ppd_bfm ENABLE_RESET 1
+Info: set_instance_parameter_value lms_dsp_inst_ppd_bfm SIGNAL_ROLES cfg_clear_rs cfg_enable cfg_passthrough_len cfg_threshold debug_count debug_long_sum debug_short_sum
+Info: set_instance_parameter_value lms_dsp_inst_ppd_bfm SIGNAL_WIDTHS 1 1 16 8 32 32 32
+Info: set_instance_parameter_value lms_dsp_inst_ppd_bfm SIGNAL_DIRECTIONS output output output output input input input
+Info: get_instance_property lms_dsp_inst_ppd_bfm CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_ppd_bfm
+Info: get_instance_interface_property lms_dsp_inst_ppd_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_ppd_bfm conduit CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_ppd_bfm reset CLASS_NAME
+Info: get_instance_property lms_dsp_inst_ppd_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value lms_dsp_inst ppd associatedClock
+Info: get_instance_interface_property lms_dsp_inst clk CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_clk_bfm
+Info: get_instance_interface_property lms_dsp_inst_clk_bfm clk CLASS_NAME
+Info: add_connection lms_dsp_inst_clk_bfm.clk lms_dsp_inst_ppd_bfm.clk
+Info: get_instance_interfaces lms_dsp_inst_ppd_bfm
+Info: get_instance_interface_property lms_dsp_inst_ppd_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_ppd_bfm conduit CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_ppd_bfm reset CLASS_NAME
+Info: get_instance_property lms_dsp_inst_ppd_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value lms_dsp_inst ppd associatedReset
+Info: get_instance_interface_property lms_dsp_inst reset CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_reset_bfm
+Info: get_instance_interface_property lms_dsp_inst_reset_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_reset_bfm reset CLASS_NAME
+Info: add_connection lms_dsp_inst_reset_bfm.reset lms_dsp_inst_ppd_bfm.reset
+Info: get_instance_interface_property lms_dsp_inst ppd CLASS_NAME
+Info: get_instance_interfaces lms_dsp_inst_ppd_bfm
+Info: get_instance_interface_property lms_dsp_inst_ppd_bfm clk CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_ppd_bfm conduit CLASS_NAME
+Info: get_instance_interface_property lms_dsp_inst_ppd_bfm reset CLASS_NAME
+Info: add_connection lms_dsp_inst_ppd_bfm.conduit lms_dsp_inst.ppd
+Info: send_message Info TB_Gen: Saving testbench system: lms_dsp_tb.qsys
+Info: TB_Gen: Saving testbench system: lms_dsp_tb.qsys
+Info: save_system lms_dsp_tb.qsys
+Info: send_message Info TB_Gen: TBGEN SUCCESSFUL
+Info: TB_Gen: TBGEN SUCCESSFUL
+Info: Testbench system: C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/lms_dsp_tb.qsys
+Info: Done
+Info: qsys-generate "C:\Users\loict\Nextcloud\Portable UCL\Master\LELEC2102 Projet\Git\fpga\LimeSDR-Mini_lms7_lelec210x\lms_dsp.qsys" --simulation=VERILOG --allow-mixed-language-simulation --testbench=STANDARD --testbench-simulation=VERILOG --allow-mixed-language-testbench-simulation --output-directory="C:\Users\loict\Nextcloud\Portable UCL\Master\LELEC2102 Projet\Git\fpga\LimeSDR-Mini_lms7_lelec210x\lms_dsp\testbench\lms_dsp_tb\simulation" --family="MAX 10" --part=10M16SAU169C8G
+Progress: Loading testbench/lms_dsp_tb.qsys
+Progress: Reading input file
+Progress: Adding lms_dsp_inst [lms_dsp 1.0]
+Progress: Parameterizing module lms_dsp_inst
+Progress: Adding lms_dsp_inst_clk_bfm [altera_avalon_clock_source 18.1]
+Progress: Parameterizing module lms_dsp_inst_clk_bfm
+Progress: Adding lms_dsp_inst_fifo_in_bfm [altera_conduit_bfm 18.1]
+Progress: Parameterizing module lms_dsp_inst_fifo_in_bfm
+Progress: Adding lms_dsp_inst_fifo_out_bfm [altera_conduit_bfm 18.1]
+Progress: Parameterizing module lms_dsp_inst_fifo_out_bfm
+Progress: Adding lms_dsp_inst_ppd_bfm [altera_conduit_bfm 18.1]
+Progress: Parameterizing module lms_dsp_inst_ppd_bfm
+Progress: Adding lms_dsp_inst_reset_bfm [altera_avalon_reset_source 18.1]
+Progress: Parameterizing module lms_dsp_inst_reset_bfm
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: lms_dsp_tb.lms_dsp_inst.AVS2FIFO: The SIM_VERILOG fileset must specify the top-level module name.
+Warning: lms_dsp_tb.lms_dsp_inst.AVS2FIFO: The SIM_VHDL fileset must specify the top-level module name.
+Info: lms_dsp_tb.lms_dsp_inst.fir_compiler_ii_0: PhysChanIn 2, PhysChanOut 2, ChansPerPhyIn 1, ChansPerPhyOut 1, OutputFullBitWidth 25, Bankcount 1, CoefBitWidth 8
+Info: lms_dsp_tb.lms_dsp_inst.packet_presence_detection_0.avalon_streaming_source/AVS2FIFO_0.avalon_streaming_sink: The source data signal is 24 bits, but the sink is 48 bits. Avalon-ST Adapter will be inserted.
+Info: lms_dsp_tb.lms_dsp_inst.FIFO2AVS_0.avalon_streaming_source/fir_compiler_ii_0.avalon_streaming_sink: The sink has a error signal of 2 bits, but the source does not. Avalon-ST Adapter will be inserted.
+Info: lms_dsp_tb.lms_dsp_inst.FIFO2AVS_0.avalon_streaming_source/fir_compiler_ii_0.avalon_streaming_sink: The source data signal is 48 bits, but the sink is 24 bits. Avalon-ST Adapter will be inserted.
+Info: lms_dsp_tb.lms_dsp_inst.fir_compiler_ii_0.avalon_streaming_source/packet_presence_detection_0.avalon_streaming_sink: The source has a error signal of 2 bits, but the sink does not. Avalon-ST Adapter will be inserted.
+Warning: lms_dsp_tb.lms_dsp_inst.clk_0.clk/packet_presence_detection_0.clock_sink: packet_presence_detection_0.clock_sink requires 100000000Hz, but source has frequency of 125000000Hz
+Info: lms_dsp_tb.lms_dsp_inst_clk_bfm: Elaborate: altera_clock_source
+Info: lms_dsp_tb.lms_dsp_inst_clk_bfm:            $Revision: #1 $
+Info: lms_dsp_tb.lms_dsp_inst_clk_bfm:            $Date: 2018/07/18 $
+Info: lms_dsp_tb.lms_dsp_inst_reset_bfm: Elaborate: altera_reset_source
+Info: lms_dsp_tb.lms_dsp_inst_reset_bfm:            $Revision: #1 $
+Info: lms_dsp_tb.lms_dsp_inst_reset_bfm:            $Date: 2018/07/18 $
+Info: lms_dsp_tb.lms_dsp_inst_reset_bfm: Reset is negatively asserted.
+Info: lms_dsp_tb: Generating lms_dsp_tb "lms_dsp_tb" for SIM_VERILOG
+Info: avalon_st_adapter: Inserting data_format_adapter: data_format_adapter_0
+Info: avalon_st_adapter: Inserting timing_adapter: timing_adapter_0
+Info: avalon_st_adapter: Inserting timing_adapter: timing_adapter_1
+Info: avalon_st_adapter_001: Inserting data_format_adapter: data_format_adapter_0
+Info: avalon_st_adapter_001: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_001: Inserting timing_adapter: timing_adapter_0
+Info: avalon_st_adapter_001: Inserting timing_adapter: timing_adapter_1
+Info: avalon_st_adapter_002: Inserting error_adapter: error_adapter_0
+Info: lms_dsp_inst: "lms_dsp_tb" instantiated lms_dsp "lms_dsp_inst"
+Info: lms_dsp_inst_clk_bfm: "lms_dsp_tb" instantiated altera_avalon_clock_source "lms_dsp_inst_clk_bfm"
+Info: lms_dsp_inst_fifo_in_bfm: "lms_dsp_tb" instantiated altera_conduit_bfm "lms_dsp_inst_fifo_in_bfm"
+Info: Reusing file C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/lms_dsp_tb/simulation/submodules/verbosity_pkg.sv
+Info: lms_dsp_inst_fifo_out_bfm: "lms_dsp_tb" instantiated altera_conduit_bfm "lms_dsp_inst_fifo_out_bfm"
+Info: Reusing file C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/lms_dsp_tb/simulation/submodules/verbosity_pkg.sv
+Info: lms_dsp_inst_ppd_bfm: "lms_dsp_tb" instantiated altera_conduit_bfm "lms_dsp_inst_ppd_bfm"
+Info: Reusing file C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/lms_dsp_tb/simulation/submodules/verbosity_pkg.sv
+Info: lms_dsp_inst_reset_bfm: "lms_dsp_tb" instantiated altera_avalon_reset_source "lms_dsp_inst_reset_bfm"
+Info: Reusing file C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/lms_dsp_tb/simulation/submodules/verbosity_pkg.sv
+Info: AVS2FIFO_0: "lms_dsp_inst" instantiated AVS2FIFO "AVS2FIFO_0"
+Info: FIFO2AVS_0: "lms_dsp_inst" instantiated FIFO2AVS "FIFO2AVS_0"
+Info: fir_compiler_ii_0: PhysChanIn 2, PhysChanOut 2, ChansPerPhyIn 1, ChansPerPhyOut 1, OutputFullBitWidth 25, Bankcount 1, Latency 17, CoefBitWidth 8
+Info: fir_compiler_ii_0: "lms_dsp_inst" instantiated altera_fir_compiler_ii "fir_compiler_ii_0"
+Info: packet_presence_detection_0: "lms_dsp_inst" instantiated packet_presence_detection "packet_presence_detection_0"
+Info: avalon_st_adapter: "lms_dsp_inst" instantiated altera_avalon_st_adapter "avalon_st_adapter"
+Info: avalon_st_adapter_001: "lms_dsp_inst" instantiated altera_avalon_st_adapter "avalon_st_adapter_001"
+Info: avalon_st_adapter_002: "lms_dsp_inst" instantiated altera_avalon_st_adapter "avalon_st_adapter_002"
+Info: rst_controller: "lms_dsp_inst" instantiated altera_reset_controller "rst_controller"
+Info: data_format_adapter_0: "avalon_st_adapter" instantiated data_format_adapter "data_format_adapter_0"
+Info: timing_adapter_0: "avalon_st_adapter" instantiated timing_adapter "timing_adapter_0"
+Info: timing_adapter_1: "avalon_st_adapter" instantiated timing_adapter "timing_adapter_1"
+Info: data_format_adapter_0: "avalon_st_adapter_001" instantiated data_format_adapter "data_format_adapter_0"
+Info: error_adapter_0: "avalon_st_adapter_001" instantiated error_adapter "error_adapter_0"
+Info: timing_adapter_0: "avalon_st_adapter_001" instantiated timing_adapter "timing_adapter_0"
+Info: timing_adapter_1: "avalon_st_adapter_001" instantiated timing_adapter "timing_adapter_1"
+Info: error_adapter_0: "avalon_st_adapter_002" instantiated error_adapter "error_adapter_0"
+Info: lms_dsp_tb: Done "lms_dsp_tb" with 23 modules, 51 files
+Info: qsys-generate succeeded.
+Info: sim-script-gen --spd="C:\Users\loict\Nextcloud\Portable UCL\Master\LELEC2102 Projet\Git\fpga\LimeSDR-Mini_lms7_lelec210x\lms_dsp_tb.spd" --output-directory="C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/" --use-relative-paths=true
+Info: Doing: ip-make-simscript --spd=C:\Users\loict\Nextcloud\Portable UCL\Master\LELEC2102 Projet\Git\fpga\LimeSDR-Mini_lms7_lelec210x\lms_dsp_tb.spd --output-directory=C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/ --use-relative-paths=true
+Info: Generating the following file(s) for MODELSIM simulator in C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/ directory:
+Info: 	mentor/msim_setup.tcl
+Info: Skipping VCS script generation since VHDL file $QUARTUS_INSTALL_DIR/eda/sim_lib/altera_syn_attributes.vhd is required for simulation
+Info: Generating the following file(s) for VCSMX simulator in C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/ directory:
+Info: 	synopsys/vcsmx/synopsys_sim.setup
+Info: 	synopsys/vcsmx/vcsmx_setup.sh
+Info: Generating the following file(s) for NCSIM simulator in C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/ directory:
+Info: 	cadence/cds.lib
+Info: 	cadence/hdl.var
+Info: 	cadence/ncsim_setup.sh
+Info: 	19 .cds.lib files in cadence/cds_libs/ directory
+Info: Generating the following file(s) for RIVIERA simulator in C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/ directory:
+Info: 	aldec/rivierapro_setup.tcl
+Info: For information on how to simulate your IP, see the explanatory comments in the simulator-specific subdirectories under C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/testbench/.
+Info: Regenerate these scripts whenever you make any change to any Quartus-generated IP in your project.
+Info: Finished: Create testbench Platform Designer system

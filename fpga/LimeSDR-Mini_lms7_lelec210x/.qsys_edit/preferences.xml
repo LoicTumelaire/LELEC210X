@@ -13,10 +13,10 @@
    <endaddress preferredWidth="30" />
   </columns>
  </systemtable>
- <library expandedCategories="Project/LELEC2102_IPs,Library,Project" />
- <window width="1938" height="1038" x="-9" y="-9" />
+ <library expandedCategories="Library,Project" />
+ <window width="1942" height="1030" x="-11" y="-11" />
  <generation
-   path="_PROJECT_NAME_/"
+   path="ip/packet_presence_detection/"
    testbench_system="STANDARD"
    testbench_simulation="VERILOG"
    greybox="1"
