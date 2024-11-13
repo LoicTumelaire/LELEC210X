@@ -1,0 +1,22 @@
+{
+	"system" : {
+		"platform" : "windows64",
+		"os_name" : "Windows 10",
+		"os_version" : "10.0"
+	},
+	"error" : {
+		"executable" : "quartus",
+		"comment" : "not_applicable",
+		"error_message" : "Access Violation at 0X00007FFC35C82C70",
+		"source_file" : "unknown",
+		"line" : "0",
+		"stack_trace" : "\t0x7ffc35c82c6f: db_bpm + 0x12c6f (?duplicate_bp_tree@BPM_BOUNDARY_PORT_MANAGER_IMPL@@QEAAHHPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEAV?$QTL_HASH_LITE@HHU?$QTL_OPS@H@@@@PEAV?$QTL_HASH_SET@HU?$QTL_OPS@H@@@@@Z + 0x50f)\n",
+		"subsystem" : "unknown"
+	},
+	"quartus" : {
+		"quartus_bits" : "64",
+		"version" : "18.1.0",
+		"build" : "625",
+		"edition" : "Lite Edition"
+	}
+}

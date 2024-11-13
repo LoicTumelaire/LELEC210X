@@ -16,7 +16,7 @@
  <library expandedCategories="Library,Project" />
  <window width="1942" height="1030" x="-11" y="-11" />
  <generation
-   path="ip/packet_presence_detection/"
+   path="_PROJECT_NAME_/"
    testbench_system="STANDARD"
    testbench_simulation="VERILOG"
    greybox="1"

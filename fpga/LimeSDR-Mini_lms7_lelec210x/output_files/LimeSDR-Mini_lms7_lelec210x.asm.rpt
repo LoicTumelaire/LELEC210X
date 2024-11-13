@@ -1,5 +1,5 @@
 Assembler report for LimeSDR-Mini_lms7_lelec210x
-Wed Nov 06 18:12:21 2024
+Wed Nov 13 17:39:46 2024
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -38,7 +38,7 @@ refer to the applicable agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Wed Nov 06 18:12:21 2024 ;
+; Assembler Status      ; Successful - Wed Nov 13 17:39:46 2024 ;
 ; Revision Name         ; LimeSDR-Mini_lms7_lelec210x           ;
 ; Top-level Entity Name ; lms7_trx_top                          ;
 ; Family                ; MAX 10                                ;
@@ -79,8 +79,8 @@ refer to the applicable agreement for further details.
 +----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Option         ; Setting                                                                                                                                                  ;
 +----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
-; JTAG usercode  ; 0x00864709                                                                                                                                               ;
-; Checksum       ; 0x00864709                                                                                                                                               ;
+; JTAG usercode  ; 0x0085F630                                                                                                                                               ;
+; Checksum       ; 0x0085F630                                                                                                                                               ;
 +----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -90,7 +90,7 @@ refer to the applicable agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Wed Nov 06 18:12:16 2024
+    Info: Processing started: Wed Nov 13 17:39:42 2024
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off LimeSDR-Mini_lms7_lelec210x -c LimeSDR-Mini_lms7_lelec210x
 Warning (125092): Tcl Script File lms_auto_dsp/synthesis/lms_auto_dsp.qip not found
     Info (125063): set_global_assignment -name QIP_FILE lms_auto_dsp/synthesis/lms_auto_dsp.qip
@@ -98,8 +98,8 @@ Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
     Info: Peak virtual memory: 4742 megabytes
-    Info: Processing ended: Wed Nov 06 18:12:21 2024
-    Info: Elapsed time: 00:00:05
+    Info: Processing ended: Wed Nov 13 17:39:46 2024
+    Info: Elapsed time: 00:00:04
     Info: Total CPU time (on all processors): 00:00:02
 
 

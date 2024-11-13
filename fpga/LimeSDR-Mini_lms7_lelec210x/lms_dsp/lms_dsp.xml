@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <deploy
- date="2024.11.06.17:21:15"
+ date="2024.11.13.17:20:26"
  outputDirectory="C:/Users/loict/Nextcloud/Portable UCL/Master/LELEC2102 Projet/Git/fpga/LimeSDR-Mini_lms7_lelec210x/lms_dsp/">
  <perimeter>
   <parameter
@@ -112,14 +112,14 @@
  </perimeter>
  <entity
    path=""
-   parameterizationKey="lms_dsp:1.0:AUTO_CLK_CLOCK_DOMAIN=-1,AUTO_CLK_CLOCK_RATE=-1,AUTO_CLK_RESET_DOMAIN=-1,AUTO_DEVICE=10M16SAU169C8G,AUTO_DEVICE_FAMILY=MAX 10,AUTO_DEVICE_SPEEDGRADE=8,AUTO_GENERATION_ID=1730910063,AUTO_UNIQUE_ID=(AVS2FIFO:1.0:datawidth=48)(FIFO2AVS:1.0:datawidth=48)(clock_source:18.1:clockFrequency=125000000,clockFrequencyKnown=true,inputClockFrequency=0,resetSynchronousEdges=NONE)(altera_fir_compiler_ii:18.1:L_bandsFilter=1,MODE_STRING=None Set,ModeWidth=0,backPressure=false,bankCount=1,bankDisplay=0,bankInWidth=0,baseAddress=0,busAddressWidth=5,busDataWidth=16,chanPerInputInterface=1,chanPerOutputInterface=1,channelModes=0,1,2,3,clockRate=0.4,clockSlack=0,coeffBitWidth=8,coeffBitWidth_derived=8,coeffComplex=false,coeffFracBitWidth=7,coeffNum=31,coeffReload=false,coeffScaling=auto,coeffSetFixedValue=0,0,0,0,0,-1,1,0,-3,6,-5,0,11,-25,37,127,37,-25,11,0,-5,6,-3,0,1,-1,0,0,0,0,0,coeffSetFixedValueImag=0,0,0,0,0,0,0,0,coeffSetRealValue=-0.001201261290430126,0.0020488944185569607,-0.0020751053507837938,4.910806933254215E-18,0.004754535968663148,-0.00987450755161552,0.00995675888032359,-1.4391882903962387E-17,-0.018922538981281996,0.036214375130954504,-0.03468641976116993,2.4803862788187382E-17,0.06848299151299582,-0.15293237705130486,0.22297239138994396,0.7505245253702963,0.22297239138994396,-0.15293237705130486,0.06848299151299582,2.4803862788187385E-17,-0.034686419761169936,0.036214375130954504,-0.018922538981282003,-1.4391882903962393E-17,0.00995675888032359,-0.009874507551615532,0.004754535968663151,4.910806933254215E-18,-0.0020751053507837946,0.0020488944185569607,-0.001201261290430126,coeffSetRealValueImag=0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0530093, -0.04498, 0.0, 0.0749693, 0.159034, 0.224907, 0.249809, 0.224907, 0.159034, 0.0749693, 0.0, -0.04498, -0.0530093, -0.0321283, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,coeffSetScaleValue=0.0,0.0,0.0,0.0,0.0,-0.0059096419320495775,0.0059096419320495775,0.0,-0.017728925796148733,0.03545785159229747,-0.029548209660247887,0.0,0.06500606125254535,-0.14774104830123944,0.21865675148583436,0.7505245253702963,0.21865675148583436,-0.14774104830123944,0.06500606125254535,0.0,-0.029548209660247887,0.03545785159229747,-0.017728925796148733,0.0,0.0059096419320495775,-0.0059096419320495775,0.0,0.0,0.0,0.0,0.0,coeffSetScaleValueImag=0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,coeffType=frac,coefficientReadback=false,coefficientWriteable=false,decimFactor=1,delayRAMBlockThreshold=20,deviceFamily=MAX 10,dspCount=0,dualMemDistRAMThreshold=1280,errorList=0,filterType=single,funcResult=-interp=1 -decim=1 -incycles=1 -len=31 -bankcount=1 -nsym -nband=1 -chans=2 -family=&quot;MAX 10&quot; 
+   parameterizationKey="lms_dsp:1.0:AUTO_CLK_CLOCK_DOMAIN=-1,AUTO_CLK_CLOCK_RATE=-1,AUTO_CLK_RESET_DOMAIN=-1,AUTO_DEVICE=10M16SAU169C8G,AUTO_DEVICE_FAMILY=MAX 10,AUTO_DEVICE_SPEEDGRADE=8,AUTO_GENERATION_ID=1731514815,AUTO_UNIQUE_ID=(AVS2FIFO:1.0:datawidth=48)(FIFO2AVS:1.0:datawidth=48)(clock_source:18.1:clockFrequency=125000000,clockFrequencyKnown=true,inputClockFrequency=0,resetSynchronousEdges=NONE)(altera_fir_compiler_ii:18.1:L_bandsFilter=1,MODE_STRING=None Set,ModeWidth=0,backPressure=false,bankCount=1,bankDisplay=0,bankInWidth=0,baseAddress=0,busAddressWidth=5,busDataWidth=16,chanPerInputInterface=1,chanPerOutputInterface=1,channelModes=0,1,2,3,clockRate=0.4,clockSlack=0,coeffBitWidth=8,coeffBitWidth_derived=8,coeffComplex=false,coeffFracBitWidth=7,coeffNum=31,coeffReload=false,coeffScaling=auto,coeffSetFixedValue=0,0,0,0,0,-1,1,0,-3,6,-5,0,11,-25,37,127,37,-25,11,0,-5,6,-3,0,1,-1,0,0,0,0,0,coeffSetFixedValueImag=0,0,0,0,0,0,0,0,coeffSetRealValue=-0.001201261290430126,0.0020488944185569607,-0.0020751053507837938,4.910806933254215E-18,0.004754535968663148,-0.00987450755161552,0.00995675888032359,-1.4391882903962387E-17,-0.018922538981281996,0.036214375130954504,-0.03468641976116993,2.4803862788187382E-17,0.06848299151299582,-0.15293237705130486,0.22297239138994396,0.7505245253702963,0.22297239138994396,-0.15293237705130486,0.06848299151299582,2.4803862788187385E-17,-0.034686419761169936,0.036214375130954504,-0.018922538981282003,-1.4391882903962393E-17,0.00995675888032359,-0.009874507551615532,0.004754535968663151,4.910806933254215E-18,-0.0020751053507837946,0.0020488944185569607,-0.001201261290430126,coeffSetRealValueImag=0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.0530093, -0.04498, 0.0, 0.0749693, 0.159034, 0.224907, 0.249809, 0.224907, 0.159034, 0.0749693, 0.0, -0.04498, -0.0530093, -0.0321283, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,coeffSetScaleValue=0.0,0.0,0.0,0.0,0.0,-0.0059096419320495775,0.0059096419320495775,0.0,-0.017728925796148733,0.03545785159229747,-0.029548209660247887,0.0,0.06500606125254535,-0.14774104830123944,0.21865675148583436,0.7505245253702963,0.21865675148583436,-0.14774104830123944,0.06500606125254535,0.0,-0.029548209660247887,0.03545785159229747,-0.017728925796148733,0.0,0.0059096419320495775,-0.0059096419320495775,0.0,0.0,0.0,0.0,0.0,coeffSetScaleValueImag=0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,coeffType=frac,coefficientReadback=false,coefficientWriteable=false,decimFactor=1,delayRAMBlockThreshold=20,deviceFamily=MAX 10,dspCount=0,dualMemDistRAMThreshold=1280,errorList=0,filterType=single,funcResult=-interp=1 -decim=1 -incycles=1 -len=31 -bankcount=1 -nsym -nband=1 -chans=2 -family=&quot;MAX 10&quot; 
 |{}|2|2|1|1|25|18|17|8|noCode|LUTS: 2504 DSPs: 0 RAM Bits: 0|,hardMultiplierThreshold=-1,inputBitWidth=12,inputChannelNum=2,inputFracBitWidth=11,inputInterfaceNum=2,inputRate=0.4,inputType=frac,interpFactor=1,karatsuba=false,latency=17,latency_realOnly=17,lutCount=2504,mRAMThreshold=1000000,memBitCount=0,modeFormatted=--,num_modes=2,outBitWidth=12,outFracBitWidth=9,outFullFracBitWidth=18,outFullFracBitWidth_realOnly=18,outLSBRound=trunc,outLsbBitRem=9,outMSBRound=trunc,outMsbBitRem=4,outType=frac,outWidth=25,outWidth_realOnly=25,outputInterfaceNum=2,outputfifodepth=16,outputfifodepth_realOnly=8,readWriteMode=read_write,reconfigurable=false,reconfigurable_list=0,speedGrade=slow,symmetryMode=nsym)(packet_presence_detection:1.0:DATA_WIDTH=12,PASSTHROUGH_LEN_WIDTH=16)(avalon_streaming:18.1:)(avalon_streaming:18.1:)(avalon_streaming:18.1:)(clock:18.1:)(clock:18.1:)(clock:18.1:)(clock:18.1:)(reset:18.1:)(reset:18.1:)(reset:18.1:)(reset:18.1:)"
    instancePathKey="lms_dsp"
    kind="lms_dsp"
    version="1.0"
    name="lms_dsp">
   <parameter name="AUTO_CLK_CLOCK_RATE" value="-1" />
-  <parameter name="AUTO_GENERATION_ID" value="1730910063" />
+  <parameter name="AUTO_GENERATION_ID" value="1731514815" />
   <parameter name="AUTO_DEVICE" value="10M16SAU169C8G" />
   <parameter name="AUTO_DEVICE_FAMILY" value="MAX 10" />
   <parameter name="AUTO_CLK_RESET_DOMAIN" value="-1" />
@@ -327,12 +327,12 @@
    <message level="Info" culprit="avalon_st_adapter">Inserting data_format_adapter: data_format_adapter_0</message>
    <message level="Info" culprit="avalon_st_adapter">Inserting timing_adapter: timing_adapter_0</message>
    <message level="Info" culprit="avalon_st_adapter">Inserting timing_adapter: timing_adapter_1</message>
-   <message level="Debug" culprit="avalon_st_adapter.clk_bridge_0">Timing: ELA:1/0.001s</message>
+   <message level="Debug" culprit="avalon_st_adapter.clk_bridge_0">Timing: ELA:1/0.000s</message>
    <message level="Debug" culprit="avalon_st_adapter.rst_bridge_0">Timing: ELA:2/0.000s/0.000s</message>
-   <message level="Debug" culprit="avalon_st_adapter.data_format_adapter_0">Timing: ELA:1/0.015s</message>
-   <message level="Debug" culprit="avalon_st_adapter.timing_adapter_0">Timing: ELA:1/0.010s</message>
-   <message level="Debug" culprit="avalon_st_adapter.timing_adapter_1">Timing: ELA:2/0.019s/0.023s</message>
-   <message level="Debug" culprit="avalon_st_adapter">Timing: COM:2/0.070s/0.105s</message>
+   <message level="Debug" culprit="avalon_st_adapter.data_format_adapter_0">Timing: ELA:1/0.011s</message>
+   <message level="Debug" culprit="avalon_st_adapter.timing_adapter_0">Timing: ELA:1/0.009s</message>
+   <message level="Debug" culprit="avalon_st_adapter.timing_adapter_1">Timing: ELA:2/0.010s/0.010s</message>
+   <message level="Debug" culprit="avalon_st_adapter">Timing: COM:2/0.050s/0.074s</message>
    <message level="Progress" culprit="min"></message>
    <message level="Progress" culprit="max"></message>
    <message level="Progress" culprit="current"></message>
@@ -342,19 +342,19 @@
    <message level="Info" culprit="avalon_st_adapter_001">Inserting timing_adapter: timing_adapter_1</message>
    <message level="Debug" culprit="avalon_st_adapter_001.clk_bridge_0">Timing: ELA:1/0.000s</message>
    <message level="Debug" culprit="avalon_st_adapter_001.rst_bridge_0">Timing: ELA:2/0.000s/0.000s</message>
-   <message level="Debug" culprit="avalon_st_adapter_001.data_format_adapter_0">Timing: ELA:1/0.009s</message>
-   <message level="Debug" culprit="avalon_st_adapter_001.error_adapter_0">Timing: ELA:2/0.014s/0.019s</message>
-   <message level="Debug" culprit="avalon_st_adapter_001.timing_adapter_0">Timing: ELA:1/0.006s</message>
-   <message level="Debug" culprit="avalon_st_adapter_001.timing_adapter_1">Timing: ELA:2/0.013s/0.016s</message>
-   <message level="Debug" culprit="avalon_st_adapter_001">Timing: COM:3/0.076s/0.118s</message>
+   <message level="Debug" culprit="avalon_st_adapter_001.data_format_adapter_0">Timing: ELA:1/0.013s</message>
+   <message level="Debug" culprit="avalon_st_adapter_001.error_adapter_0">Timing: ELA:2/0.010s/0.010s</message>
+   <message level="Debug" culprit="avalon_st_adapter_001.timing_adapter_0">Timing: ELA:1/0.010s</message>
+   <message level="Debug" culprit="avalon_st_adapter_001.timing_adapter_1">Timing: ELA:2/0.015s/0.020s</message>
+   <message level="Debug" culprit="avalon_st_adapter_001">Timing: COM:3/0.072s/0.121s</message>
    <message level="Progress" culprit="min"></message>
    <message level="Progress" culprit="max"></message>
    <message level="Progress" culprit="current"></message>
    <message level="Info" culprit="avalon_st_adapter_002">Inserting error_adapter: error_adapter_0</message>
    <message level="Debug" culprit="avalon_st_adapter_002.clk_bridge_0">Timing: ELA:1/0.000s</message>
    <message level="Debug" culprit="avalon_st_adapter_002.rst_bridge_0">Timing: ELA:2/0.000s/0.000s</message>
-   <message level="Debug" culprit="avalon_st_adapter_002.error_adapter_0">Timing: ELA:1/0.014s</message>
-   <message level="Debug" culprit="avalon_st_adapter_002">Timing: COM:3/0.021s/0.028s</message>
+   <message level="Debug" culprit="avalon_st_adapter_002.error_adapter_0">Timing: ELA:1/0.020s</message>
+   <message level="Debug" culprit="avalon_st_adapter_002">Timing: COM:3/0.023s/0.030s</message>
    <message
        level="Debug"
        culprit="com_altera_sopcmodel_transforms_avalonst_AvalonStreamingTransform"><![CDATA[After transform: <b>8</b> modules, <b>20</b> connections]]></message>

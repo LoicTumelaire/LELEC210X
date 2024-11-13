@@ -117,6 +117,7 @@ module dual_running_sum #(
 	reg  [($clog2(SHORT_SUM_LEN) -1) :0] short_counter;
 
 	reg   [(LONG_SUM_WIDTH+8 -1):0] long_shift_rescale_bis;
+	reg   [(LONG_SUM_WIDTH+8 -1):0] long_shift_rescale_bis_bis;
 
 	reg  short_to_long_arrived;
 	reg  short_shift_full;
@@ -196,22 +197,17 @@ module dual_running_sum #(
 	end
 
 	always @(posedge clock) begin
-		long_shift_rescale_bis <= long_sum_reg * K >> 3;
-	end
-	
-	reg launch_bis;
-
-	always  @(posedge clock) begin
-		launch_bis <= short_to_long_arrived & long_shift_full &  (short_sum_reg  > long_shift_rescale);
+		long_shift_rescale_bis <= long_sum_reg * K;
+		long_shift_rescale_bis_bis <= long_shift_rescale_bis >> 3;
 	end
 	
 	wire  [(LONG_SUM_WIDTH+8 -1):0] long_shift_rescale;
 	
-	assign long_shift_rescale  = long_shift_rescale_bis;
+	assign long_shift_rescale  = long_shift_rescale_bis_bis;
 
 	assign long_shift_full = (long_counter==LONG_SHIFT_LEN);
 	
-	assign launch = launch_bis;
+	assign launch = short_to_long_arrived & long_shift_full &  (short_sum_reg  > long_shift_rescale);
 	
 	assign  long_sum = long_shift_rescale  ;
 	assign short_sum = short_sum_reg ;
