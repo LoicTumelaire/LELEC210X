@@ -7,9 +7,9 @@ import numpy as np
 import sounddevice as sd
 import soundfile as sf
 from numpy import ndarray
-from scipy.signal import fftconvolve
+from scipy.signal import fftconvolve, lfilter
 
-from scipy import signal
+import scipy.signal as signal
 
 # -----------------------------------------------------------------------------
 """
@@ -69,9 +69,10 @@ class AudioUtil:
         sig, sr = audio
 
         ### TO COMPLETE
-        y = signal.resample(sig, int(len(sig) / newsr))
-
-        return (y, newsr)
+        
+        resig = signal.resample(sig, int(len(sig) * newsr / sr))
+        
+        return (resig, newsr)
 
     def pad_trunc(audio, max_ms) -> Tuple[ndarray, int]:
         """
@@ -126,12 +127,11 @@ class AudioUtil:
         sig, sr = audio
 
         ### TO COMPLETE
-        random = np.random.uniform(1, scaling_limit)
-        sig = sig * random
+        scaling_factor = np.random.uniform(1/scaling_limit, scaling_limit)
+        
+        resig = sig * scaling_factor
 
-        audio = (sig, sr)
-
-        return audio
+        return resig, sr
 
     def add_noise(audio, sigma=0.05) -> Tuple[ndarray, int]:
         """
@@ -144,9 +144,9 @@ class AudioUtil:
 
         ### TO COMPLETE
         noise = np.random.normal(0, sigma, len(sig))
-        sig = sig + noise
+        resig = sig + noise
 
-        audio = (sig, sr)
+        audio = (resig, sr)
 
         return audio
 
@@ -179,11 +179,9 @@ class AudioUtil:
 
         ### TO COMPLETE
         # Filter the signal
-        sig = signal.lfilter(filt, 1, sig)
+        resig = lfilter(filt, 1, sig)
 
-        audio = (sig, sr)
-
-        return (sig, sr)
+        return (resig, sr)
 
     def add_bg(
         audio, dataset, num_sources=1, max_ms=5000, amplitude_limit=0.1
@@ -198,25 +196,30 @@ class AudioUtil:
         :param amplitude_limit: The maximum amplitude of the added sounds.
         """
         sig, sr = audio
+        
+        resig = sig
 
         ### TO COMPLETE
-        # Choose random sounds from the dataset
-        for i in range(num_sources):
-            audio_file = random.choice(dataset)
-            aud = AudioUtil.open(audio_file)
-            aud = AudioUtil.resample(aud, sr)
-            aud = AudioUtil.pad_trunc(aud, max_ms)
+                
+        # Choose the sounds to add
+        for _ in range(num_sources):
+            # Choose a sound from the dataset
+            sound = dataset[np.random.randint(len(dataset))]
+            sound = AudioUtil.open(sound)
             
-            # Amplitude maximale
-            aud_max = np.max(np.abs(aud))
-            limit= amplitude_limit/aud_max
-            aud= AudioUtil.scaling(aud, limit)
-
+            # Resample the sound
+            sound = AudioUtil.resample(sound, sr)
+            
+            # Pad or truncate the sound
+            sound = AudioUtil.pad_trunc(sound, max_ms)
+            
+            # Normalize the sound
+            sound = AudioUtil.normalize(sound, target_dB=10)
+            
             # Add the sound to the signal
-            sig += aud[0]
+            resig += sound[0] * np.random.uniform(0, amplitude_limit)
         
-        audio = (sig, sr)
-        return audio
+        return (resig, sr)
 
     def specgram(audio, Nft=512, fs2=11025) -> ndarray:
         """
@@ -226,23 +229,16 @@ class AudioUtil:
         :param Nft: The number of points of the FFT.
         :param fs2: The sampling frequency.
         """
-        ### TO COMPLETE
-        # stft /= float(2**8)
-
-        sig, sr= audio
-
-        L = len(sig)
-        sig = sig[: L - L % Nft]
         
-
-        audiomat = np.reshape(sig, (L // Nft, Nft))
-        audioham = audiomat * np.hamming(Nft)
-        stft = np.fft.fft(audioham, axis=1)
-        stft = np.abs(stft[:, : Nft // 2].T)
-        stft /= float(2**8)
-
+        ### TO COMPLETE
+        
+        sig, sr = audio
+        
+        # Compute the STFT
+        
+        stft = librosa.stft(sig, n_fft=Nft, hop_length=int(Nft/4))
+        
         return stft
-
 
     def get_hz2mel(fs2=11025, Nft=512, Nmel=20) -> ndarray:
         """
@@ -253,7 +249,6 @@ class AudioUtil:
         :param Nmel: The number of mel bands.
         """
         mels = librosa.filters.mel(sr=fs2, n_fft=Nft, n_mels=Nmel)
-        mels = mels[:, :-1]
         mels = mels / np.max(mels)
 
         return mels
@@ -268,16 +263,15 @@ class AudioUtil:
         :param fs2: The sampling frequency.
         """
         ### TO COMPLETE
-        x, sr= audio
-        sr = fs2
         
-        y = AudioUtil.resample(audio, fs2)
-        stft = AudioUtil.specgram(y)
-        melspec = np.zeros((Nmel, stft.shape[1]))
-        mels = librosa.filters.mel(sr=sr, n_fft=Nft, n_mels=Nmel)
-        mels = mels[:, :-1]
-        mels = mels / np.max(mels)
-        melspec = mels @ stft #np.abs(stft) nécessaire?
+        # Compute the spectrogram
+        stft = AudioUtil.specgram(audio, Nft, fs2)
+        
+        # Get the mel conversion matrix
+        mels = AudioUtil.get_hz2mel(fs2, Nft, Nmel)
+        
+        # Compute the mel spectrogram
+        melspec = np.dot(mels, np.abs(stft))
 
         return melspec
 
