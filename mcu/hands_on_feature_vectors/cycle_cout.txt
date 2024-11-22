@@ -1,0 +1,25 @@
+[PERF] Step_0.1 3660 cycles.
+[PERF] Step_0.2 15911 cycles.
+
+[PERF] Step_0.2 15911 cycles.
+[PERF] Step_1 3923 cycles.
+
+[PERF] Step_1 3923 cycles.
+[PERF] Step_2 23162 cycles.
+
+[PERF] Step_2 23162 cycles.
+[PERF] Step_3.1 16612 cycles.
+
+[PERF] Step_3.1 16612 cycles.
+[PERF] Step_3.2 15423 cycles.
+
+[PERF] Step_3.2 15423 cycles.
+[PERF] Step_3.3 7648 cycles.
+
+[PERF] Step_3.3 7648 cycles.
+[PERF] Step_3.4 6439 cycles.
+
+[PERF] Step_3.4 6439 cycles.
+[PERF] Step_4 20888 cycles.
+
+[PERF] Step_4 20888 cycles.
