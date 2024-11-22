@@ -204,7 +204,9 @@ class AudioUtil:
         # Choose the sounds to add
         for _ in range(num_sources):
             # Choose a sound from the dataset
-            sound = dataset[np.random.randint(len(dataset))]
+            class_name = random.choice(dataset.list_classes())
+            myint = random.randint(0, len(dataset.get_class_files(class_name)) - 1)
+            sound = dataset.__getitem__((class_name, myint))
             sound = AudioUtil.open(sound)
             
             # Resample the sound
