@@ -17,11 +17,7 @@ const uint8_t AES_Key[16]  = {
 void tag_cbc_mac(uint8_t *tag, const uint8_t *msg, size_t msg_len) {
 	// Allocate a buffer of the key size to store the input and result of AES
 	// uint32_t[4] is 4*(32/8)= 16 bytes long
-	uint32_t statew[4] = {0};
-	// state is a pointer to the start of the buffer
-	uint8_t *state = (uint8_t*) statew;
-    size_t i;
-
+	uint8_t state[16] = {0};
 
     // TO DO : Complete the CBC-MAC_AES, without allocating memory and its stack space usage must be constant 
 
@@ -30,11 +26,8 @@ void tag_cbc_mac(uint8_t *tag, const uint8_t *msg, size_t msg_len) {
 	// s ← 0**16 (Where 0**16 denotes the string made of 16 zero bytes.)
 	// void AES128_encrypt ( unsigned char * block , const unsigned char * key ) ;
 
-	// Initialize the state to 0**16
-	memset(state, 0, 16);
-
 	// Process each 16-byte block
-	for (i = 0; i < msg_len; i += 16) {
+	for (size_t i = 0; i < msg_len; i += 16) {
 		// XOR the current block with the state
 		for (size_t j = 0; j < 16; j++) {
 			if (i + j < msg_len) {
@@ -47,15 +40,8 @@ void tag_cbc_mac(uint8_t *tag, const uint8_t *msg, size_t msg_len) {
 		AES128_encrypt(state, AES_Key);
 	}
 	
-	
-	
-
-
-	
     // Copy the result of CBC-MAC-AES to the tag.
-    for (int j=0; j<16; j++) {
-        tag[j] = state[j];
-    }
+	memcpy(tag, state, 16);
 }
 
 // Assumes payload is already in place in the packet
@@ -91,13 +77,9 @@ int make_packet(uint8_t *packet, size_t payload_len, uint8_t sender_id, uint32_t
 	// Set the emitter_id field
 	packet[1] = sender_id;
 	// Set the payload_length field
-	packet[2] = (payload_len >> 8);  // >>8 is a right shift of 8 bits (1 byte)
-	packet[3] = payload_len;
+	*(uint16_t *)(packet + 2) = __builtin_bswap16(payload_len);
 	// Set the packet_serial field
-	packet[4] = (serial >> 24);
-	packet[5] = (serial >> 16);
-	packet[6] = (serial >> 8);
-	packet[7] = serial;
+	*(uint32_t *)(packet + 4) = __builtin_bswap32(serial);
 
 	// app_data is already in place in the packet
 
