@@ -369,7 +369,7 @@ class Feature_vector_DS:
                     amplitude_limit=0.1,
                 )
             if "echo" in self.data_aug:
-                aud = AudioUtil.add_echo(aud)
+                aud = AudioUtil.echo(aud)
             if "noise" in self.data_aug:
                 aud = AudioUtil.add_noise(aud, sigma=0.05)
             if "scaling" in self.data_aug:
