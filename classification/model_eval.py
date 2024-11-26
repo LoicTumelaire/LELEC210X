@@ -116,53 +116,73 @@ print(f"Shape of the feature matrix : {X.shape}")
 print(f"Number of labels : {len(y)}")
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, stratify=y, random_state=1)
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# then normalize individual vectors
 X_train = X_train / np.linalg.norm(X_train, axis=1, keepdims=True) # Normalization
 X_test = X_test / np.linalg.norm(X_test, axis=1, keepdims=True) # Normalization
-
-#PCA
-pca = PCA(n_components=14)
-X_train_pca = pca.fit_transform(X_train)
-X_test_pca = pca.transform(X_test)
-
-#grid search for different models
 
 # Split the dataset into training and validation subsets
 n_splits = 10
 kf = StratifiedKFold(n_splits=n_splits, shuffle=True) #normaly K-fold is used to determine the best hyperparameters => strange to use it here
-accuracies_knn = np.zeros((n_splits,))
 
-# SVM
-svm = SVC()
-param_grid = {
-    "C": [20,100, 1000],
-    "gamma": [0.1, 0.01, 0.001, 0.0001],
-    "kernel": ["rbf", "linear", "poly", "sigmoid"],
-}
-grid_svm = perform_grid_search(svm, param_grid, kf, X_train_pca, y_train, "SVM", save_fold=False)
-eval_visualise(grid_svm, "SVM", X_train_pca, y_train, X_test_pca, y_test)
+def SVM_Model():
+    pca = PCA(n_components=14)
+    X_train_pca = pca.fit_transform(X_train)
+    X_test_pca = pca.transform(X_test)
+    # SVM
+    svm = SVC()
+    param_grid = {
+        "C": [20,100, 1000],
+        "gamma": [0.1, 0.01, 0.001, 0.0001],
+        "kernel": ["rbf", "linear", "poly", "sigmoid"],
+    }
+    grid_svm = perform_grid_search(svm, param_grid, kf, X_train_pca, y_train, "SVM", save_fold=False)
+    eval_visualise(grid_svm, "SVM", X_train_pca, y_train, X_test_pca, y_test)
 
-# KNN
-#redo pca
-pca = PCA(n_components=3)
-X_train_pca = pca.fit_transform(X_train)
-X_test_pca = pca.transform(X_test)
+def KNN_Model():
+    # KNN
+    #redo pca
+    pca = PCA(n_components=3)
+    X_train_pca = pca.fit_transform(X_train)
+    X_test_pca = pca.transform(X_test)
 
-knn = KNeighborsClassifier()
-param_grid = {
-    "n_neighbors": [3, 5, 7, 9, 11],
-    "weights": ["uniform", "distance"],
-    "metric": ["euclidean", "manhattan", "minkowski"],
-}
-grid_knn = perform_grid_search(knn, param_grid, kf, X_train_pca, y_train, "KNN", save_fold=False)
-eval_visualise(grid_knn, "KNN", X_train_pca, y_train, X_test_pca, y_test)
+    knn = KNeighborsClassifier()
+    param_grid = {
+        "n_neighbors": [3, 5, 7, 9, 11],
+        "weights": ["uniform", "distance"],
+        "metric": ["euclidean", "manhattan", "minkowski"],
+    }
+    grid_knn = perform_grid_search(knn, param_grid, kf, X_train_pca, y_train, "KNN", save_fold=False)
+    eval_visualise(grid_knn, "KNN", X_train_pca, y_train, X_test_pca, y_test)
 
-# Gaussian process
-#no grid search for gaussian process
-from sklearn.gaussian_process import GaussianProcessClassifier
-pca = PCA(n_components=4)
-X_train_pca = pca.fit_transform(X_train)
-X_test_pca = pca.transform(X_test)
+def Gaussian_Process_Model():
+    # Gaussian process
+    #no grid search for gaussian process
+    from sklearn.gaussian_process import GaussianProcessClassifier
+    pca = PCA(n_components=4)
+    X_train_pca = pca.fit_transform(X_train)
+    X_test_pca = pca.transform(X_test)
 
-gp = GaussianProcessClassifier()
-gp.fit(X_train_pca, y_train)
-eval_visualise(gp, "Gaussian Process", X_train_pca, y_train, X_test_pca, y_test, grid=False)
+    gp = GaussianProcessClassifier()
+    gp.fit(X_train_pca, y_train)
+    eval_visualise(gp, "Gaussian Process", X_train_pca, y_train, X_test_pca, y_test, grid=False)
+
+def MLP_Model():
+    # MLP Classifier
+    from sklearn.neural_network import MLPClassifier
+
+    mlp = MLPClassifier(max_iter=500)
+    param_grid = {
+        "hidden_layer_sizes": [(50), (100), (75, 75)],
+        "learning_rate_init": [0.001, 0.01, 0.1],
+        "activation": ["identity", "logistic", "tanh", "relu"],
+        "batch_size": [8, 32, 64],
+    }
+    grid_mlp = perform_grid_search(mlp, param_grid, kf, X_train, y_train, "MLP", save_fold=False)
+    eval_visualise(grid_mlp, "MLP", X_train, y_train, X_test, y_test)
+
+MLP_Model()
