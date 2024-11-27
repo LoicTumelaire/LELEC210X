@@ -80,6 +80,5 @@ if __name__ == "__main__":
                 title=f"MEL Spectrogram #{msg_counter}",
                 xlabel="Mel vector",
             )
-            plt.draw()
-            plt.pause(0.001)
+            plt.show()
             plt.clf()

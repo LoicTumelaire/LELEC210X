@@ -415,7 +415,7 @@ class Feature_vector_DS:
         """
         audio = self.get_audiosignal(cls_index)
         AudioUtil.play(audio)
-        plt.figure(figsize=(4, 3))
+        plt.figure()
         plt.imshow(
             AudioUtil.melspectrogram(audio, Nmel=self.nmel, Nft=self.Nft),
             cmap="jet",
@@ -424,7 +424,11 @@ class Feature_vector_DS:
         )
         plt.colorbar()
         plt.title(audio)
-        plt.title(self.dataset.__getname__(cls_index))
+        plt.title("MEL Spectrogram")
+        plt.xlabel("Mel vector")
+        plt.ylabel("Frequency [Mel]")
+        plt.tight_layout()
+        plt.savefig("data/spectrogram.pdf", bbox_inches="tight")
         plt.show()
 
     def mod_data_aug(self, data_aug) -> None:
