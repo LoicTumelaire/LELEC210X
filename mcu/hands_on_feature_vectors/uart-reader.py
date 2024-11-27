@@ -10,6 +10,9 @@ import numpy as np
 import serial
 from serial.tools import list_ports
 
+import tensorflow as tf
+from tensorflow.keras.models import load_model
+
 from classification.utils.plots import plot_specgram
 
 PRINT_PREFIX = "DF:HEX:"
@@ -70,7 +73,12 @@ if __name__ == "__main__":
         for melvec in input_stream:
             msg_counter += 1
 
+            # Charge notre modèle de prédiction (CNN)
+            model = load_model("classification/models/cnn_model.h5")
+            prediction = model.predict(melvec.reshape((N_MELVECS, MELVEC_LENGTH)).T)
+
             print(f"MEL Spectrogram #{msg_counter}")
+            print(f"Prediction: {prediction}")
 
             plt.figure()
             plot_specgram(
