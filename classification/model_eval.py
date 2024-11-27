@@ -83,7 +83,7 @@ model_dir = "data/models/"  # where to save the models
 dataset = Dataset()
 classnames = dataset.list_classes()
 
-myds = Feature_vector_DS(dataset, Nft=512, nmel=20, duration=950, shift_pct=0.2)
+myds = Feature_vector_DS(dataset, Nft=512, nmel=20, duration=2400, shift_pct=0.2)
 
 "Random split of 70:30 between training and validation"
 train_pct = 0.7
@@ -98,7 +98,6 @@ data_aug_factor = 1 #no data augmentation => maybe add later
 class_ids_aug = np.repeat(classnames, naudio * data_aug_factor)
 
 "Compute the matrixed dataset, this takes some seconds, but you can then reload it by commenting this loop and decommenting the np.load below"
-"""
 X = np.zeros((data_aug_factor * nclass * naudio, featveclen))
 for s in range(data_aug_factor):
     for class_idx, classname in enumerate(classnames):
@@ -106,8 +105,7 @@ for s in range(data_aug_factor):
             featvec = myds[classname, idx]
             X[s * nclass * naudio + class_idx * naudio + idx, :] = featvec
 np.save(fm_dir + "feature_matrix_2D_svm.npy", X)
-"""
-X = np.load(fm_dir+"feature_matrix_2D_svm.npy")
+#X = np.load(fm_dir+"feature_matrix_2D_svm.npy")
 
 "Labels"
 y = class_ids_aug.copy()
@@ -115,7 +113,7 @@ y = class_ids_aug.copy()
 print(f"Shape of the feature matrix : {X.shape}")
 print(f"Number of labels : {len(y)}")
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, stratify=y, random_state=1)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.9, stratify=y, random_state=1)
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
@@ -175,14 +173,17 @@ def MLP_Model():
     # MLP Classifier
     from sklearn.neural_network import MLPClassifier
 
-    mlp = MLPClassifier(max_iter=500)
+    mlp = MLPClassifier(max_iter=750, early_stopping=False)
     param_grid = {
-        "hidden_layer_sizes": [(50), (100), (75, 75)],
-        "learning_rate_init": [0.001, 0.01, 0.1],
-        "activation": ["identity", "logistic", "tanh", "relu"],
-        "batch_size": [8, 32, 64],
+        "hidden_layer_sizes": [(200, 200, 200)],
+        "learning_rate_init": [0.001],
+        "activation": ["relu"],
+        "batch_size": [8],
     }
     grid_mlp = perform_grid_search(mlp, param_grid, kf, X_train, y_train, "MLP", save_fold=False)
     eval_visualise(grid_mlp, "MLP", X_train, y_train, X_test, y_test)
 
-MLP_Model()
+from sklearn.neural_network import MLPClassifier
+mlp = MLPClassifier(max_iter=750, early_stopping=False, hidden_layer_sizes=(200, 200, 200), learning_rate_init=0.001, activation='relu')
+mlp.fit(X_train, y_train)
+eval_visualise(mlp, "MLP", X_train, y_train, X_test, y_test, grid=False)
