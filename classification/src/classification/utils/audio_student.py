@@ -374,6 +374,12 @@ class Feature_vector_DS:
                 aud = AudioUtil.add_noise(aud, sigma=0.05)
             if "scaling" in self.data_aug:
                 aud = AudioUtil.scaling(aud, scaling_limit=5)
+            if "filter" in self.data_aug:
+                filt = np.array([1, -0.97])
+                aud = AudioUtil.filter(aud, filt)
+            if "time_shift" in self.data_aug:
+                aud = AudioUtil.time_shift(aud, shift_limit=0.4)
+                
 
         # aud = AudioUtil.normalize(aud, target_dB=10)
         aud = (aud[0] / np.max(np.abs(aud[0])), aud[1])
