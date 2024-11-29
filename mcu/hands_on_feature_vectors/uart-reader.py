@@ -87,11 +87,12 @@ if __name__ == "__main__":
                 melvec.reshape((N_MELVECS, MELVEC_LENGTH)).T,
                 ax=plt.gca(),
                 is_mel=True,
-                title=f"MEL Spectrogram #{msg_counter}",
+                title=f"MEL Spectrogram #{msg_counter}" + f" - {CLASSNAMES[np.argmax(prediction)]}",
                 xlabel="Mel vector",
             )
+            #plt.savefig(f"Results_MelSpectr/mel_spectrogram_{msg_counter}.pdf")
             plt.show()
-            plt.clf()
+            #plt.clf()
 
 
 ## exp moving avg
