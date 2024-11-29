@@ -75,7 +75,7 @@ if __name__ == "__main__":
             msg_counter += 1
 
             # Charge notre modèle de prédiction (CNN)
-            model = models.load_model("C:\LELEC210X\LELEC210X\classification\data\models\one.keras")
+            model = models.load_model("..\..\classification\data\models\one.keras")
             prediction = model.predict(melvec.reshape((N_MELVECS, MELVEC_LENGTH, 1)).T)
 
             print(f"MEL Spectrogram #{msg_counter}")
