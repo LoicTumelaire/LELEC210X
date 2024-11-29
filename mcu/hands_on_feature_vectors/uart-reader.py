@@ -11,7 +11,7 @@ import serial
 from serial.tools import list_ports
 
 import tensorflow as tf
-from tensorflow.keras.models import load_model
+from keras import models
 
 from classification.utils.plots import plot_specgram
 
@@ -19,6 +19,7 @@ PRINT_PREFIX = "DF:HEX:"
 FREQ_SAMPLING = 10200
 MELVEC_LENGTH = 20
 N_MELVECS = 20
+CLASSNAMES = ["birds", "chainsaw", "fire", "handsaw", "helicopter"]
 
 dt = np.dtype(np.uint16).newbyteorder("<")
 
@@ -74,11 +75,12 @@ if __name__ == "__main__":
             msg_counter += 1
 
             # Charge notre modèle de prédiction (CNN)
-            model = load_model("classification/models/cnn_model.h5")
-            prediction = model.predict(melvec.reshape((N_MELVECS, MELVEC_LENGTH)).T)
+            model = models.load_model("C:\LELEC210X\LELEC210X\classification\data\models\one.keras")
+            prediction = model.predict(melvec.reshape((N_MELVECS, MELVEC_LENGTH, 1)).T)
 
             print(f"MEL Spectrogram #{msg_counter}")
             print(f"Prediction: {prediction}")
+            print(f"Class: {CLASSNAMES[np.argmax(prediction)]}")
 
             plt.figure()
             plot_specgram(
@@ -90,3 +92,6 @@ if __name__ == "__main__":
             )
             plt.show()
             plt.clf()
+
+
+## exp moving avg
