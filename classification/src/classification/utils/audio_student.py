@@ -222,6 +222,49 @@ class AudioUtil:
             resig += sound[0] * np.random.uniform(0, amplitude_limit)
         
         return (resig, sr)
+    
+    def distorsion(audio, alpha=0.2) -> Tuple[ndarray, int]:
+        """
+        Add distorsion to the audio signal.
+
+        :param audio: The audio signal as a tuple (signal, sample_rate).
+        :param alpha: The distorsion factor.
+        """
+        sig, sr = audio
+        
+        # Compute the distorsion
+        resig = sig + alpha * sig**3
+        
+        return (resig, sr)
+    
+    def pitch_shift(audio, sr2=11025, n_steps=2) -> Tuple[ndarray, int]:
+        """
+        Shift the pitch of the audio signal.
+
+        :param audio: The audio signal as a tuple (signal, sample_rate).
+        :param sr2: The sampling frequency.
+        :param n_steps: The number of steps to shift the pitch.
+        """
+        sig, sr = audio
+        
+        # Compute the pitch shifted signal
+        resig = librosa.effects.pitch_shift(sig, sr, n_steps=n_steps)
+        
+        return (resig, sr)
+    
+    def add_DC(audio, alpha=0.1) -> Tuple[ndarray, int]:
+        """
+        Add a DC component to the audio signal.
+
+        :param audio: The audio signal as a tuple (signal, sample_rate).
+        :param alpha: The DC component amplitude.
+        """
+        sig, sr = audio
+        
+        # Add the DC component
+        resig = sig + alpha
+        
+        return (resig, sr)
 
     def specgram(audio, Nft=512, fs2=11025) -> ndarray:
         """
@@ -379,6 +422,12 @@ class Feature_vector_DS:
                 aud = AudioUtil.filter(aud, filt)
             if "time_shift" in self.data_aug:
                 aud = AudioUtil.time_shift(aud, shift_limit=0.4)
+            if "distorsion" in self.data_aug:
+                aud = AudioUtil.distorsion(aud, alpha=0.2)
+            if "pitch_shift" in self.data_aug:
+                aud = AudioUtil.pitch_shift(aud, n_steps=2)
+            if "add_DC" in self.data_aug:
+                aud = AudioUtil.add_DC(aud, alpha=0.1)
                 
 
         # aud = AudioUtil.normalize(aud, target_dB=10)
