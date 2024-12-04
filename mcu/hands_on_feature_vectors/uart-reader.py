@@ -60,9 +60,7 @@ if __name__ == "__main__":
     memory_size = 10
     
     memory = np.zeros((memory_size, len(CLASSNAMES)))
-    
-    print (memory)
-    
+        
     file_predictions = pd.DataFrame(columns=["prediction", "mean_prediction", "weighted_prediction"])
     
     print("uart-reader launched...\n")
@@ -83,6 +81,9 @@ if __name__ == "__main__":
         msg_counter = 0
 
         for melvec in input_stream:
+            
+            melvec = melvec[4:-8]
+            
             msg_counter += 1
 
             # Charge notre modèle de prédiction (CNN)
@@ -99,13 +100,17 @@ if __name__ == "__main__":
             
             ## resize weights from 10 to (10, 5)
             
-            weights = np.tile(weights, (5, 1)).T
+            weights = np.tile(weights, (len(CLASSNAMES), 1)).T
             
             weighted_memory = np.multiply(memory, weights)
             
             mean_prediction = np.mean(memory, axis=0)
             
+            mean_prediction = mean_prediction / np.sum(mean_prediction)
+            
             weighted_prediction = np.mean(weighted_memory, axis=0)
+            
+            weighted_prediction = weighted_prediction / np.sum(weighted_prediction)
 
             print(f"Prediction: {prediction}")
             print(f"Mean Prediction: {mean_prediction}")
@@ -125,7 +130,7 @@ if __name__ == "__main__":
             )
             #plt.savefig(f"Results_MelSpectr/mel_spectrogram_{msg_counter}.pdf")
             plt.show()
-            #plt.clf()
+            plt.close()
             """
             
             file_predictions.to_csv("predictions.csv")
