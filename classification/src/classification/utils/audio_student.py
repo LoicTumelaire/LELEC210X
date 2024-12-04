@@ -233,7 +233,7 @@ class AudioUtil:
         sig, sr = audio
         
         # Compute the distorsion
-        resig = sig + alpha * sig**3
+        resig = sig + random.uniform(-alpha, alpha) * sig**3
         
         return (resig, sr)
     
@@ -248,7 +248,7 @@ class AudioUtil:
         sig, sr = audio
         
         # Compute the pitch shifted signal
-        resig = librosa.effects.pitch_shift(sig, sr, n_steps=n_steps)
+        resig = librosa.effects.pitch_shift(sig, sr=sr, n_steps=random.randint(-n_steps, n_steps))
         
         return (resig, sr)
     
@@ -262,7 +262,21 @@ class AudioUtil:
         sig, sr = audio
         
         # Add the DC component
-        resig = sig + alpha
+        resig = sig + random.uniform(-alpha, alpha)
+        
+        return (resig, sr)
+    
+    def saturation(audio, alpha=0.1) -> Tuple[ndarray, int]:
+        """
+        Add saturation to the audio signal.
+
+        :param audio: The audio signal as a tuple (signal, sample_rate).
+        :param alpha: The saturation factor.
+        """
+        sig, sr = audio
+        
+        # Compute the saturation
+        resig = np.tanh(random.uniform(-alpha, alpha) * sig)
         
         return (resig, sr)
 
@@ -428,6 +442,8 @@ class Feature_vector_DS:
                 aud = AudioUtil.pitch_shift(aud, n_steps=2)
             if "add_DC" in self.data_aug:
                 aud = AudioUtil.add_DC(aud, alpha=0.1)
+            if "saturation" in self.data_aug:
+                aud = AudioUtil.saturation(aud, alpha=0.2)
                 
 
         # aud = AudioUtil.normalize(aud, target_dB=10)
