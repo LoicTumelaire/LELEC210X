@@ -25,7 +25,7 @@ class AudioUtil:
     Define a new class with util functions to process an audio signal.
     """
 
-    def open(audio_file) -> Tuple[ndarray, int]:
+    def open(self, audio_file) -> Tuple[ndarray, int]:
         """
         Load an audio file.
 
@@ -37,14 +37,14 @@ class AudioUtil:
             sig = sig[:, 0]
         return (sig, sr)
 
-    def play(audio):
+    def play(self, audio):
         """
         Play an audio file.
 
         :param audio: The audio signal as a tuple (signal, sample_rate).
         """
         sig, sr = audio
-        sd.play(sig, sr)
+        sd.play(sig, sr, blocking=False)
 
     def normalize(audio, target_dB=52) -> Tuple[ndarray, int]:
         """

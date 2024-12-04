@@ -13,6 +13,8 @@ from serial.tools import list_ports
 import tensorflow as tf
 from keras import models
 
+import pandas as pd
+
 from classification.utils.plots import plot_specgram
 
 PRINT_PREFIX = "DF:HEX:"
@@ -54,6 +56,15 @@ if __name__ == "__main__":
     argParser = argparse.ArgumentParser()
     argParser.add_argument("-p", "--port", help="Port for serial communication")
     args = argParser.parse_args()
+    
+    memory_size = 10
+    
+    memory = np.zeros((memory_size, len(CLASSNAMES)))
+    
+    print (memory)
+    
+    file_predictions = pd.DataFrame(columns=["prediction", "mean_prediction", "weighted_prediction"])
+    
     print("uart-reader launched...\n")
 
     if args.port is None:
@@ -75,13 +86,35 @@ if __name__ == "__main__":
             msg_counter += 1
 
             # Charge notre modèle de prédiction (CNN)
-            model = models.load_model("..\..\classification\data\models\one.keras")
+            model = models.load_model(r"C:\LELEC210X\LELEC210X\classification\data\models\two.keras")
             prediction = model.predict(melvec.reshape((N_MELVECS, MELVEC_LENGTH, 1)).T)
+            
+            memory[msg_counter % 10] = prediction
+            
+            ## exp moving avg
+            alpha = 0.1  # Smoothing factor for exponential moving average
+            weights = np.exp(-alpha * np.arange(len(memory)))
+            weights /= weights.sum()
+            weights = np.roll(weights, -msg_counter % 10)
+            
+            ## resize weights from 10 to (10, 5)
+            
+            weights = np.tile(weights, (5, 1)).T
+            
+            weighted_memory = np.multiply(memory, weights)
+            
+            mean_prediction = np.mean(memory, axis=0)
+            
+            weighted_prediction = np.mean(weighted_memory, axis=0)
 
-            print(f"MEL Spectrogram #{msg_counter}")
             print(f"Prediction: {prediction}")
+            print(f"Mean Prediction: {mean_prediction}")
+            print(f"Weighted Prediction: {weighted_prediction}")
             print(f"Class: {CLASSNAMES[np.argmax(prediction)]}")
-
+            
+            file_predictions = pd.concat([file_predictions, pd.DataFrame([{"prediction": prediction, "mean_prediction": mean_prediction, "weighted_prediction": weighted_prediction}])], ignore_index=True)
+            
+            """
             plt.figure()
             plot_specgram(
                 melvec.reshape((N_MELVECS, MELVEC_LENGTH)).T,
@@ -93,6 +126,6 @@ if __name__ == "__main__":
             #plt.savefig(f"Results_MelSpectr/mel_spectrogram_{msg_counter}.pdf")
             plt.show()
             #plt.clf()
-
-
-## exp moving avg
+            """
+            
+            file_predictions.to_csv("predictions.csv")
