@@ -2,6 +2,8 @@
 
 .vscode/
 .venv/
+new_venv/
+datasets/
 __pycache__/
 .mypy_cache/
 .ipynb_checkpoints

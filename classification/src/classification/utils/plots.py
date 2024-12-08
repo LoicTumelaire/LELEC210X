@@ -44,9 +44,9 @@ def show_confusion_matrix(y_predict, y_true, classnames, title=""):
     )
     plt.xlabel("True label")
     plt.ylabel("Predicted label")
-    plt.title(title)
+    plt.title("confusion_matrix" + title)
     plt.tight_layout()
-    plt.savefig("plots/confusion_matrix.pdf")
+    plt.savefig(f"plots/confusion_matrix{title}.pdf")
     plt.show()
     return None
 
