@@ -7,7 +7,6 @@ new_venv/Lib/
 new_venv/Scripts/
 new_venv/pyvenv.cfg
 new_venv/share/
-datasets/
 __pycache__/
 .mypy_cache/
 .ipynb_checkpoints
