@@ -51,8 +51,8 @@ if __name__ == "__main__":
                     continue
 
         # Diagnostique des longueurs des colonnes
-        for key, value in data.items():
-            print(f"{key}: {len(value)}")
+        #for key, value in data.items():
+        #    print(f"{key}: {len(value)}")
 
         # Complétez les listes pour égaliser les longueurs
         max_len = max(len(v) for v in data.values())
@@ -64,5 +64,20 @@ if __name__ == "__main__":
 
         axs[i // 5, i % 5].hist(df["cfo"], bins=20)
         axs[i // 5, i % 5].set_title(f"SNR = {data['snr'][0]} dB")
+    plt.show()
 
+
+    # Plot PER vs. SNR
+    print(df.groupby("snr").head())
+    per_data = df.groupby("snr").apply(lambda x: x["invalid"].sum() / len(x)).reset_index()
+    per_data.columns = ["SNR", "PER"]
+   
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(per_data["SNR"], per_data["PER"], marker="o", label="PER-SNR Curve")
+    plt.xlabel("SNR (dB)")
+    plt.ylabel("Packet Error Rate (PER)")
+    plt.title("PER vs. SNR")
+    plt.grid(True)
+    plt.legend()
     plt.show()
