@@ -104,4 +104,4 @@ fpga/incremental_db/
 
 # Dataset
 
-classification/src/classification/datasets/ESC-50/
+classification/src/classification/datasets/ESC-50/audio/*.wav
