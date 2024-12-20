@@ -37,10 +37,29 @@ if __name__ == "__main__":
                 invalid = 1 if ber > 0 else 0
                 data["ber"].append(ber)
                 data["invalid"].append(invalid)
-
         df = pd.DataFrame.from_dict(data)
 
         print(df)
 
     fig = df.groupby("txp").hist(column="cfo")
+    plt.suptitle("CFO values for different SNR values")
+    plt.xlabel("CFO [Hz]")
+    plt.ylabel("Number of packets")
+
+    plt.legend(df["txp"].unique())
+    plt.show()
+
+
+    print(df.groupby("snr").head())
+    per_data = df.groupby("snr").apply(lambda x: x["invalid"].sum() / len(x)).reset_index()
+    per_data.columns = ["SNR", "PER"]
+   
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(per_data["SNR"], per_data["PER"], marker="o", label="PER-SNR Curve")
+    plt.xlabel("SNR (dB)")
+    plt.ylabel("Packet Error Rate (PER)")
+    plt.title("PER vs. SNR")
+    plt.grid(True)
+    plt.legend()
     plt.show()

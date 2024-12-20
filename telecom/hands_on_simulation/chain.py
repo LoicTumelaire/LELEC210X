@@ -38,7 +38,9 @@ class Chain:
 
     # Lowpass filter parameters
     numtaps: int = 100
-    cutoff: float = BIT_RATE * osr_rx / 2.0001  # or 2*BIT_RATE,...
+    #cutoff: float = BIT_RATE * osr_rx / 2.0001  # or 2*BIT_RATE,...
+    cutoff: float = 130e3  # from FPGA
+
 
     # Tx methods
 

@@ -91,7 +91,7 @@ blocks:
     label: ''
     'true': '1'
     type: int
-    value: '1'
+    value: '0'
   states:
     bus_sink: false
     bus_source: false
@@ -108,7 +108,7 @@ blocks:
     label: ''
     'true': '1'
     type: int
-    value: '1'
+    value: '0'
   states:
     bus_sink: false
     bus_source: false
@@ -361,7 +361,6 @@ blocks:
     comment: ''
     crc_len: crc_len
     hdr_len: hdr_len
-    log_payload: Print_payload
     maxoutbuf: '0'
     minoutbuf: '0'
     payload_len: payload_len
@@ -379,7 +378,6 @@ blocks:
     alias: ''
     comment: ''
     drate: data_rate
-    enable_log: Print_metrics
     fdev: fdev
     fsamp: samp_rate
     hdr_len: hdr_len

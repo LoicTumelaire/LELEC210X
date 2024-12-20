@@ -279,6 +279,7 @@ def run_sim(chain: Chain):
     ax2.axis("tight")
 
     plt.savefig( os.path.dirname(os.path.abspath(__file__)) +"Dashboard.pdf")
+    plt.show()
 
     # Bit error rate
     fig, ax = plt.subplots(constrained_layout=True)
@@ -360,6 +361,7 @@ def run_sim(chain: Chain):
     plt.grid()
     plt.legend()
     plt.savefig(os.path.dirname(os.path.abspath(__file__)) + "preamble_detection.pdf")
+    plt.show()
 
     # RMSE CFO
     #    plt.figure()
