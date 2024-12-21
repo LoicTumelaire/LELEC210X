@@ -332,7 +332,7 @@ def run_sim(chain: Chain):
     for txp in txp_data["txp"].unique():
         txp_subset = txp_data[txp_data["txp"] == txp]
         ax.plot(txp_subset["snr_avg"], txp_subset["per"], marker='o', color='red')
-    ax.plot(txp_data["snr_avg"], txp_data["per"], linestyle='-', color='blue')
+    ax.plot(txp_data["snr_avg"], txp_data["per"], linestyle='-', color='blue', label='PER from measurements')
     ax.set_ylabel("PER")
     ax.set_xlabel("SNR$_{o}$ [dB]")
     ax.set_yscale("log")
@@ -358,7 +358,7 @@ def run_sim(chain: Chain):
         ax2.set_xlim(ax.get_xlim())
         ax2.xaxis.label.set_color("b")
         ax2.tick_params(axis="x", colors="b")
-    fig.savefig("../plots/Simulation/PER_SNRe.pdf")
+    fig.savefig("../plots/Simulation/PER_SNRe_Measur.pdf")
 
     # Preamble metrics
     plt.figure()
