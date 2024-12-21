@@ -4,6 +4,7 @@ import numpy as np
 from chain import Chain
 from scipy.signal import firwin, freqz
 from scipy.special import erfc
+import pandas as pd
 
 
 def add_delay(chain: Chain, x: np.ndarray, tau: float):
@@ -278,7 +279,7 @@ def run_sim(chain: Chain):
     ax2.grid(True)
     ax2.axis("tight")
 
-    plt.savefig( os.path.dirname(os.path.abspath(__file__)) +"Dashboard.pdf")
+    plt.savefig( "../plots/Simulation/Dashboard.pdf")
     plt.show()
 
     # Bit error rate
@@ -295,7 +296,7 @@ def run_sim(chain: Chain):
     ax.grid(True)
     ax.set_title("Average Bit Error Rate")
     ax.legend()
-    fig.savefig(os.path.dirname(os.path.abspath(__file__)) + "BER.pdf")
+    fig.savefig("../plots/Simulation/BER.pdf")
 
     # add second axis
     bool_2_axis = True
@@ -314,6 +315,10 @@ def run_sim(chain: Chain):
         ax2.tick_params(axis="x", colors="b")
 
     # Packet error rate
+
+    # load data from file
+    txp_data = pd.read_csv("../plots/txp_data.csv")
+    
     fig, ax = plt.subplots(constrained_layout=True)
     ax.plot(SNRs_dB + shift_SNR_out, PER, "-s", label="Simulation")
     ax.plot(SNR_th, 1 - (1 - BER_th) ** chain.payload_len, label="AWGN Th. FSK")
@@ -323,6 +328,11 @@ def run_sim(chain: Chain):
         label="AWGN Th. FSK non-coh.",
     )
     ax.plot(SNR_th, 1 - (1 - BER_th_BPSK) ** chain.payload_len, label="AWGN Th. BPSK")
+    
+    for txp in txp_data["txp"].unique():
+        txp_subset = txp_data[txp_data["txp"] == txp]
+        ax.plot(txp_subset["snr_avg"], txp_subset["per"], marker='o', color='red')
+    ax.plot(txp_data["snr_avg"], txp_data["per"], linestyle='-', color='blue')
     ax.set_ylabel("PER")
     ax.set_xlabel("SNR$_{o}$ [dB]")
     ax.set_yscale("log")
@@ -331,7 +341,7 @@ def run_sim(chain: Chain):
     ax.grid(True)
     ax.set_title("Average Packet Error Rate")
     ax.legend()
-    fig.savefig(os.path.dirname(os.path.abspath(__file__)) + "PER.pdf")
+    #fig.savefig(os.path.dirname(os.path.abspath(__file__)) + "PER.pdf")
 
     # add second axis
     bool_2_axis = True
@@ -348,7 +358,7 @@ def run_sim(chain: Chain):
         ax2.set_xlim(ax.get_xlim())
         ax2.xaxis.label.set_color("b")
         ax2.tick_params(axis="x", colors="b")
-    fig.savefig(os.path.dirname(os.path.abspath(__file__)) + "PER_SNRe.pdf")
+    fig.savefig("../plots/Simulation/PER_SNRe.pdf")
 
     # Preamble metrics
     plt.figure()
@@ -360,7 +370,7 @@ def run_sim(chain: Chain):
     plt.ylim([-1, 101])
     plt.grid()
     plt.legend()
-    plt.savefig(os.path.dirname(os.path.abspath(__file__)) + "preamble_detection.pdf")
+    plt.savefig("../plots/Simulation/preamble_detection.pdf")
     plt.show()
 
     # RMSE CFO

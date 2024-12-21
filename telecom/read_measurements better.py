@@ -112,11 +112,15 @@ if __name__ == "__main__":
     # retire les 0
     txp_data = txp_data[txp_data["per"] >= 1e-6]
 
+    # save the txp_data in a file
+    txp_data.to_csv("plots/txp_data.csv", index=False)
+
     # Plot the number of false packets (invalid) / the number of packets for this mean SNR
     plt.figure()
     for txp in txp_data["txp"].unique():
         txp_subset = txp_data[txp_data["txp"] == txp]
         plt.plot(txp_subset["snr_avg"], txp_subset["per"], marker='o', label=f'TXP {txp}', color='red')
+    
     # Relie les points par des lignes
     plt.plot(txp_data["snr_avg"], txp_data["per"], linestyle='-', color='blue')
     plt.xlabel("Average SNR (dB)")
@@ -127,5 +131,5 @@ if __name__ == "__main__":
     #plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig("plots/PER_SNR.pdf")
+    #plt.savefig("plots/PER_SNR.pdf")
     plt.show()
