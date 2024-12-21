@@ -17,13 +17,13 @@ power = 3.3*v_res/R*1e6 # in uW
 fig, axs = plt.subplots(2, 1, sharex=True, figsize=(10, 6))
 
 # Plot power
-axs[0].plot(time, power, label='Power', color='blue')
+axs[0].plot(time, power, label='Power', color='blue', alpha=0.8)
 axs[0].set_ylabel('Power ($\mu$W)')
 axs[0].legend()
 axs[0].grid()
 
 # Plot v_sound
-axs[1].plot(time, v_sound, label='Sound Voltage', color='green')
+axs[1].plot(time, v_sound, label='Sound Voltage', color='green', alpha=0.8)
 axs[1].set_xlabel('Time (s)')
 axs[1].set_ylabel('Sound Voltage (V)')
 axs[1].legend()
@@ -42,7 +42,7 @@ voltage_resistor = np.array([70.9, 70.91, 73, 74.59, 76, 76.17])*1e-3 # in V
 current = voltage_resistor/R
 power = current*voltage*1e6 # in uW
 
-plt.plot(voltage, power, label='Power', color='blue')
+plt.plot(voltage, power, label='Power', color='blue', alpha=0.8)
 plt.xlabel('Voltage (V)')
 plt.ylabel('Power ($\mu$W)')
 plt.legend()
@@ -59,7 +59,7 @@ v_sound = v_sound[(time >= 0.5) & (time <= 2.5)]
 time = time[(time >= 0.5) & (time <= 2.5)]
 time = time - time[0] # start time at 0
 
-plt.plot(time, v_sound, label='Sound Voltage', color='green')
+plt.plot(time, v_sound, label='Sound Voltage', color='green', alpha=0.8)
 plt.xlabel('Time (s)')
 plt.ylabel('Sound Voltage (V)')
 plt.legend()
@@ -70,48 +70,44 @@ plt.close()
 
 #Radio power plot
 _, time_radio, v_radio = np.loadtxt('scopy radio.csv', delimiter=',', unpack=True, skiprows=8)
-v_radio = v_radio[(time_radio >= 1.683+time_radio[0]) & (time_radio <= 2.91+time_radio[0])]
-time_radio = time_radio[(time_radio >= 1.683+time_radio[0]) & (time_radio <= 2.91+time_radio[0])]
+v_radio = v_radio[(time_radio >= 3.549+time_radio[0]) & (time_radio <= 4.78+time_radio[0])]
+time_radio = time_radio[(time_radio >= 3.549+time_radio[0]) & (time_radio <= 4.78+time_radio[0])]
 time_radio = time_radio - time_radio[0] # start time at 0
-
-#add data from 0 to 554ms to have the same duration as the MCU (modify directly time)
-time_prefix = time_radio[time_radio < 0.53]
-v_radio_prefix = v_radio[time_radio < 0.53]
-time_radio = np.concatenate([time_prefix, time_radio + 0.53])
-v_radio = np.concatenate([v_radio_prefix, v_radio])
 
 R = 27
 power_radio = 3.3*v_radio/R*1e3 # in mW
 
-plt.plot(time_radio, power_radio, label='Power', color='blue')
+plt.plot(time_radio, power_radio, label='Power', color='blue', alpha=0.8)
 plt.xlabel('Time (s)')
 plt.ylabel('Power (mW)')
 plt.legend()
 plt.grid()
-plt.savefig('radio_power.pdf', bbox_inches='tight')
-plt.clf()
-plt.close()
+plt.show()
+#plt.savefig('radio_power.pdf', bbox_inches='tight')
+#plt.clf()
+#plt.close()
 
 print('Duration : ', time_radio[-1])
 print('Average power : ', np.mean(power_radio), ' mW')
 
 #MCU power plot
-_, time_mcu, v_mcu = np.loadtxt('scopy mesures 2.csv', delimiter=',', unpack=True, skiprows=8)
-v_mcu = v_mcu[(time_mcu >= 0.675+time_mcu[0]) & (time_mcu <= 2.456+time_mcu[0])]
-time_mcu = time_mcu[(time_mcu >= 0.675+time_mcu[0]) & (time_mcu <= 2.456+time_mcu[0])]
+_, time_mcu, v_mcu = np.loadtxt('scopy mesures_mcu.csv', delimiter=',', unpack=True, skiprows=8)
+v_mcu = v_mcu[(time_mcu >= 1.675+time_mcu[0]) & (time_mcu <= 2.91+time_mcu[0])]
+time_mcu = time_mcu[(time_mcu >= 1.675+time_mcu[0]) & (time_mcu <= 2.91+time_mcu[0])]
 time_mcu = time_mcu - time_mcu[0] # start time at 0
 
 R = 27
 power_mcu = 3.3*v_mcu/R*1e3 # in mW
 
-plt.plot(time_mcu, power_mcu, label='Power', color='blue')
+plt.plot(time_mcu, power_mcu, label='Power', color='blue', alpha=0.8)
 plt.xlabel('Time (s)')
 plt.ylabel('Power (mW)')
 plt.legend()
 plt.grid()
-plt.savefig('mcu_power.pdf', bbox_inches='tight')
-plt.clf()
-plt.close()
+plt.show()
+#plt.savefig('mcu_power.pdf', bbox_inches='tight')
+#plt.clf()
+#plt.close()
 
 print('Duration : ', time_mcu[-1])
 print('Average power : ', np.mean(power_mcu), ' mW')
@@ -119,14 +115,13 @@ print('Average power : ', np.mean(power_mcu), ' mW')
 # plot radio and MCU power on the same plot
 power_afe_micro = 140*1e-3 # in mW
 
-plt.plot(time_radio, power_radio, label='Radio Power', color='blue')
-plt.plot(time_mcu, np.ones_like(time_mcu)*power_afe_micro, label='AFE power', color='green')
-plt.plot(time_mcu, power_mcu, label='MCU Power', color='red')
+plt.plot(time_radio, power_radio, label='Radio Power', color='blue', alpha=0.8)
+plt.plot(time_mcu, np.ones_like(time_mcu)*power_afe_micro, label='AFE power', color='green', alpha=0.8)
+plt.plot(time_mcu, power_mcu, label='MCU Power', color='red', alpha=0.8)
 plt.xlabel('Time (s)')
 plt.ylabel('Power (mW)')
 plt.legend()
 plt.grid()
-plt.yscale('log')
 plt.show()
 
 #integrate each power to get the energy
@@ -140,13 +135,13 @@ custom_colors = ['red', 'blue', 'green']  # Light red, blue, green
 # Custom function to display actual values
 def actual_values(pct, all_values):
     absolute = round(pct/100.*sum(all_values), 2)
-    return f'{absolute}'
+    return f'{absolute} mJ'
 
 # Plot the pie chart
 plt.pie(
     data, 
     labels=labels, 
     colors=custom_colors,
-    autopct=lambda pct: actual_values(pct, data)
+    autopct=lambda pct: actual_values(pct, data),
 )
 plt.show()
