@@ -20,9 +20,13 @@ if __name__ == "__main__":
 
     ########################################################
 
-    files = ["Measures/test.txt"]
-    for i, file in enumerate(files):
-        data = defaultdict(list)
+    files = ["Measures/measurements_1m.txt", "Measures/measurements_3m.txt", "Measures/measurements_20m.txt", "Measures/measurements_7m.txt", "Measures/measurements_12m.txt"]
+    distances = [1, 3, 20, 7, 12]
+
+    combined_data = []  # List to hold data from all files
+
+    for idx, file in enumerate(files):
+        data = defaultdict(list)  # Create a new dictionary for each file
         with open(file) as f:
             for line in f.read().splitlines():
                 try:
@@ -47,17 +51,25 @@ if __name__ == "__main__":
                         data["ber"].append(ber)
                         data["invalid"].append(invalid)
                 except Exception as e:
-                    print(f"Erreur lors du traitement de la ligne : {line}\n{e}")
+                    print(f"Error processing line: {line}\n{e}")
                     continue
-    
-    # Complétez les listes pour égaliser les longueurs
-    max_len = max(len(v) for v in data.values())
-    for key in data:
-        while len(data[key]) < max_len:
-            data[key].append(None)
+            # Add distance information for this file
+            data["distance"].extend([distances[idx]] * len(data["cfo"]))
 
-    df = pd.DataFrame.from_dict(data)
+        # Fill missing values to match the longest list
+        max_len = max(len(v) for v in data.values())
+        for key in data:
+            while len(data[key]) < max_len:
+                data[key].append(None)
 
+        # Convert to DataFrame and append to the combined list
+        combined_data.append(pd.DataFrame.from_dict(data))
+
+    # Combine all DataFrames into one
+    df = pd.concat(combined_data, ignore_index=True)
+
+
+    """
     # Plot the CFO values for different SNR values for each TX power level(subplot) 5 for the width
     number_of_txp = len(df["txp"].unique())
     largeur = 5
@@ -80,11 +92,55 @@ if __name__ == "__main__":
     plt.tight_layout()
     #plt.savefig("plots/CFO_values.pdf")
     plt.show()
-
-
+    """            
+    # add the code to Plot SNR vs. distance
+        
+    # Compute the average SNR for each distance
+    
+    distance_avg_snr = df.groupby("distance")["snr"].mean().reset_index()
+    df = pd.merge(df, distance_avg_snr, on="distance", suffixes=("", "_avg"))
+    
+    # Plot the average SNR for each distance
+    plt.figure()
+    for distance in df["distance"].unique():
+        distance_subset = df[df["distance"] == distance]
+        print(distance_subset)
+        plt.plot(distance, distance_subset["snr_avg"].mean(), marker='o', label=f'Distance {distance} m', color='red')
+        
+    plt.xlabel("Distance (m)")
+    plt.ylabel("Average SNR (dB)")
+    #plt.ylim(1e-4, 10)  # Set the y-axis limits
+    # plt.yscale("log")  # Set the y-axis to logarithmic scale
+    plt.title("Average SNR vs. Distance")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig("plots/SNR_distance.pdf")
+    
+    distance_data = df.dropna(subset=["snr", "invalid"])
+        
+    # Plot the number of false packets (invalid) / the number of packets for this mean SNR
+    plt.figure()
+    for distance in distance_data["distance"].unique():
+        distance_subset = distance_data[distance_data["distance"] == distance].copy()
+        distance_subset.loc[:, "per"] = distance_subset["invalid"] / distance_subset["invalid"].size
+        distance_subset = distance_subset[distance_subset["per"] >= 1e-6]
+        if not distance_subset.empty:
+            plt.plot([distance] * len(distance_subset), distance_subset["per"], marker='o', label=f'Distance {distance} m', color='red')
+    
+    # Relie les points par des lignes
+    plt.xlabel("Distance (m)")
+    plt.ylabel("PER (Packet Error Rate)")
+    plt.ylim(1e-6, 1)  # Set the y-axis limits
+    plt.yscale("log")  # Set the y-axis to logarithmic scale
+    plt.title("Distance vs. SNR")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig("plots/PER_distance.pdf")
     
 
-
+    """
     # For each TX power level, keep the datas with are close to the mean SNR for each TX power level
     # Compute the mean SNR for each TX power level
     txp_avg_snr = df.groupby("txp")["snr"].mean().reset_index()
@@ -112,11 +168,15 @@ if __name__ == "__main__":
     # retire les 0
     txp_data = txp_data[txp_data["per"] >= 1e-6]
 
+    # save the txp_data in a file
+    txp_data.to_csv("plots/txp_data.csv", index=False)
+
     # Plot the number of false packets (invalid) / the number of packets for this mean SNR
     plt.figure()
     for txp in txp_data["txp"].unique():
         txp_subset = txp_data[txp_data["txp"] == txp]
         plt.plot(txp_subset["snr_avg"], txp_subset["per"], marker='o', label=f'TXP {txp}', color='red')
+    
     # Relie les points par des lignes
     plt.plot(txp_data["snr_avg"], txp_data["per"], linestyle='-', color='blue')
     plt.xlabel("Average SNR (dB)")
@@ -127,5 +187,6 @@ if __name__ == "__main__":
     #plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig("plots/PER_SNR.pdf")
+    #plt.savefig("plots/PER_SNR.pdf")
     plt.show()
+    """
