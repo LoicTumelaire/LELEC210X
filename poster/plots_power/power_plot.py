@@ -124,9 +124,13 @@ plt.xlabel('Time (s)')
 plt.ylabel('Power (mW)')
 plt.legend()
 plt.grid()
-plt.savefig('mcu_power.pdf', bbox_inches='tight')
-plt.clf()
-plt.close()
+plt.show()
+
+#compute mean between 0.8 sec and 2.2 sec
+mean_mcu = np.mean(power_mcu[(time_mcu >= 0.7942) & (time_mcu <= 2.0272)])
+mean_mcu_lower_clock = np.mean(power_mcu_lower_clock[(time_mcu_lower_clock >= 0.7942) & (time_mcu_lower_clock <= 2.1985)])
+print('Average power of mcu with 48Mhz : ', mean_mcu, ' mW')
+print('Average power of mcu with 24Mhz : ', mean_mcu_lower_clock, ' mW')
 
 #recover again to do different plot
 _, time_mcu, v_mcu = np.loadtxt('scopy mesures_mcu.csv', delimiter=',', unpack=True, skiprows=8)
