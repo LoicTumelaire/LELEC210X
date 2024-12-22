@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     ########################################################
 
-    files = ["Measures/test.txt"]
+    files = ["Measures/final.txt"]
     for i, file in enumerate(files):
         data = defaultdict(list)
         with open(file) as f:
