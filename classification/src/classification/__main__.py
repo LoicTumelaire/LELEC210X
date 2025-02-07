@@ -1,6 +1,9 @@
 import pickle
+from keras import models
 from pathlib import Path
 from typing import Optional
+
+import numpy as np
 
 import click
 
@@ -11,7 +14,18 @@ from common.logging import logger
 
 from .utils import payload_to_melvecs
 
+import requests
+import json
+
+model_dir = "../../data/models/"
+
 load_dotenv()
+
+send = True
+hostname = "http://localhost:5000"
+# Contest:
+#hostname = "http://lelec210x.sipr.ucl.ac.be/lelec210x"
+key = "aqH27o66E8xz-IotBk11ZZo1ix7Vbs5H2pTXlSra"
 
 
 @click.command()
@@ -66,4 +80,21 @@ def main(
 
             if m:
                 # TODO: perform classification
-                pass
+
+                model = models.load_model(model_dir + "two.keras")
+
+                y_pred = model.predict(melvecs)
+
+                classes = ["fireworks", "gunshot", "chainsaw", "helicopter"]
+
+                guess = classes[np.argmax(y_pred, axis=1)]
+
+                print(f"Prediction: {guess}")
+
+                # Send to the server
+                if send:
+                    response = requests.post(f"{hostname}/lelec210x/leaderboard/submit/{key}/{guess}", timeout=1)
+                    # All responses are JSON dictionaries
+                    response_as_dict = json.loads(response.text)
+                    print(response_as_dict)
+

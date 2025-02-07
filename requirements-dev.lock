@@ -610,7 +610,7 @@ wsproto==1.2.0
     # via simple-websocket
 wtforms==3.1.2
     # via flask-wtf
-youtube-dl @ git+https://github.com/ytdl-org/youtube-dl.git@c5098961b04ce83f4615f2a846c84f803b072639
+youtube-dl @ git+https://github.com/ytdl-org/youtube-dl.git@711e72c292327674c4a0593fdbb83d6347738ec9
 zipp==3.20.1
     # via importlib-metadata
     # via importlib-resources
