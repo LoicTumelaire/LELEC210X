@@ -25,7 +25,7 @@ send = True
 hostname = "http://localhost:5000"
 # Contest:
 #hostname = "http://lelec210x.sipr.ucl.ac.be/lelec210x"
-key = "aqH27o66E8xz-IotBk11ZZo1ix7Vbs5H2pTXlSra"
+key = "dhdCGK4Xq7EKm-U9Ji1MAHYvPyWBqoimYAU4pknY"
 
 
 @click.command()
