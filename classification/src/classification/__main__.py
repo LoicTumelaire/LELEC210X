@@ -20,6 +20,7 @@ import json
 
 pathFile = Path(__file__).resolve()
 model_dir = str(pathFile)[:-11]+"/../../data/models/"
+model = models.load_model(model_dir + "two.keras")
 
 load_dotenv()
 
@@ -80,10 +81,13 @@ def main(
             melvecs = payload_to_melvecs(payload, melvec_length, n_melvecs)
             logger.info(f"Parsed payload into Mel vectors: {melvecs}")
 
-            if True:
-                # TODO: perform classification
+            classify = True
+            # If the melvecs has too much noise, we don't classify it
+            if np.max(melvecs) < 0.1:
+                classify = False
 
-                model = models.load_model(model_dir + "two.keras")
+            if classify:
+                # Perform classification
 
                 melvecs = np.rot90(melvecs, k=1, axes=(0, 1))
 
@@ -91,17 +95,17 @@ def main(
                 plt.imshow(melvecs[0])
                 plt.show()
 
-                y_pred = model.predict(melvecs)
+                y_pred = model.predict(melvecs) # [[0.1, 0.2, 0.3, 0.4, 0.5]]
 
                 classes = ["birds", "chainsaw", "fire", "handsaw", "helicopter"]
 
-                guess = y_pred
+                guess = classes[int(np.argmax(y_pred))]
 
                 print(f"Prediction: {guess}")
-            
+                print(f"Probabilities: {y_pred}")
 
-                # Send to the server
-                if send:
+                # Send to the server if the probabilities are high enough
+                if send and np.max(y_pred) > 0.8:
                     response = requests.post(f"{hostname}/lelec210x/leaderboard/submit/{key}/{guess}", timeout=1)
                     # All responses are JSON dictionaries
                     response_as_dict = json.loads(response.text)
