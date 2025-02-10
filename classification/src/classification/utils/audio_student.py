@@ -25,7 +25,7 @@ class AudioUtil:
     Define a new class with util functions to process an audio signal.
     """
 
-    def open(self, audio_file) -> Tuple[ndarray, int]:
+    def open(audio_file) -> Tuple[ndarray, int]:
         """
         Load an audio file.
 
@@ -37,7 +37,7 @@ class AudioUtil:
             sig = sig[:, 0]
         return (sig, sr)
 
-    def play(self, audio):
+    def play(audio):
         """
         Play an audio file.
 
@@ -435,7 +435,7 @@ class Feature_vector_DS:
                 filt = np.array([1, -0.97])
                 aud = AudioUtil.filter(aud, filt)
             if "time_shift" in self.data_aug:
-                aud = AudioUtil.time_shift(aud, shift_limit=0.4)
+                aud = AudioUtil.time_shift(aud, shift_limit=0.8)
             if "distorsion" in self.data_aug:
                 aud = AudioUtil.distorsion(aud, alpha=0.2)
             if "pitch_shift" in self.data_aug:

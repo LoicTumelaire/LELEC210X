@@ -79,23 +79,26 @@ def main(
 
             melvecs = payload_to_melvecs(payload, melvec_length, n_melvecs)
             logger.info(f"Parsed payload into Mel vectors: {melvecs}")
-            plt.imshow(melvecs, cmap='hot', interpolation='nearest')
-            plt.show()
 
             if True:
                 # TODO: perform classification
 
                 model = models.load_model(model_dir + "two.keras")
 
+                melvecs = np.rot90(melvecs, k=1, axes=(0, 1))
+
                 melvecs = melvecs.reshape(20,20,1).T
+                plt.imshow(melvecs[0])
+                plt.show()
 
                 y_pred = model.predict(melvecs)
 
-                classes = ["fireworks", "gunshot", "chainsaw", "helicopter", "caca"]
+                classes = ["birds", "chainsaw", "fire", "handsaw", "helicopter"]
 
-                guess = classes[int(np.argmax(y_pred, axis=1))]
+                guess = y_pred
 
                 print(f"Prediction: {guess}")
+            
 
                 # Send to the server
                 if send:
