@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Optional
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 import click
 
@@ -17,7 +18,8 @@ from .utils import payload_to_melvecs
 import requests
 import json
 
-model_dir = "../../data/models/"
+pathFile = Path(__file__).resolve()
+model_dir = str(pathFile)[:-11]+"/../../data/models/"
 
 load_dotenv()
 
@@ -77,17 +79,21 @@ def main(
 
             melvecs = payload_to_melvecs(payload, melvec_length, n_melvecs)
             logger.info(f"Parsed payload into Mel vectors: {melvecs}")
+            plt.imshow(melvecs, cmap='hot', interpolation='nearest')
+            plt.show()
 
-            if m:
+            if True:
                 # TODO: perform classification
 
                 model = models.load_model(model_dir + "two.keras")
 
+                melvecs = melvecs.reshape(20,20,1).T
+
                 y_pred = model.predict(melvecs)
 
-                classes = ["fireworks", "gunshot", "chainsaw", "helicopter"]
+                classes = ["fireworks", "gunshot", "chainsaw", "helicopter", "caca"]
 
-                guess = classes[np.argmax(y_pred, axis=1)]
+                guess = classes[int(np.argmax(y_pred, axis=1))]
 
                 print(f"Prediction: {guess}")
 
