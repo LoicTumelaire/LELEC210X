@@ -14,7 +14,6 @@ from keras import models
 pathFile = Path(__file__).resolve()
 mel_dir = str(pathFile)[:-11]+"/../../data/melspecs/"
 model_dir = str(pathFile)[:-11]+"/../../data/models/"
-model = models.load_model(model_dir + "two.keras")
 
 @click.command()
 @click.option(
@@ -70,6 +69,7 @@ def classify():
         plt.imshow(melvecs[0])
         plt.show()
 
+        model = models.load_model(model_dir + "two.keras")
         y_pred = model.predict(melvecs) # [[0.1, 0.2, 0.3, 0.4, 0.5]]
         guess = classes[int(np.argmax(y_pred))]
 
