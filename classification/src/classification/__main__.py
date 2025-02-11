@@ -105,7 +105,7 @@ def main(
                 print(f"Probabilities: {y_pred}")
 
                 # Send to the server if the probabilities are high enough
-                if send and np.max(y_pred) > 0.8:
+                if send and np.max(y_pred) > 0.5:
                     response = requests.post(f"{hostname}/lelec210x/leaderboard/submit/{key}/{guess}", timeout=1)
                     # All responses are JSON dictionaries
                     response_as_dict = json.loads(response.text)

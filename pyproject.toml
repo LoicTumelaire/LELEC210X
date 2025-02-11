@@ -10,6 +10,7 @@ version = "0.1.0"
 dependencies = [
     "dash>=2.18.2",
     "tensorflow>=2.18.0",
+    "tensorflow-io>=0.31.0",
 ]
 
 [tool.ruff]
