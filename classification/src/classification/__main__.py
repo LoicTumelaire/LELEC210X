@@ -26,9 +26,9 @@ load_dotenv()
 
 send = True
 hostname = "http://localhost:5000"
-# Contest:
-#hostname = "http://lelec210x.sipr.ucl.ac.be/lelec210x"
+#hostname = "http://lelec210x.sipr.ucl.ac.be/lelec210x" # Contest: http://lelec210x.sipr.ucl.ac.be/lelec210x/leaderboard
 key = "dhdCGK4Xq7EKm-U9Ji1MAHYvPyWBqoimYAU4pknY"
+#key = "EPHNDFX0Y_aie6lb6trPdTrw_ob8Gc8yNzIpusWF" # Contest
 
 
 @click.command()
