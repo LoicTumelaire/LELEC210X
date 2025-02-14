@@ -20,15 +20,15 @@ import json
 
 pathFile = Path(__file__).resolve()
 model_dir = str(pathFile)[:-11]+"/../../data/models/"
-model = models.load_model(model_dir + "two.keras")
+mel_dir = str(pathFile)[:-11]+"/../../data/melspecs/"
 
 load_dotenv()
 
 send = True
-hostname = "http://localhost:5000"
-#hostname = "http://lelec210x.sipr.ucl.ac.be/lelec210x" # Contest: http://lelec210x.sipr.ucl.ac.be/lelec210x/leaderboard
-key = "dhdCGK4Xq7EKm-U9Ji1MAHYvPyWBqoimYAU4pknY"
-#key = "EPHNDFX0Y_aie6lb6trPdTrw_ob8Gc8yNzIpusWF" # Contest
+#hostname = "http://localhost:5000"
+hostname = "http://lelec210x.sipr.ucl.ac.be" # Contest: http://lelec210x.sipr.ucl.ac.be/lelec210x/leaderboard
+#key = "dhdCGK4Xq7EKm-U9Ji1MAHYvPyWBqoimYAU4pknY"
+key = "EPHNDFX0Y_aie6lb6trPdTrw_ob8Gc8yNzIpusWF" # Contest
 
 
 @click.command()
@@ -68,12 +68,7 @@ def main(
     This way, you will directly receive the authentified packets from STDIN
     (standard input, i.e., the terminal).
     """
-    if model:
-        with open(model, "rb") as file:
-            m = pickle.load(file)
-    else:
-        m = None
-
+    model = models.load_model(model_dir + "two.keras")
     for payload in _input:
         if PRINT_PREFIX in payload:
             payload = payload[len(PRINT_PREFIX) :]
@@ -82,19 +77,25 @@ def main(
             logger.info(f"Parsed payload into Mel vectors: {melvecs}")
 
             classify = True
-            # If the melvecs has too much noise, we don't classify it
-            if np.max(melvecs) < 0.1:
+            # If the melvecs has too much noise, we don't classify it, TODO: add in the MCU
+            if np.max(melvecs) < 1e-3:
                 classify = False
 
             if classify:
                 # Perform classification
 
-                melvecs = np.rot90(melvecs, k=1, axes=(0, 1))
+                # Flip the melvecs for the frequencies and reshape it for the model
+                #melvecs = np.flipud(melvecs)
+                melvecs = melvecs[None,...]
 
-                melvecs = melvecs.reshape(20,20,1).T
-                plt.imshow(melvecs[0])
+                # Plot the melvecs !! Plot à l'envers
+                plt.imshow(melvecs[0,:], origin='lower')
                 plt.show()
 
+                # Save the melvecs into a file
+                filename = mel_dir + payload[:10] + ".npy"
+                #np.save(filename, melvecs)
+                print(melvecs)
                 y_pred = model.predict(melvecs) # [[0.1, 0.2, 0.3, 0.4, 0.5]]
 
                 classes = ["birds", "chainsaw", "fire", "handsaw", "helicopter"]
