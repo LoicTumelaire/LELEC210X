@@ -95,7 +95,7 @@ def main(
                 # Save the melvecs into a file
                 filename = mel_dir + payload[:10] + ".npy"
                 #np.save(filename, melvecs)
-                print(melvecs)
+                #print(melvecs)
                 y_pred = model.predict(melvecs) # [[0.1, 0.2, 0.3, 0.4, 0.5]]
 
                 classes = ["birds", "chainsaw", "fire", "handsaw", "helicopter"]
