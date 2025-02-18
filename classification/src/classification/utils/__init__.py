@@ -13,7 +13,6 @@ def payload_to_melvecs(
     buffer = bytes.fromhex(payload.strip())
     unpacked = struct.iter_unpack(fmt, buffer)
     melvecs_q15int = np.asarray(list(unpacked), dtype=np.int16)
-    melvecs = melvecs_q15int.astype(float) / 32768  # 32768 = 2 ** 15
+    melvecs = melvecs_q15int.astype(float)
     melvecs = np.rot90(melvecs, k=-1, axes=(0, 1))
-    melvecs = np.fliplr(melvecs)
     return melvecs
