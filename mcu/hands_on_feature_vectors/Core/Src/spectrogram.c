@@ -10,9 +10,11 @@
 #include "config.h"
 #include "arm_math.h"
 #include "arm_absmax_q15.h"
+#include "main.h"
 
 extern void start_cycle_count();
 extern void stop_cycle_count(char *s);
+extern void print_buffer(volatile uint16_t *buffer, size_t len);
 
 q15_t buf    [  SAMPLES_PER_MELVEC  ]; // Windowed samples
 q15_t buf_fft[2*SAMPLES_PER_MELVEC  ]; // Double size (real|imag) buffer for arm_rfft_q15
@@ -61,7 +63,10 @@ void Spectrogram_Format(q15_t *buf)
 
 // Compute spectrogram of samples and transform into MEL vectors.
 void Spectrogram_Compute(q15_t *samples, q15_t *melvec)
-{
+{	
+	// Print the input buffer
+	print_buffer((uint16_t*) samples, SAMPLES_PER_MELVEC);
+
 	// STEP 1  : Windowing of input samples
 	//           --> Pointwise product
 	//           Complexity: O(n)
