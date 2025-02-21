@@ -1,8 +1,9 @@
-from keras import models #import pickle
 from pathlib import Path
 from typing import Optional
 
-import numpy as np
+import tensorflow as tf
+
+import numpy as np  
 from matplotlib.pyplot import imshow, show #import matplotlib.pyplot as plt
 
 import click
@@ -16,10 +17,11 @@ from .utils import payload_to_melvecs
 
 from requests import post
 from json import loads
+import os
 
 pathFile = Path(__file__).resolve()
-model_dir = str(pathFile)[:-11]+"/../../data/models/"
-mel_dir = str(pathFile)[:-11]+"/../../data/melspecs/"
+model_dir = str(pathFile)[:-11]+'..\\..\\data\\models\\'
+mel_dir = str(pathFile)[:-11]+'..\\..\\data\\melspecs\\'
 
 load_dotenv()
 
@@ -28,7 +30,7 @@ load_dotenv()
 ###################################
 send = True
 save = False
-DEBUG = False
+DEBUG = True
 
 # Adresses + keys
 #hostname = "http://localhost:5000"
@@ -36,9 +38,6 @@ hostname = "http://lelec210x.sipr.ucl.ac.be" # Contest: http://lelec210x.sipr.uc
 #key = "dhdCGK4Xq7EKm-U9Ji1MAHYvPyWBqoimYAU4pknY"
 key = "EPHNDFX0Y_aie6lb6trPdTrw_ob8Gc8yNzIpusWF" # Contest
 
-model = models.load_model(model_dir + "two.keras")
-classes = ["birds", "chainsaw", "fire", "handsaw", "helicopter"]
-history = np.zeros((5,5)) # History of max len of 5 y_pred = [0.1, 0.2, 0.3, 0.4, 0.5], if we add more, the first one is removed
 
 def exponentialWeight(number, expo=0.1):
     """
@@ -88,6 +87,16 @@ def main(
     This way, you will directly receive the authentified packets from STDIN
     (standard input, i.e., the terminal).
     """
+
+    def normalize(x):
+        return x / tf.reduce_max(x)
+    
+    print(os.path.exists(model_dir + "four.keras"))
+
+    model = tf.keras.models.load_model(model_dir + "four.keras", custom_objects={'normalize': normalize}) # BUG four.keras can't load
+    classes = ['chainsaw', 'fire', 'fireworks', 'gunshot']
+    history = np.zeros((5,5)) # History of max len of 5 y_pred = [0.1, 0.2, 0.3, 0.4, 0.5], if we add more, the first one is removed
+
     for payload in _input:
         if PRINT_PREFIX in payload:
             payload = payload[len(PRINT_PREFIX) :]
@@ -138,7 +147,7 @@ def main(
 
                 # Send to the server if the probabilities are high enough
                 if send and np.max(y_pred) > 0.5:
-                    print("Sending to the server")
+                    print(f"Sending to the server:{guess}")
                     response = post(f"{hostname}/lelec210x/leaderboard/submit/{key}/{guess}", timeout=1)
                     # All responses are JSON dictionaries
                     response_as_dict = loads(response.text)
