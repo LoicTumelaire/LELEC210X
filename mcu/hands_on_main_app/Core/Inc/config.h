@@ -32,7 +32,7 @@
 #define PERF_COUNT 0
 
 // Enable debug print
-#define DEBUGP 0
+#define DEBUGP 1
 
 #if (DEBUGP == 1)
 #define DEBUG_PRINT(...) do{ printf(__VA_ARGS__ ); } while( 0 )

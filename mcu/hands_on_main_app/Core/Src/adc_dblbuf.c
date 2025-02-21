@@ -17,6 +17,8 @@ static q15_t mel_vectors[N_MELVECS][MELVEC_LENGTH];
 
 static uint32_t packet_cnt = 0;
 
+static q15_t noise_power = 0;
+
 static volatile int32_t rem_n_bufs = 0;
 
 int StartADCAcq(int32_t n_bufs) {
@@ -27,6 +29,27 @@ int StartADCAcq(int32_t n_bufs) {
 	} else {
 		return HAL_OK;
 	}
+}
+
+static int Sound_Presence(q15_t* signal){
+	static q63_t  power = 0;
+	arm_power_q15(signal, ADC_BUF_SIZE, &power);
+
+	if (noise_power == 0){
+		DEBUG_PRINT("Noise power calibration \r\n");
+		noise_power = power;
+		return 0;
+	}
+
+	if (noise_power < 4* power ){ // 6 dB
+		DEBUG_PRINT("Signal detected \r\n");
+		return 1;
+	}
+	else {
+		DEBUG_PRINT("Noise detected \r\n");
+		return 0;
+	}
+
 }
 
 int IsADCFinished(void) {
@@ -103,17 +126,22 @@ static void ADC_Callback(int buf_cplt) {
 		Error_Handler();
 	}
 	ADCDataRdy[buf_cplt] = 1;
-	start_cycle_count();
-	Spectrogram_Format((q15_t *)ADCData[buf_cplt]);
-	Spectrogram_Compute((q15_t *)ADCData[buf_cplt], mel_vectors[cur_melvec]);
-	cur_melvec++;
-	stop_cycle_count("spectrogram");
+
+	if (Sound_Presence ((q15_t *)ADCData[buf_cplt]) || cur_melvec != 0) {
+		start_cycle_count();
+		Spectrogram_Format((q15_t *)ADCData[buf_cplt]);
+		Spectrogram_Compute((q15_t *)ADCData[buf_cplt], mel_vectors[cur_melvec]);
+		cur_melvec++;
+		stop_cycle_count("spectrogram");
+	}
+
 	ADCDataRdy[buf_cplt] = 0;
 
 	if (rem_n_bufs == 0) {
 		print_spectrogram();
 		send_spectrogram();
 	}
+
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
