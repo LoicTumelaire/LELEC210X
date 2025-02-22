@@ -5,13 +5,17 @@ ELEC PROJECT - 210x
 
 import argparse
 
-import matplotlib.pyplot as plt
+import time
+from classification.datasets import Dataset
+
 import numpy as np
 import serial
 import soundfile as sf
 from serial.tools import list_ports
 
-PRINT_PREFIX = "SND:HEX:" # Changed from "DF:HEX:"
+from classification.utils.audio_student import AudioUtil, Feature_vector_DS
+
+PRINT_PREFIX = "SND:HEX:"
 FREQ_SAMPLING = 10200
 VAL_MAX_ADC = 4096
 VDD = 3.3
@@ -48,8 +52,26 @@ def generate_audio(buf, file_name):
     buf /= max(abs(buf))
     sf.write("audio_files/" + file_name + ".ogg", buf, FREQ_SAMPLING)
 
+def play_sounds():
+    ### play all the sounds
+    audio_util = AudioUtil()
+
+    classnames = ["birds", "chainsaw", "fire", "handsaw", "helicopter"]
+    dataset = Dataset()
+
+    for classname in classnames:
+        for idx in range(40):
+            path = dataset.__getitem__((classname, idx))
+            audio = audio_util.open(path)
+            audio_util.play(audio)
+            time.sleep(5)
+            print(f'Playing {classname} {idx}')
+
 
 if __name__ == "__main__":
+    """
+    The goal of this program is to play some sounds with the computer and record them with the microcontroller.
+    """
     argParser = argparse.ArgumentParser()
     argParser.add_argument("-p", "--port", help="Port for serial communication")
     args = argParser.parse_args()
@@ -67,13 +89,20 @@ if __name__ == "__main__":
         print("Launch this script with [-p PORT_REF] to access the communication port")
 
     else:
+        # Play the sounds
+        play_sounds()
+
         input_stream = reader(port=args.port)
         msg_counter = 0
 
         for msg in input_stream:
-            # Enregistrement du message dans un fichier audio
-            print(f"Enregistrement son #{msg_counter}")
+            print(f"Acquisition #{msg_counter}")
 
+            buffer_size = len(msg)
+            times = np.linspace(0, buffer_size - 1, buffer_size) * 1 / FREQ_SAMPLING
+            voltage_mV = msg * VDD / VAL_MAX_ADC * 1e3
+
+            # Generate audio file
             generate_audio(msg, f"acq-{msg_counter}")
 
             msg_counter += 1
