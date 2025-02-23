@@ -20,6 +20,12 @@ import pandas as pd
 def normalize(x):
   return x / tf.reduce_max(x)
 
+dir = os.path.dirname(__file__)
+
+model_dir = dir + "/../../classification/data/models/four.keras"
+
+model = tf.keras.models.load_model(model_dir, custom_objects={'normalize': normalize})
+
 PRINT_PREFIX = "DF:HEX:"
 FREQ_SAMPLING = 10200
 MELVEC_LENGTH = 30
@@ -34,7 +40,7 @@ def parse_buffer(line):
     if line.startswith(PRINT_PREFIX):
         return bytes.fromhex(line[len(PRINT_PREFIX) :])
     else:
-        print(line)
+        # print(line)
         return None
 
 
@@ -46,7 +52,7 @@ def reader(port=None):
             line += ser.read_until(b"\n", size=2 * N_MELVECS * MELVEC_LENGTH).decode(
                 "ascii"
             )
-            print(line)
+            # print(line)
         line = line.strip()
         buffer = parse_buffer(line)
         if buffer is not None:
@@ -84,7 +90,6 @@ if __name__ == "__main__":
         msg_counter = 0
 
         for melvec in input_stream:
-            print (melvec.shape)
             
             melvec = melvec[4:-8]            
             
@@ -92,8 +97,11 @@ if __name__ == "__main__":
 
             # Charge notre modèle de prédiction (CNN)
             
-            model = tf.keras.models.load_model(r'C:\LELEC210X\LELEC210X\classification\data\models\four.keras', custom_objects={'normalize': normalize})
             prediction = model.predict(melvec.reshape((N_MELVECS, MELVEC_LENGTH, 1)).T)
+            
+            if max(prediction[0]) < 0.5:
+                print("No prediction")
+                continue
             
             memory[msg_counter % 10] = prediction
             
@@ -123,7 +131,7 @@ if __name__ == "__main__":
             print(f"Class: {CLASSNAMES[np.argmax(prediction)]}")
             
             file_predictions = pd.concat([file_predictions, pd.DataFrame([{"prediction": prediction, "mean_prediction": mean_prediction, "weighted_prediction": weighted_prediction}])], ignore_index=True)
-            
+            """
             plt.figure()
             plt.imshow(melvec.reshape((N_MELVECS, MELVEC_LENGTH)).T, aspect="auto")
             plt.colorbar()
@@ -135,5 +143,5 @@ if __name__ == "__main__":
             plt.show()
             plt.close()
             
-            
+            """
             file_predictions.to_csv("predictions.csv")

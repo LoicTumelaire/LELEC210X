@@ -6,24 +6,33 @@ import tensorflow as tf
 import numpy as np  
 from matplotlib.pyplot import imshow, show #import matplotlib.pyplot as plt
 
-import click
-
-import common
-from auth import PRINT_PREFIX
-from common.env import load_dotenv
-from common.logging import logger
-
-from .utils import payload_to_melvecs
-
 from requests import post
 from json import loads
 import os
+import struct
+
+PRINT_PREFIX = "DF:HEX:"
+MELVEC_LENGTH = 30
+N_MELVECS = 20
+
+def normalize(x):
+    return x / tf.reduce_max(x)
+
+def payload_to_melvecs(
+    payload: str, melvec_length: int = MELVEC_LENGTH, n_melvecs: int = N_MELVECS
+) -> np.ndarray:
+    """Convert a payload string to a melvecs array."""
+    fmt = f"!{melvec_length}h"
+    buffer = bytes.fromhex(payload.strip())
+    unpacked = struct.iter_unpack(fmt, buffer)
+    melvecs_q15int = np.asarray(list(unpacked), dtype=np.int16)
+    melvecs = melvecs_q15int.astype(float)
+    melvecs = np.rot90(melvecs, k=-1, axes=(0, 1))
+    return melvecs
 
 pathFile = Path(__file__).resolve()
 model_dir = str(pathFile)[:-11]+'..\\..\\data\\models\\'
 mel_dir = str(pathFile)[:-11]+'..\\..\\data\\melspecs\\'
-
-load_dotenv()
 
 ###################################
 # Variables globales
@@ -50,27 +59,9 @@ def exponentialWeight(number, expo=0.1):
     """
     return np.exp(-expo*number)
 
-@click.command()
-@click.option(
-    "-i",
-    "--input",
-    "_input",
-    default="-",
-    type=click.File("r"),
-    help="Where to read the input stream. Default to '-', a.k.a. stdin.",
-)
-@click.option(
-    "-m",
-    "--model",
-    default=None,
-    type=click.Path(exists=True, dir_okay=False, path_type=Path),
-    help="Path to the trained classification model.",
-)
-@common.click.melvec_length
-@common.click.n_melvecs
-@common.click.verbosity
+
 def main(
-    _input: Optional[click.File],
+    _input: list[str],
     model: Optional[Path],
     melvec_length: int,
     n_melvecs: int,
@@ -87,9 +78,6 @@ def main(
     This way, you will directly receive the authentified packets from STDIN
     (standard input, i.e., the terminal).
     """
-
-    def normalize(x):
-        return x / tf.reduce_max(x)
     
     print(os.path.exists(model_dir + "four.keras"))
 
@@ -102,7 +90,6 @@ def main(
             payload = payload[len(PRINT_PREFIX) :]
 
             melvecs = payload_to_melvecs(payload, melvec_length, n_melvecs)
-            logger.info(f"Parsed payload into Mel vectors: {melvecs}")
 
             # If the melvecs has too much noise, we don't classify it, 
             # TODO: add in the MCU: don't send it
