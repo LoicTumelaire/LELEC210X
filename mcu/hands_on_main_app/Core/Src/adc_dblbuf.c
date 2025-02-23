@@ -42,11 +42,9 @@ static int Sound_Presence(q15_t* signal){
 	}
 
 	if (noise_power < 4* power ){ // 6 dB
-		DEBUG_PRINT("Signal detected \r\n");
 		return 1;
 	}
 	else {
-		DEBUG_PRINT("Noise detected \r\n");
 		return 0;
 	}
 
@@ -108,11 +106,11 @@ static void send_spectrogram() {
 	encode_packet(packet, &packet_cnt);
 	stop_cycle_count("Encode packet");
 
+	print_encoded_packet(packet);
+
 	start_cycle_count();
 	S2LP_Send(packet, PACKET_LENGTH);
 	stop_cycle_count("Send packet");
-
-	print_encoded_packet(packet);
 }
 
 static void ADC_Callback(int buf_cplt) {

@@ -11,17 +11,20 @@ import serial
 from serial.tools import list_ports
 
 import tensorflow as tf
-from keras import models
+
+import os
 
 import pandas as pd
 
-from classification.utils.plots import plot_specgram
+@tf.function
+def normalize(x):
+  return x / tf.reduce_max(x)
 
 PRINT_PREFIX = "DF:HEX:"
 FREQ_SAMPLING = 10200
-MELVEC_LENGTH = 20
+MELVEC_LENGTH = 30
 N_MELVECS = 20
-CLASSNAMES = ["birds", "chainsaw", "fire", "handsaw", "helicopter"]
+CLASSNAMES = ['chainsaw', 'crackling_fire', 'fireworks', 'gun']
 
 dt = np.dtype(np.uint16).newbyteorder("<")
 
@@ -81,13 +84,15 @@ if __name__ == "__main__":
         msg_counter = 0
 
         for melvec in input_stream:
+            print (melvec.shape)
             
-            melvec = melvec[4:-8]
+            melvec = melvec[4:-8]            
             
             msg_counter += 1
 
             # Charge notre modèle de prédiction (CNN)
-            model = models.load_model(r"C:\LELEC210X\LELEC210X\classification\data\models\two.keras")
+            
+            model = tf.keras.models.load_model(r'C:\LELEC210X\LELEC210X\classification\data\models\four.keras', custom_objects={'normalize': normalize})
             prediction = model.predict(melvec.reshape((N_MELVECS, MELVEC_LENGTH, 1)).T)
             
             memory[msg_counter % 10] = prediction
@@ -97,7 +102,7 @@ if __name__ == "__main__":
             weights = np.exp(-alpha * np.arange(len(memory)))
             weights /= weights.sum()
             weights = np.roll(weights, -msg_counter % 10)
-            
+
             ## resize weights from 10 to (10, 5)
             
             weights = np.tile(weights, (len(CLASSNAMES), 1)).T
@@ -119,18 +124,16 @@ if __name__ == "__main__":
             
             file_predictions = pd.concat([file_predictions, pd.DataFrame([{"prediction": prediction, "mean_prediction": mean_prediction, "weighted_prediction": weighted_prediction}])], ignore_index=True)
             
-            """
             plt.figure()
-            plot_specgram(
-                melvec.reshape((N_MELVECS, MELVEC_LENGTH)).T,
-                ax=plt.gca(),
-                is_mel=True,
-                title=f"MEL Spectrogram #{msg_counter}" + f" - {CLASSNAMES[np.argmax(prediction)]}",
-                xlabel="Mel vector",
-            )
+            plt.imshow(melvec.reshape((N_MELVECS, MELVEC_LENGTH)).T, aspect="auto")
+            plt.colorbar()
+            plt.title(f"Mel spectrogram {msg_counter}")
+            plt.xlabel("Time")
+            plt.ylabel("Frequency")
+            plt.tight_layout()
             #plt.savefig(f"Results_MelSpectr/mel_spectrogram_{msg_counter}.pdf")
             plt.show()
             plt.close()
-            """
+            
             
             file_predictions.to_csv("predictions.csv")

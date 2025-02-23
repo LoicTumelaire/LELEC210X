@@ -84,6 +84,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 }
 
 static void acquire_and_send_packet() {
+	HAL_GPIO_WritePin(GPIOB, LD2_Pin, GPIO_PIN_RESET);
 	if (StartADCAcq(N_MELVECS) != HAL_OK) {
 		DEBUG_PRINT("Error while enabling the DMA\r\n");
 	}
@@ -100,9 +101,7 @@ void run(void)
 	{
 	  while (!btn_press) {
 		  HAL_GPIO_WritePin(GPIOB, LD2_Pin, GPIO_PIN_SET);
-		  HAL_Delay(200);
-		  HAL_GPIO_WritePin(GPIOB, LD2_Pin, GPIO_PIN_RESET);
-		  HAL_Delay(200);
+		  __WFI();
 	  }
 	  btn_press = 0;
 #if (CONTINUOUS_ACQ == 1)

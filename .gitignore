@@ -47,6 +47,10 @@ tex/hands_on_wireless_simulation/modulate.py
 
 mcu/Debug/
 mcu/Release/
+mcu/final/
+mcu/hands_on_main_app/final/
+mcu/hands_on_main_app/Debug/
+mcu/hands_on_main_app/Release/
 mcu/.settings/
 mcu/*.launch
 

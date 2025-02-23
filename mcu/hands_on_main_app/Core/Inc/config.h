@@ -17,7 +17,7 @@
 #define ENABLE_RADIO 1
 
 // General UART enable/disable (disable for low-power operation)
-#define ENABLE_UART 0
+#define ENABLE_UART 1
 
 // In continuous mode, we start and stop continuous acquisition on button press.
 // In non-continuous mode, we send a single packet on button press.
@@ -25,7 +25,7 @@
 
 // Spectrogram parameters
 #define SAMPLES_PER_MELVEC 512
-#define MELVEC_LENGTH 20
+#define MELVEC_LENGTH 30
 #define N_MELVECS 20
 
 // Enable performance measurements

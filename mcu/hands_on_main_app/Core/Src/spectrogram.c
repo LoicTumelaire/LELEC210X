@@ -41,9 +41,8 @@ void Spectrogram_Format(q15_t *buf)
 	// Since we use a signed representation, we should now center the value around zero, we can do this by substracting 2**14.
 	// Now the value of buf[i] is in [-2**14 , 2**14 - 1]
 
-	for(uint16_t i=0; i < SAMPLES_PER_MELVEC; i++) { // Remove DC component
-		buf[i] -= (1 << 14);
-	}
+	arm_offset_q15(buf, -16384, buf, SAMPLES_PER_MELVEC);
+
 }
 
 // Compute spectrogram of samples and transform into MEL vectors.
@@ -86,6 +85,8 @@ void Spectrogram_Compute(q15_t *samples, q15_t *melvec)
 	//           Complexity: O(N)
 	//           Number of cycles: <TODO>
 
+	//init q31_t vector with 1/vmax
+
 	for (int i=0; i < SAMPLES_PER_MELVEC; i++) // We don't use the second half of the symmetric spectrum
 	{
 		buf[i] = (q15_t) (((q31_t) buf_fft[i] << 15) /((q31_t)vmax));
@@ -127,4 +128,6 @@ void Spectrogram_Compute(q15_t *samples, q15_t *melvec)
 	arm_mat_init_q15(&melvec_inst, MELVEC_LENGTH, 1, melvec);
 
 	arm_mat_mult_fast_q15(&hz2mel_inst, &fftmag_inst, &melvec_inst, buf_tmp);
+
+	DEBUG_PRINT("%d", melvec[0]);
 }

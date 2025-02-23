@@ -7,6 +7,7 @@
 #include "packet.h"
 #include "main.h"
 #include "utils.h"
+#include <string.h>
 
 const uint8_t AES_Key[16]  = {
                             0x00,0x00,0x00,0x00,
