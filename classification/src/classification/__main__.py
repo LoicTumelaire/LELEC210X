@@ -1,6 +1,11 @@
 from pathlib import Path
 from typing import Optional
 
+import tensorflow as tf
+
+import numpy as np  
+from matplotlib.pyplot import imshow, show #import matplotlib.pyplot as plt
+
 import click
 
 import common
@@ -10,56 +15,41 @@ from common.logging import logger
 
 from .utils import payload_to_melvecs
 
-import tensorflow as tf
-
-import numpy as np  
-from matplotlib.pyplot import imshow, show #import matplotlib.pyplot as plt
-
 from requests import post
 from json import loads
-import os
-import struct
-
-MELVEC_LENGTH = 24
-N_MELVECS = 20
-
-load_dotenv()
-
-@tf.function
-def normalize(x):
-  return x / tf.reduce_max(x)
-
-def payload_to_melvecs(
-    payload: str, melvec_length: int = MELVEC_LENGTH, n_melvecs: int = N_MELVECS
-) -> np.ndarray:
-    fmt = f"!{melvec_length}h"
-    buffer = bytes.fromhex(payload.strip())
-    unpacked = struct.iter_unpack(fmt, buffer)
-    melvecs_q15int = np.asarray(list(unpacked), dtype=np.int16)
-    melvecs = melvecs_q15int.astype(float)
-    melvecs = np.rot90(melvecs, k=-1, axes=(0, 1))
-    return melvecs
 
 pathFile = Path(__file__).resolve()
 model_dir = str(pathFile)[:-11]+'..\\..\\data\\models\\'
 mel_dir = str(pathFile)[:-11]+'..\\..\\data\\melspecs\\'
 
+load_dotenv()
+
 ###################################
 # Variables globales
 ###################################
 send = True
-save = True
+save = False
 DEBUG = True
 
 # Adresses + keys
-#hostname = "http://localhost:5000"
-hostname = "http://lelec210x.sipr.ucl.ac.be" # Contest: http://lelec210x.sipr.ucl.ac.be/lelec210x/leaderboard
-#key = "dhdCGK4Xq7EKm-U9Ji1MAHYvPyWBqoimYAU4pknY"
-key = "EPHNDFX0Y_aie6lb6trPdTrw_ob8Gc8yNzIpusWF" # Contest
+hostname = "http://localhost:5000"
+#hostname = "http://lelec210x.sipr.ucl.ac.be" # Contest: http://lelec210x.sipr.ucl.ac.be/lelec210x/leaderboard
+key = "tU_0Pj3suElVVaGESopSy1by_vmSIbJm7eNzZwNb"
+#key = "EPHNDFX0Y_aie6lb6trPdTrw_ob8Gc8yNzIpusWF" # Contest
 
-model = tf.keras.models.load_model(model_dir + "four.keras", custom_objects={'normalize': normalize}) # BUG four.keras can't load
-classes = ['chainsaw', 'fire', 'fireworks', 'gunshot']
+def normalize(x):
+    return x / tf.reduce_max(x)
 
+def exponentialWeight(number, expo=0.1):
+    """
+    Calculate the exponential weight of a given number.
+    Parameters:
+        number (float): The input number to be weighted.
+        expo (float, optional): The exponent value to be used in the calculation. Default is 0.1.
+    Returns:
+        float: The exponential weight of the input number.
+    """
+    return np.exp(-expo*number)
 
 @click.command()
 @click.option(
@@ -98,13 +88,22 @@ def main(
     This way, you will directly receive the authentified packets from STDIN
     (standard input, i.e., the terminal).
     """
+    
+    model = tf.keras.models.load_model(model_dir + "four.keras", custom_objects={'normalize': normalize}) # BUG four.keras can't load
+    classes = ['chainsaw', 'fire', 'fireworks', 'gunshot']
+    history = np.zeros((5,4)) # History of max len of 4 y_pred = [0.1, 0.2, 0.3, 0.4], if we add more, the first one is removed
 
     for payload in _input:
         if PRINT_PREFIX in payload:
             payload = payload[len(PRINT_PREFIX) :]
 
             melvecs = payload_to_melvecs(payload, melvec_length, n_melvecs)
-            logger.info(f"Parsed payload into Mel vectors: {melvecs}")
+            #logger.info(f"Parsed payload into Mel vectors: {melvecs}")
+
+            # If the melvecs has too much noise, we don't classify it, 
+            # TODO: add in the MCU: don't send it
+            
+            # Perform classification
 
             melvecs = melvecs[None,...] # Add a dimension to the melvecs for the model
 
@@ -126,10 +125,7 @@ def main(
             history[0] = y_pred
             
             # Smooth the prediction
-            smoothed_pred = np.zeros(5)
-            for i in range(5):
-                smoothed_pred += history[i]
-            smoothed_pred /= np.sum(smoothed_pred)
+            smoothed_pred = np.mean(history, axis=0)
 
             # Get the most probable class
             guess = classes[int(np.argmax(smoothed_pred))]
@@ -139,9 +135,9 @@ def main(
                 print(f"Prediction: {guess}")
 
             # Send to the server if the probabilities are high enough
-            if send and np.max(y_pred) > 0.5:
+            if send :
                 print(f"Sending to the server:{guess}")
-                response = post(f"{hostname}/lelec210x/leaderboard/submit/{key}/{guess}", timeout=1)
+                response = post(f"{hostname}/lelec210x/leaderboard/submit/{key}/{guess}", timeout=2)
                 # All responses are JSON dictionaries
                 response_as_dict = loads(response.text)
                 print(response_as_dict)
