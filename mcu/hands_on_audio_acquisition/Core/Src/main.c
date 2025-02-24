@@ -186,7 +186,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1){
-    if(!buttonPressed) __WFI(); // Wait for interrupt
+    if(0) __WFI(); // Wait for interrupt
     else {
       // Start the ADC and the timer
       HAL_TIM_Base_Start(&htim3);

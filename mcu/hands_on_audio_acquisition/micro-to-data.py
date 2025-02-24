@@ -90,12 +90,13 @@ if __name__ == "__main__":
 
     else:
         # Play the sounds
-        play_sounds()
+        # play_sounds()
 
         input_stream = reader(port=args.port)
         msg_counter = 0
 
         for msg in input_stream:
+            print("okkk")
             print(f"Acquisition #{msg_counter}")
 
             buffer_size = len(msg)
