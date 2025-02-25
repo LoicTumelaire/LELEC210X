@@ -89,7 +89,7 @@ def main(
     (standard input, i.e., the terminal).
     """
     
-    model = tf.keras.models.load_model(model_dir + "four.keras", custom_objects={'normalize': normalize}) # BUG four.keras can't load
+    model = tf.keras.models.load_model(model_dir + "four.keras", custom_objects={'normalize': normalize})
     classes = ['chainsaw', 'fire', 'fireworks', 'gunshot']
     history = np.zeros((5,4)) # History of max len of 4 y_pred = [0.1, 0.2, 0.3, 0.4], if we add more, the first one is removed
 
@@ -98,10 +98,9 @@ def main(
             payload = payload[len(PRINT_PREFIX) :]
 
             melvecs = payload_to_melvecs(payload, melvec_length, n_melvecs)
-            #logger.info(f"Parsed payload into Mel vectors: {melvecs}")
 
-            # If the melvecs has too much noise, we don't classify it, 
-            # TODO: add in the MCU: don't send it
+            if DEBUG:
+                logger.info(f"Parsed payload into Mel vectors: {melvecs}")
             
             # Perform classification
 
