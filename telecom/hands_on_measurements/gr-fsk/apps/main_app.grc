@@ -180,7 +180,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '20'
+    value: '24'
   states:
     bus_sink: false
     bus_source: false
