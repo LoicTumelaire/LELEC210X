@@ -108,7 +108,7 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc){
   // If half of the buffer is filled
 	uint32_t power = get_signal_power(ADCData1, ADC_BUF_SIZE);
   printf("Power: %d\r\n", power);
-  if (power>80000){
+  if (power>4000){
     sound_bigger_than_50 = 1;
   }
 }
@@ -215,7 +215,7 @@ void SystemClock_Config(void)
 
   /** Configure the main internal regulator output voltage
   */
-  if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
+  if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE2) != HAL_OK)
   {
     Error_Handler();
   }

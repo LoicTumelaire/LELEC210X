@@ -29,13 +29,13 @@ load_dotenv()
 ###################################
 send = True
 save = False
-DEBUG = True
+DEBUG = False
 
 # Adresses + keys
-hostname = "http://localhost:5000"
-#hostname = "http://lelec210x.sipr.ucl.ac.be" # Contest: http://lelec210x.sipr.ucl.ac.be/lelec210x/leaderboard
-key = "tU_0Pj3suElVVaGESopSy1by_vmSIbJm7eNzZwNb"
-#key = "EPHNDFX0Y_aie6lb6trPdTrw_ob8Gc8yNzIpusWF" # Contest
+# hostname = "http://localhost:5000"
+hostname = "http://lelec210x.sipr.ucl.ac.be" # Contest: http://lelec210x.sipr.ucl.ac.be/lelec210x/leaderboard
+#key = "tU_0Pj3suElVVaGESopSy1by_vmSIbJm7eNzZwNb"
+key = "EPHNDFX0Y_aie6lb6trPdTrw_ob8Gc8yNzIpusWF" # Contest
 
 def normalize(x):
     return x / tf.reduce_max(x)
@@ -122,6 +122,8 @@ def main(
             # Add the prediction to the history and delete the last one
             history = np.roll(history, 1, axis=0)
             history[0] = y_pred
+            if DEBUG:
+                print(f"History: {history}")
             
             # Smooth the prediction
             smoothed_pred = np.mean(history, axis=0)
@@ -135,7 +137,7 @@ def main(
 
             # Send to the server if the probabilities are high enough
             if send :
-                print(f"Sending to the server:{guess}")
+                print(f"Sending to the server: {guess}")
                 response = post(f"{hostname}/lelec210x/leaderboard/submit/{key}/{guess}", timeout=2)
                 # All responses are JSON dictionaries
                 response_as_dict = loads(response.text)
