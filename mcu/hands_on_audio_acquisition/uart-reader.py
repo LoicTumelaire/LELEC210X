@@ -10,11 +10,41 @@ import numpy as np
 import serial
 import soundfile as sf
 from serial.tools import list_ports
+import os
+import sounddevice as sd
+import time
 
 PRINT_PREFIX = "SND:HEX:"
 FREQ_SAMPLING = 10200
 VAL_MAX_ADC = 4096
 VDD = 3.3
+
+###################################
+# File path for the sounds
+###################################
+
+current_dir = os.path.dirname(os.path.realpath(__file__))
+sound_files_path = str(current_dir) + '/../../classification/src/classification/datasets/micro_sounds'
+audio_file = str(current_dir) + '/audio_files'
+sound_files = [f for f in os.listdir(sound_files_path) if f.endswith('.wav')]
+
+###################################
+
+def playsound(sound_file):
+    """
+        Play a sound file
+    Args:
+        sound_file (str): The name of the sound file to be
+        played
+
+    Returns:
+        None
+    """
+    sound_path = os.path.join(sound_files_path, sound_file)
+    print(f'Playing {sound_file}')
+    # Play the sound
+    data, fs = sf.read(sound_path)
+    sd.play(data, fs)
 
 
 def parse_buffer(line):
@@ -46,7 +76,7 @@ def generate_audio(buf, file_name):
     buf = np.asarray(buf, dtype=np.float64)
     buf = buf - np.mean(buf)
     buf /= max(abs(buf))
-    sf.write("audio_files/" + file_name + ".ogg", buf, FREQ_SAMPLING)
+    sf.write( audio_file + '/' + file_name + ".wav", buf, FREQ_SAMPLING)
 
 
 if __name__ == "__main__":
@@ -67,19 +97,22 @@ if __name__ == "__main__":
         print("Launch this script with [-p PORT_REF] to access the communication port")
 
     else:
-        plt.figure(figsize=(10, 5))
+        # Play the first sound
+        index = 0
+        playsound(sound_files[index])
+
+        #plt.figure(figsize=(10, 5))
         input_stream = reader(port=args.port)
         msg_counter = 0
 
         for msg in input_stream:
             print(f"Acquisition #{msg_counter}")
-
-            buffer_size = len(msg)
-            times = np.linspace(0, buffer_size - 1, buffer_size) * 1 / FREQ_SAMPLING
-            voltage_mV = msg * VDD / VAL_MAX_ADC * 1e3
-
             if False:
                 #Plot fft of the signal
+                buffer_size = len(msg)
+                times = np.linspace(0, buffer_size - 1, buffer_size) * 1 / FREQ_SAMPLING
+                voltage_mV = msg * VDD / VAL_MAX_ADC * 1e3
+                
                 fft = np.fft.fft(voltage_mV/500)
                 freqs = np.fft.fftfreq(buffer_size, 1 / FREQ_SAMPLING)
                 plt.subplot(2, 1, 1)
@@ -101,6 +134,12 @@ if __name__ == "__main__":
                 plt.pause(0.1)
                 plt.cla()
 
-            generate_audio(msg, f"acq-{msg_counter}")
+            generate_audio(msg, f"micro-{sound_files[index][:-4]}")
 
             msg_counter += 1
+            index += 1
+            if index >= len(sound_files):
+                # Stop the script
+                print("End of the script")
+                break
+            playsound(sound_files[index])
