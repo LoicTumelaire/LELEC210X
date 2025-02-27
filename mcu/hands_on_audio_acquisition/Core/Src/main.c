@@ -108,7 +108,7 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc){
   // If half of the buffer is filled
 	uint32_t power = get_signal_power(ADCData1, ADC_BUF_SIZE);
   printf("Power: %d\r\n", power);
-  if (power>2000){
+  if (power>200){
     sound_bigger_than_50 = 1;
   }
 }
