@@ -84,12 +84,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 }
 
 static void acquire_and_send_packet() {
-	HAL_GPIO_WritePin(GPIOB, LD2_Pin, GPIO_PIN_RESET);
+	//HAL_GPIO_WritePin(GPIOB, LD2_Pin, GPIO_PIN_RESET);
 	if (StartADCAcq(N_MELVECS) != HAL_OK) {
 		DEBUG_PRINT("Error while enabling the DMA\r\n");
 	}
 	while (!IsADCFinished()) {
-		__WFI();
+    __WFI();
 	}
 }
 
@@ -100,7 +100,7 @@ void run(void)
 	while (1)
 	{
 	  while (!btn_press) {
-		  HAL_GPIO_WritePin(GPIOB, LD2_Pin, GPIO_PIN_SET);
+		  //HAL_GPIO_WritePin(GPIOB, LD2_Pin, GPIO_PIN_SET);
 		  __WFI();
 	  }
 	  btn_press = 0;
@@ -143,7 +143,8 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  HAL_PWREx_EnableLowPowerRunMode();
+  HAL_PWREx_EnablePVM3();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -169,6 +170,7 @@ int main(void)
   } else {
 	  DEBUG_PRINT("[S2LP] Init OK\r\n");
   }
+  S2LP_Sleep(); // Put the radio to sleep
 #endif
 
   if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK) {
@@ -183,6 +185,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  /* Calibration now */
 #if (RUN_CONFIG == MAIN_APP)
   run();
 #elif (RUN_CONFIG == EVAL_RADIO)

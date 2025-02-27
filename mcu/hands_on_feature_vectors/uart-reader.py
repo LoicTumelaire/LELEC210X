@@ -10,25 +10,22 @@ import numpy as np
 import serial
 from serial.tools import list_ports
 
-import tensorflow as tf
+from keras import models
 
 import os
 
 import pandas as pd
 
-@tf.function
-def normalize(x):
-  return x / tf.reduce_max(x)
-
 dir = os.path.dirname(__file__)
 
 model_dir = dir + "/../../classification/data/models/four.keras"
+print("Loading model...")
 
-model = tf.keras.models.load_model(model_dir, custom_objects={'normalize': normalize})
+model = models.load_model(model_dir)
 
 PRINT_PREFIX = "DF:HEX:"
 FREQ_SAMPLING = 10200
-MELVEC_LENGTH = 30
+MELVEC_LENGTH = 24
 N_MELVECS = 20
 CLASSNAMES = ['chainsaw', 'crackling_fire', 'fireworks', 'gun']
 
@@ -59,7 +56,6 @@ def reader(port=None):
             buffer_array = np.frombuffer(buffer, dtype=dt)
 
             yield buffer_array
-
 
 if __name__ == "__main__":
     argParser = argparse.ArgumentParser()
@@ -99,10 +95,6 @@ if __name__ == "__main__":
             
             prediction = model.predict(melvec.reshape((N_MELVECS, MELVEC_LENGTH, 1)).T)
             
-            if max(prediction[0]) < 0.5:
-                print("No prediction")
-                continue
-            
             memory[msg_counter % 10] = prediction
             
             ## exp moving avg
@@ -116,7 +108,7 @@ if __name__ == "__main__":
             weights = np.tile(weights, (len(CLASSNAMES), 1)).T
             
             weighted_memory = np.multiply(memory, weights)
-            
+            """
             mean_prediction = np.mean(memory, axis=0)
             
             mean_prediction = mean_prediction / np.sum(mean_prediction)
@@ -124,14 +116,16 @@ if __name__ == "__main__":
             weighted_prediction = np.mean(weighted_memory, axis=0)
             
             weighted_prediction = weighted_prediction / np.sum(weighted_prediction)
-
+            """
             print(f"Prediction: {prediction}")
+            """
             print(f"Mean Prediction: {mean_prediction}")
             print(f"Weighted Prediction: {weighted_prediction}")
+            """
             print(f"Class: {CLASSNAMES[np.argmax(prediction)]}")
             
-            file_predictions = pd.concat([file_predictions, pd.DataFrame([{"prediction": prediction, "mean_prediction": mean_prediction, "weighted_prediction": weighted_prediction}])], ignore_index=True)
-            """
+            #file_predictions = pd.concat([file_predictions, pd.DataFrame([{"prediction": prediction, "mean_prediction": mean_prediction, "weighted_prediction": weighted_prediction}])], ignore_index=True)
+            
             plt.figure()
             plt.imshow(melvec.reshape((N_MELVECS, MELVEC_LENGTH)).T, aspect="auto")
             plt.colorbar()
@@ -143,5 +137,4 @@ if __name__ == "__main__":
             plt.show()
             plt.close()
             
-            """
-            file_predictions.to_csv("predictions.csv")
+            # file_predictions.to_csv("predictions.csv")
