@@ -108,7 +108,7 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc){
   // If half of the buffer is filled
 	uint32_t power = get_signal_power(ADCData1, ADC_BUF_SIZE);
   printf("Power: %d\r\n", power);
-  if (power>4000){
+  if (power>200){
     sound_bigger_than_50 = 1;
   }
 }
@@ -186,7 +186,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1){
-    if(!buttonPressed) __WFI(); // Wait for interrupt
+    if(0) __WFI(); // Wait for interrupt
     else {
       // Start the ADC and the timer
       HAL_TIM_Base_Start(&htim3);
@@ -215,7 +215,7 @@ void SystemClock_Config(void)
 
   /** Configure the main internal regulator output voltage
   */
-  if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE2) != HAL_OK)
+  if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
   {
     Error_Handler();
   }
