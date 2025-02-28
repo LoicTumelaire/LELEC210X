@@ -27,7 +27,7 @@ load_dotenv()
 ###################################
 # Variables globales
 ###################################
-server = True
+send = True
 save = False
 DEBUG = False
 
@@ -39,10 +39,6 @@ key = "EPHNDFX0Y_aie6lb6trPdTrw_ob8Gc8yNzIpusWF" # Contest
 
 def normalize(x):
     return x / tf.reduce_max(x)
-
-def saving(payload, melvecs):
-    filename = mel_dir + payload[:10] + ".npy"
-    np.save(filename, melvecs)
 
 def exponentialWeight(number, expo=0.1):
     """
@@ -99,14 +95,15 @@ def main(
 
     for payload in _input:
         if PRINT_PREFIX in payload:
-
             payload = payload[len(PRINT_PREFIX) :]
+
             melvecs = payload_to_melvecs(payload, melvec_length, n_melvecs)
 
             if DEBUG:
                 logger.info(f"Parsed payload into Mel vectors: {melvecs}")
             
             # Perform classification
+
             melvecs = melvecs[None,...] # Add a dimension to the melvecs for the model
 
             if DEBUG:
@@ -116,32 +113,30 @@ def main(
 
             # Save the melvecs into a file
             if save:
-                saving(payload, melvecs)
+                filename = mel_dir + payload[:10] + ".npy"
+                np.save(filename, melvecs)
 
             # Predict the class probabilities
             y_pred = model.predict(melvecs) # [0.1, 0.2, 0.3, 0.4, 0.5]
 
             # Add the prediction to the history and delete the last one
             history = np.roll(history, 1, axis=0)
-            history[0] = y_pred              
+            history[0] = y_pred
+            if DEBUG:
+                print(f"History: {history}")
             
             # Smooth the prediction
             smoothed_pred = np.mean(history, axis=0)
 
-            # If the prediction is high enough, send it to the server
-            if np.argmax(smoothed_pred) > 0.5:
-                send = True
-            else:
-                send = False
+            # Get the most probable class
             guess = classes[int(np.argmax(smoothed_pred))]
 
             if DEBUG:
-                print(f"History: {history}")
                 print(f"Probabilities: {y_pred}")
                 print(f"Prediction: {guess}")
 
             # Send to the server if the probabilities are high enough
-            if send and server:
+            if send :
                 print(f"Sending to the server: {guess}")
                 response = post(f"{hostname}/lelec210x/leaderboard/submit/{key}/{guess}", timeout=2)
                 # All responses are JSON dictionaries

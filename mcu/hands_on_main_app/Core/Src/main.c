@@ -20,7 +20,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
-#include "aes.h"
 #include "dma.h"
 #include "spi.h"
 #include "tim.h"
@@ -85,19 +84,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 }
 
 static void acquire_and_send_packet() {
-#if (LED == 1)
-	HAL_GPIO_WritePin(GPIOB, LD2_Pin, GPIO_PIN_RESET);
-#endif
+	//HAL_GPIO_WritePin(GPIOB, LD2_Pin, GPIO_PIN_RESET);
 	if (StartADCAcq(N_MELVECS) != HAL_OK) {
 		DEBUG_PRINT("Error while enabling the DMA\r\n");
 	}
 	while (!IsADCFinished()) {
-#if (MCU_TICK_STOP == 1)
-		HAL_SuspendTick();
-#endif
-# if (MCU_SLEEPMODE == 1)
-		HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
-#endif
+    __WFI();
 	}
 }
 
@@ -108,29 +100,16 @@ void run(void)
 	while (1)
 	{
 	  while (!btn_press) {
-#if (LED == 1)
-		  HAL_GPIO_WritePin(GPIOB, LD2_Pin, GPIO_PIN_SET);
-#endif
-#if (MCU_TICK_STOP == 1)
-		  HAL_SuspendTick();
-#endif
-# if (MCU_SLEEPMODE == 1)
-		  HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
-# endif
+		  //HAL_GPIO_WritePin(GPIOB, LD2_Pin, GPIO_PIN_SET);
+		  __WFI();
 	  }
 	  btn_press = 0;
 #if (CONTINUOUS_ACQ == 1)
 	  while (!btn_press) {
-#if (MCU_LOW_POwER_MODE == 1)
-      HAL_PWREx_EnableLowPowerRunMode();
-#endif
 		  acquire_and_send_packet();
 	  }
 	  btn_press = 0;
 #elif (CONTINUOUS_ACQ == 0)
-#if (MCU_LOW_POwER_MODE == 1)
-    HAL_PWREx_EnableLowPowerRunMode();
-# endif
 	  acquire_and_send_packet();
 #else
 #error "Wrong value for CONTINUOUS_ACQ."
@@ -164,7 +143,8 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  //HAL_PWREx_EnablePVM3();
+  HAL_PWREx_EnableLowPowerRunMode();
+  HAL_PWREx_EnablePVM3();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -173,7 +153,6 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM3_Init();
   MX_ADC1_Init();
-  MX_AES_Init();
   /* USER CODE BEGIN 2 */
   if (ENABLE_UART) {
 	  MX_LPUART1_UART_Init();
@@ -191,9 +170,7 @@ int main(void)
   } else {
 	  DEBUG_PRINT("[S2LP] Init OK\r\n");
   }
-#if (RADIO_SLEEP_MODE == 1)
-  S2LP_Sleep();
-#endif
+  S2LP_Sleep(); // Put the radio to sleep
 #endif
 
   if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK) {
@@ -243,8 +220,7 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_MSI;
-  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_MSI;
   RCC_OscInitStruct.MSIState = RCC_MSI_ON;
   RCC_OscInitStruct.MSICalibrationValue = 0;
   RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_11;
@@ -267,7 +243,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  HAL_RCCEx_EnableLSCO(RCC_LSCOSOURCE_LSI);
 }
 
 /* USER CODE BEGIN 4 */

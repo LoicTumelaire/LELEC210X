@@ -8,20 +8,20 @@
 #include <stdio.h>
 
 // Runtime parameters
-#define MAIN_APP 0
-#define EVAL_RADIO 1
+#define MAIN_APP 1
+#define EVAL_RADIO 0
 
-#define RUN_CONFIG MAIN_APP
+#define RUN_CONFIG MAIN_APP // MAIN_APP or EVAL_RADIO changed
 
 // Radio parameters
 #define ENABLE_RADIO 1
 
 // General UART enable/disable (disable for low-power operation)
-#define ENABLE_UART 1
+#define ENABLE_UART 0
 
 // In continuous mode, we start and stop continuous acquisition on button press.
 // In non-continuous mode, we send a single packet on button press.
-#define CONTINUOUS_ACQ 0
+#define CONTINUOUS_ACQ 1
 
 // Spectrogram parameters
 #define SAMPLES_PER_MELVEC 512
@@ -32,7 +32,7 @@
 #define PERF_COUNT 0
 
 // Enable debug print
-#define DEBUGP 1
+#define DEBUGP 0
 
 #if (DEBUGP == 1)
 #define DEBUG_PRINT(...) do{ printf(__VA_ARGS__ ); } while( 0 )
@@ -40,26 +40,6 @@
 #define DEBUG_PRINT(...) do{ } while ( 0 )
 #endif
 
-/////////////////////////////////CUSTOM CONFIG////////////////////////////////////////////
 
-/////	1 = TRUE (activated) 0 = INITAL behavior (deactivated)
-
-// Enable MCU sleep mode while waiting
-#define MCU_SLEEPMODE 1
-
-// Enable MCU low power run mode
-#define MCU_LOW_POwER_MODE 1
-
-// Enable hardware AES tag computation acceleration
-#define AES_HW_ACCELERATION 1
-
-// Enable sleep mode for the radio when no transmission occurs
-#define RADIO_SLEEP_MODE 1
-
-// Disable the ticking clock when the MCU is in sleep mode
-#define MCU_TICK_STOP 0
-
-// LED used for debugging
-#define LED 0
 
 #endif /* INC_CONFIG_H_ */

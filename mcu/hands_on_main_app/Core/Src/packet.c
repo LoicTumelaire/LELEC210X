@@ -1,8 +1,8 @@
 /*
  * packet.c
  */
+
 #include "aes_ref.h"
-#include "aes.h"
 #include "config.h"
 #include "packet.h"
 #include "main.h"
@@ -18,24 +18,9 @@ const uint8_t AES_Key[16]  = {
 void tag_cbc_mac(uint8_t *tag, const uint8_t *msg, size_t msg_len) {
 	// Allocate a buffer of the key size to store the input and result of AES
 	// uint32_t[4] is 4*(32/8)= 16 bytes long
-
-#if (AES_HW_ACCELERATION == 1)
-
-	size_t size = msg_len+16-msg_len%16;
-	uint8_t plain[size];
-	uint8_t cipher[size];
-
-	memcpy(plain, msg, msg_len);
-
-	HAL_CRYP_AESCBC_Encrypt(&hcryp, plain, size, cipher, 1000);
-	
-    // Copy the result of CBC-MAC-AES to the tag.
-	memcpy(tag, cipher + msg_len - 16, 16);
-
-#else
 	uint8_t state[16] = {0};
 
-    // TO DO : Complete the CBC-MAC_AES, without allocating memory and its stack space usage must be constant
+    // TO DO : Complete the CBC-MAC_AES, without allocating memory and its stack space usage must be constant 
 
 	// Parse x into blocks (x1, x2, . . . , xn) such that the length of each block is 16 bytes (except for xn)
 	// If the length of xn is not 16, append as many zero bytes to xn to extend it to 16 bytes.
@@ -55,12 +40,11 @@ void tag_cbc_mac(uint8_t *tag, const uint8_t *msg, size_t msg_len) {
 		// Encrypt the state with AES
 		AES128_encrypt(state, AES_Key);
 	}
-
+	
     // Copy the result of CBC-MAC-AES to the tag.
 	memcpy(tag, state, 16);
-
-#endif
 }
+
 // Assumes payload is already in place in the packet
 int make_packet(uint8_t *packet, size_t payload_len, uint8_t sender_id, uint32_t serial) {
     size_t packet_len = payload_len + PACKET_HEADER_LENGTH + PACKET_TAG_LENGTH;
