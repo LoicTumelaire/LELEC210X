@@ -60,6 +60,6 @@
 #define MCU_TICK_STOP 0
 
 // LED used for debugging
-#define LED 0
+#define LED 1
 
 #endif /* INC_CONFIG_H_ */

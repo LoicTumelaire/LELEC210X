@@ -84,6 +84,8 @@ if __name__ == "__main__":
     else:
         input_stream = reader(port=args.port)
         msg_counter = 0
+        
+        print (input_stream)
 
         for melvec in input_stream:
             
