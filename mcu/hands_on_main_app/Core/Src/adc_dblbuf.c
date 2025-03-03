@@ -109,9 +109,13 @@ static void send_spectrogram() {
 	print_encoded_packet(packet);
 
 	//start_cycle_count();
+#if (RADIO_SLEEP_MODE == 1)
 	S2LP_WakeUp();
+#endif
 	S2LP_Send(packet, PACKET_LENGTH);
+#if (RADIO_SLEEP_MODE == 1)
 	S2LP_Sleep();
+#endif
 	//stop_cycle_count("Send packet");
 }
 
@@ -127,13 +131,13 @@ static void ADC_Callback(int buf_cplt) {
 	}
 	ADCDataRdy[buf_cplt] = 1;
 
-	if (Sound_Presence ((q15_t *)ADCData[buf_cplt]) || cur_melvec != 0) {
+	//if (Sound_Presence ((q15_t *)ADCData[buf_cplt]) || cur_melvec != 0) {
 		//start_cycle_count();
 		Spectrogram_Format((q15_t *)ADCData[buf_cplt]);
 		Spectrogram_Compute((q15_t *)ADCData[buf_cplt], mel_vectors[cur_melvec]);
 		cur_melvec++;
 		//stop_cycle_count("spectrogram");
-	}
+	//}
 
 	ADCDataRdy[buf_cplt] = 0;
 
