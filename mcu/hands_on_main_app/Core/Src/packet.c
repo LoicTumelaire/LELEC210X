@@ -1,48 +1,38 @@
 /*
  * packet.c
  */
-
 #include "aes_ref.h"
 #include "config.h"
 #include "packet.h"
 #include "main.h"
 #include "utils.h"
+#include <string.h>
 
-const uint8_t AES_Key[16]  = {
-                            0x00,0x00,0x00,0x00,
-							0x00,0x00,0x00,0x00,
-							0x00,0x00,0x00,0x00,
-							0x00,0x00,0x00,0x00};
+#include "stm32l4xx_hal.h"
+#include "stm32l4xx_hal_cryp.h"
+
+extern CRYP_HandleTypeDef hcryp;
 
 void tag_cbc_mac(uint8_t *tag, const uint8_t *msg, size_t msg_len) {
-	// Allocate a buffer of the key size to store the input and result of AES
-	// uint32_t[4] is 4*(32/8)= 16 bytes long
-	uint8_t state[16] = {0};
+    size_t padded_len = (msg_len + 15) & ~15; // Round up to next multiple of 16
+    uint8_t padded_msg[padded_len];
 
-    // TO DO : Complete the CBC-MAC_AES, without allocating memory and its stack space usage must be constant 
+    // Copy original message
+    memcpy(padded_msg, msg, msg_len);
 
-	// Parse x into blocks (x1, x2, . . . , xn) such that the length of each block is 16 bytes (except for xn)
-	// If the length of xn is not 16, append as many zero bytes to xn to extend it to 16 bytes.
-	// s ← 0**16 (Where 0**16 denotes the string made of 16 zero bytes.)
-	// void AES128_encrypt ( unsigned char * block , const unsigned char * key ) ;
+    uint8_t pad_value = padded_len - msg_len;
+    memset(padded_msg + msg_len, 0, pad_value);
 
-	// Process each 16-byte block
-	for (size_t i = 0; i < msg_len; i += 16) {
-		// XOR the current block with the state
-		for (size_t j = 0; j < 16; j++) {
-			if (i + j < msg_len) {
-				state[j] ^= msg[i + j];// XOR the current block with the state
-			} else {
-				state[j] ^= 0x00; // Padding with zero if the block is less than 16 bytes
-			}
-		}
-		// Encrypt the state with AES
-		AES128_encrypt(state, AES_Key);
-	}
-	
-    // Copy the result of CBC-MAC-AES to the tag.
-	memcpy(tag, state, 16);
+    uint8_t cipher_output[padded_len];
+
+    if (HAL_CRYP_AESCBC_Encrypt(&hcryp, padded_msg, padded_len, cipher_output, HAL_MAX_DELAY) != HAL_OK) {
+        DEBUG_PRINT("Error in AES encryption\r\n");
+    }
+
+    // CBC-MAC is the last 16 bytes of the ciphertext
+    memcpy(tag, &cipher_output[padded_len - 16], 16);
 }
+
 
 // Assumes payload is already in place in the packet
 int make_packet(uint8_t *packet, size_t payload_len, uint8_t sender_id, uint32_t serial) {
@@ -81,11 +71,6 @@ int make_packet(uint8_t *packet, size_t payload_len, uint8_t sender_id, uint32_t
 	// Set the packet_serial field
 	*(uint32_t *)(packet + 4) = __builtin_bswap32(serial);
 
-	// app_data is already in place in the packet
-
-	// For the tag field, you have to calculate the tag. The function call below is correct but
-	// tag_cbc_mac function, calculating the tag, is not implemented.
     tag_cbc_mac(packet + payload_len + PACKET_HEADER_LENGTH, packet, payload_len + PACKET_HEADER_LENGTH);
-
     return packet_len;
 }

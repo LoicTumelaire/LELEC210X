@@ -79,7 +79,7 @@ static void print_encoded_packet(uint8_t *packet) {
 #if (DEBUGP == 1)
 	char hex_encoded_packet[2*PACKET_LENGTH+1];
 	hex_encode(hex_encoded_packet, packet, PACKET_LENGTH);
-	DEBUG_PRINT("DF:HEX:%s\r\n", hex_encoded_packet);
+	//DEBUG_PRINT("DF:HEX:%s\r\n", hex_encoded_packet);
 #endif
 }
 
