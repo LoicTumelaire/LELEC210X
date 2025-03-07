@@ -29,3 +29,34 @@ plt.ylabel('Power (mW)')
 plt.legend()
 plt.show()
 #plt.savefig('o3_power.pdf', bbox_inches='tight')
+
+# lower sample frequency
+
+_, time, volt = np.loadtxt('f_sample_2khz.csv', delimiter=',', unpack=True, skiprows=8)
+power = volt/R*Vdd*1000
+
+plt.plot(time, power, color='blue', alpha=0.8, label="2kHz")
+plt.xlabel('Time (s)')
+plt.ylabel('Power (mW)')
+plt.legend()
+plt.show()
+
+#clk=8Mhz
+_, time, volt = np.loadtxt('f=2khz_clk=8Mhz.csv', delimiter=',', unpack=True, skiprows=8)
+power = volt/R*Vdd*1000
+
+plt.plot(time, power, color='blue', alpha=0.8, label="CLK=8MHz")
+plt.xlabel('Time (s)')
+plt.ylabel('Power (mW)')
+plt.legend()
+plt.show()
+
+#Clk=2MHz
+_, time, volt = np.loadtxt('f=2khz_clk=2Mhz.csv', delimiter=',', unpack=True, skiprows=8)
+power = volt/R*Vdd*1000
+
+plt.plot(time, power, color='blue', alpha=0.8, label="CLK=2MHz")
+plt.xlabel('Time (s)')
+plt.ylabel('Power (mW)')
+plt.legend()
+plt.show()
